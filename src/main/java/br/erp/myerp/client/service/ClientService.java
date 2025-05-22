@@ -1,6 +1,8 @@
 package br.erp.myerp.client.service;
 
-import br.erp.myerp.client.dto.ClientDTO;
+import br.erp.myerp.client.dto.ClientCreateDTO;
+import br.erp.myerp.client.dto.ClientResponseDTO;
+import br.erp.myerp.client.dto.ClientUpdateDTO;
 import br.erp.myerp.client.entity.Client;
 import br.erp.myerp.client.mapper.ClientMapper;
 import br.erp.myerp.client.repository.ClientRepository;
@@ -14,19 +16,37 @@ public class ClientService {
     @Autowired
     private ClientRepository clientRepository;
 
-    public Client find(String cpf){
-        Client client = clientRepository.findByCpf(cpf).orElse(null);
-        if(client != null){
-            return client;
-        }
-        throw new EntityNotFoundException("Client with cpf: " + cpf + " was not founded");
+    @Autowired
+    private ClientMapper clientMapper;
+
+    public ClientResponseDTO find(Long id){
+        return clientMapper.toDto(clientRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Client with id: " + id + " was not founded")));
     }
 
-    public void create(ClientDTO clientDTO){
-        if (clientRepository.findByCpf(clientDTO.getCpf()).isPresent()) {
-            throw new IllegalArgumentException("CPF já cadastrado");
-        }
-        Client client = ClientMapper.toClient(clientDTO);
+    public ClientResponseDTO find(String cpf){
+        return clientMapper.toDto(clientRepository.findByCpf(cpf).orElseThrow(() -> new EntityNotFoundException("Client with cpf: " + cpf + " was not founded")));
+    }
+
+    public void create(ClientCreateDTO clientCreateDTO){
+        Client client = clientMapper.toClient(clientCreateDTO);
         clientRepository.save(client);
+    }
+
+    public void update(Long id, ClientUpdateDTO clientUpdateDTO){
+        Client client = clientRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Client with id: " + id + " was not founded"));
+        client.setId(id);
+        client.setFirstName(clientUpdateDTO.getFirstName());
+        client.setLastName(clientUpdateDTO.getLastName());
+        client.setEmail(clientUpdateDTO.getEmail());
+        client.setDdd(clientUpdateDTO.getDdd());
+        client.setCellphone(clientUpdateDTO.getCellphone());
+        client.setBirthday(clientUpdateDTO.getBirthday());
+        client.setCpf(clientUpdateDTO.getCpf());
+        clientRepository.save(client);
+    }
+
+    public void delete(Long id) {
+        Client client = clientRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Client with id: " + id + " not found"));
+        clientRepository.delete(client);
     }
 }

@@ -1,6 +1,8 @@
 package br.erp.myerp.client.controller;
 
-import br.erp.myerp.client.dto.ClientDTO;
+import br.erp.myerp.client.dto.ClientCreateDTO;
+import br.erp.myerp.client.dto.ClientResponseDTO;
+import br.erp.myerp.client.dto.ClientUpdateDTO;
 import br.erp.myerp.client.service.ClientService;
 import br.erp.myerp.response.Response;
 import jakarta.validation.Valid;
@@ -17,13 +19,32 @@ public class ClientController {
     private ClientService clientService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<String> getClient(@PathVariable Long id){
-        return ResponseEntity.status(HttpStatus.OK).body("Hello world, user: " + id);
+    public ResponseEntity<ClientResponseDTO> getClient(@PathVariable Long id){
+        ClientResponseDTO client = clientService.find(id);
+        return ResponseEntity.status(HttpStatus.OK).body(client);
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<Response> createClient(@RequestBody @Valid ClientDTO clientDTO){
-        clientService.create(clientDTO);
+    @GetMapping("/by-cpf/{cpf}")
+    public ResponseEntity<ClientResponseDTO> getClient(@PathVariable String cpf){
+        ClientResponseDTO client = clientService.find(cpf);
+        return ResponseEntity.status(HttpStatus.OK).body(client);
+    }
+
+    @PostMapping()
+    public ResponseEntity<Response> createClient(@RequestBody @Valid ClientCreateDTO clientCreateDTO){
+        clientService.create(clientCreateDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(new Response(HttpStatus.CREATED, "Client successfully created"));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Response> updateClient(@PathVariable Long id, @RequestBody @Valid ClientUpdateDTO clientUpdateDTO){
+        clientService.update(id, clientUpdateDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(new Response(HttpStatus.OK, "Client was successfully updated"));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Response> deleteClient(@PathVariable Long id){
+        clientService.delete(id);
+        return ResponseEntity.status(HttpStatus.OK).body(new Response(HttpStatus.OK, "Client id: " + id + " was successfully deleted"));
     }
 }

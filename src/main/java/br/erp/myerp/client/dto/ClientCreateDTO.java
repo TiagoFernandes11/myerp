@@ -5,12 +5,12 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
-import org.hibernate.validator.constraints.br.CPF;
+import org.mapstruct.Mapper;
 
 import java.time.LocalDate;
 
 @Data
-public class ClientDTO {
+public class ClientCreateDTO {
 
     @NotBlank(message = "First name can not be blank")
     private String firstName;
@@ -33,8 +33,6 @@ public class ClientDTO {
     private LocalDate birthday;
 
     @NotBlank(message = "CPF can not be blank")
-    @CPF(message = "Your cpf must be valid")
+    @Pattern(regexp = "[0-9]{11}", message = "CPF must be 11 digits long")
     private String cpf;
-
 }
-
