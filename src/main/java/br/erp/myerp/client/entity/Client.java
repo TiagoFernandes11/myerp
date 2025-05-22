@@ -1,9 +1,6 @@
-package br.erp.myerp.client;
+package br.erp.myerp.client.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Past;
@@ -12,7 +9,6 @@ import lombok.Data;
 import org.hibernate.validator.constraints.br.CPF;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -43,7 +39,8 @@ public class Client {
     private LocalDate birthday;
 
     @NotBlank(message = "CPF can not be blank")
-    @CPF(message = "Your cpf must be valid")
+    @Pattern(regexp = "[0-9]{11}")
+    @Column(unique = true, nullable = false)
     private String cpf;
 
 
