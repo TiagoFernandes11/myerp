@@ -1,9 +1,8 @@
 package br.erp.myerp.client;
 
-import br.erp.myerp.client.controller.ClientController;
-import br.erp.myerp.client.dto.ClientCreateDTO;
-import br.erp.myerp.client.dto.ClientResponseDTO;
-import br.erp.myerp.client.service.ClientService;
+import br.erp.myerp.backend.client.controller.ClientController;
+import br.erp.myerp.backend.client.dto.ClientCreateDTO;
+import br.erp.myerp.backend.client.service.ClientService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
