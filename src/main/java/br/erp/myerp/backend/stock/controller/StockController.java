@@ -1,7 +1,8 @@
 package br.erp.myerp.backend.stock.controller;
 
 import br.erp.myerp.backend.response.Response;
-import br.erp.myerp.backend.stock.dto.StockDTO;
+import br.erp.myerp.backend.stock.dto.stock.StockDTO;
+import br.erp.myerp.backend.stock.dto.stock.StockUpdateDTO;
 import br.erp.myerp.backend.stock.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,11 +38,11 @@ public class StockController {
     }
 
     @PutMapping
-    public ResponseEntity<Response> updateStock(@RequestBody StockDTO stockDTO){
-        stockService.update(stockDTO);
+    public ResponseEntity<Response> updateStock(@RequestBody StockUpdateDTO stockUpdateDTO){
+        stockService.update(stockUpdateDTO);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(
-                        new Response(HttpStatus.OK, "Stock for product: " + stockDTO.getProduct().getName() + " was successfully created")
+                        new Response(HttpStatus.OK, "Stock for product: " + stockUpdateDTO.getProduct().getName() + " was successfully created")
                 );
     }
 }

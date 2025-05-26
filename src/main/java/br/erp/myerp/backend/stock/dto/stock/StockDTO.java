@@ -1,16 +1,18 @@
-package br.erp.myerp.backend.stock.dto;
+package br.erp.myerp.backend.stock.dto.stock;
 
 import br.erp.myerp.backend.product.entity.Product;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NonNull;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class StockDTO {
 
-    @NotNull(message = "Id must not be null")
     private Long id;
 
     @NotNull(message = "Product can not be null")

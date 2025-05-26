@@ -1,6 +1,6 @@
 package br.erp.myerp.backend.stock.mapper;
 
-import br.erp.myerp.backend.stock.dto.StockDTO;
+import br.erp.myerp.backend.stock.dto.stock.StockDTO;
 import br.erp.myerp.backend.stock.entity.Stock;
 import org.mapstruct.Mapper;
 

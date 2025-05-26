@@ -1,7 +1,8 @@
 package br.erp.myerp.backend.stock.service;
 
 import br.erp.myerp.backend.product.entity.Product;
-import br.erp.myerp.backend.stock.dto.StockDTO;
+import br.erp.myerp.backend.stock.dto.stock.StockDTO;
+import br.erp.myerp.backend.stock.dto.stock.StockUpdateDTO;
 import br.erp.myerp.backend.stock.entity.Stock;
 import br.erp.myerp.backend.stock.mapper.StockMapper;
 import br.erp.myerp.backend.stock.repository.StockRepository;
@@ -10,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class StockService {
@@ -43,9 +43,9 @@ public class StockService {
         stockRepository.save(stock);
     }
 
-    public void update(StockDTO stockDTO){
-        Stock stock = stockMapper.toStock(this.get(stockDTO.getId()));
-        stock.setQuantity(stockDTO.getQuantity());
+    public void update(StockUpdateDTO stockUpdateDTO){
+        Stock stock = stockMapper.toStock(this.get(stockUpdateDTO.getProduct()));
+        stock.setQuantity(stockUpdateDTO.getQuantity());
         stockRepository.save(stock);
     }
 

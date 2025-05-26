@@ -1,11 +1,15 @@
 package br.erp.myerp.backend.client.dto;
 
 import jakarta.validation.constraints.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ClientUpdateDTO {
 
     @NotBlank(message = "First name can not be blank")
