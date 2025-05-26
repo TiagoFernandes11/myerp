@@ -16,7 +16,8 @@ public class StockMovement {
     private Long id;
 
     @ManyToOne(optional = false)
-    private Product product;
+    @JoinColumn(nullable = false)
+    private Stock stock;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -26,5 +27,18 @@ public class StockMovement {
 
     private String description;
 
-    private LocalDateTime timestamp = LocalDateTime.now();
+    private LocalDateTime timestamp;
+
+    public StockMovement() {
+        this.timestamp = LocalDateTime.now();
+    }
+
+    public StockMovement(Long id, Stock stock, MovementType type, Integer quantity, String description) {
+        this.id = id;
+        this.stock = stock;
+        this.type = type;
+        this.quantity = quantity;
+        this.description = description;
+        this.timestamp = LocalDateTime.now();
+    }
 }

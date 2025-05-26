@@ -16,4 +16,8 @@ public class Stock {
     private Product product;
 
     private int quantity;
+
+    public void addQuantity(int quantity){
+        this.quantity += quantity;
+    }
 }

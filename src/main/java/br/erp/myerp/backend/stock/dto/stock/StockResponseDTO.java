@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class StockDTO {
+public class StockResponseDTO {
 
     private Long id;
 

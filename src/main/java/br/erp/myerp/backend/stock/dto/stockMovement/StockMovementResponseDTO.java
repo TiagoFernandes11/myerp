@@ -1,4 +1,4 @@
-package br.erp.myerp.backend.stock.dto;
+package br.erp.myerp.backend.stock.dto.stockMovement;
 
 import br.erp.myerp.backend.product.entity.Product;
 import br.erp.myerp.backend.stock.enums.MovementType;
@@ -14,7 +14,10 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class StockMovementDTO {
+public class StockMovementResponseDTO {
+
+    @NotNull(message = "ID can not be null")
+    private Long id;
 
     @NotNull(message = "product can not be null")
     private Product product;

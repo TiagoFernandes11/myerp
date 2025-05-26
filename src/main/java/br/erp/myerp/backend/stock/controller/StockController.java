@@ -1,13 +1,16 @@
 package br.erp.myerp.backend.stock.controller;
 
 import br.erp.myerp.backend.response.Response;
-import br.erp.myerp.backend.stock.dto.stock.StockDTO;
+import br.erp.myerp.backend.stock.dto.stock.StockCreateDTO;
+import br.erp.myerp.backend.stock.dto.stock.StockResponseDTO;
 import br.erp.myerp.backend.stock.dto.stock.StockUpdateDTO;
 import br.erp.myerp.backend.stock.service.StockService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.w3c.dom.html.HTMLParagraphElement;
 
 import java.util.List;
 
@@ -19,30 +22,36 @@ public class StockController {
     private StockService stockService;
 
     @GetMapping
-    public ResponseEntity<List<StockDTO>> findAll(){
+    public ResponseEntity<List<StockResponseDTO>> findAll(){
         return ResponseEntity.status(HttpStatus.OK).body(stockService.getAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<StockDTO> getStock(@PathVariable Long id){
+    public ResponseEntity<StockResponseDTO> getStock(@PathVariable Long id){
         return ResponseEntity.status(HttpStatus.OK).body(stockService.get(id));
     }
 
     @PostMapping
-    public ResponseEntity<Response> createStock(@RequestBody StockDTO stockDTO){
-        stockService.create(stockDTO);
+    public ResponseEntity<Response> createStock(@RequestBody @Valid StockCreateDTO stockCreateDTO){
+        stockService.create(stockCreateDTO);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(
-                        new Response(HttpStatus.CREATED, "Stock for product: " + stockDTO.getProduct().getName() + " was successfully created")
+                        new Response(HttpStatus.CREATED, "Stock for product: " + stockCreateDTO.getProduct().getName() + " was successfully created")
                 );
     }
 
     @PutMapping
-    public ResponseEntity<Response> updateStock(@RequestBody StockUpdateDTO stockUpdateDTO){
+    public ResponseEntity<Response> updateStock(@RequestBody @Valid StockUpdateDTO stockUpdateDTO){
         stockService.update(stockUpdateDTO);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(
                         new Response(HttpStatus.OK, "Stock for product: " + stockUpdateDTO.getProduct().getName() + " was successfully created")
                 );
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Response> deleteStock(@PathVariable Long id){
+        stockService.delete(id);
+        return ResponseEntity.status(HttpStatus.OK).body(new Response(HttpStatus.OK, "Stock with id: " + id + " was successfully deleted"));
     }
 }
