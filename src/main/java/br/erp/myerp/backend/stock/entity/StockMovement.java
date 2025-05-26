@@ -1,9 +1,8 @@
 package br.erp.myerp.backend.stock.entity;
 
 import br.erp.myerp.backend.product.entity.Product;
-import br.erp.myerp.backend.stock.enums.MovemenType;
+import br.erp.myerp.backend.stock.enums.MovementType;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Positive;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -21,9 +20,8 @@ public class StockMovement {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private MovemenType type;
+    private MovementType type;
 
-    @Positive
     private Integer quantity;
 
     private String description;

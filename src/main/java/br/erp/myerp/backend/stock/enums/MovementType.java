@@ -1,5 +1,5 @@
 package br.erp.myerp.backend.stock.enums;
 
-public enum MovemenType {
+public enum MovementType {
     IN, OUT;
 }

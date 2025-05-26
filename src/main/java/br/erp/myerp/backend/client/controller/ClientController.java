@@ -11,12 +11,19 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/client")
 public class ClientController {
 
     @Autowired
     private ClientService clientService;
+
+    @GetMapping
+    public ResponseEntity<List<ClientResponseDTO>> getAll(){
+        return ResponseEntity.status(HttpStatus.OK).body(clientService.findAll());
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<ClientResponseDTO> getClient(@PathVariable Long id){

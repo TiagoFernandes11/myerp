@@ -10,6 +10,8 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ClientService {
 
@@ -18,6 +20,10 @@ public class ClientService {
 
     @Autowired
     private ClientMapper clientMapper;
+
+    public List<ClientResponseDTO> findAll(){
+        return clientRepository.findAllResponseDTO();
+    }
 
     public ClientResponseDTO find(Long id){
         return clientMapper.toDto(clientRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Client with id: " + id + " was not founded")));
