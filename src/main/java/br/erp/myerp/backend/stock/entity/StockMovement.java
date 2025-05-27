@@ -23,8 +23,10 @@ public class StockMovement {
     @Column(nullable = false)
     private MovementType type;
 
+    @Column(nullable = false)
     private Integer quantity;
 
+    @Column(nullable = false)
     private String description;
 
     private LocalDateTime timestamp;

@@ -1,6 +1,6 @@
 package br.erp.myerp.backend.stock.dto.stockMovement;
 
-import br.erp.myerp.backend.product.entity.Product;
+import br.erp.myerp.backend.stock.entity.Stock;
 import br.erp.myerp.backend.stock.enums.MovementType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -8,10 +8,10 @@ import jakarta.validation.constraints.Positive;
 import lombok.Data;
 
 @Data
-public class StockMoventCreateDTO {
+public class StockMovementCreateDTO {
 
     @NotNull(message = "product can not be null")
-    private Product product;
+    private Stock stock;
 
     @NotNull(message = "Movement type can not be null")
     private MovementType type;
