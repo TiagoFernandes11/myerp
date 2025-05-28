@@ -8,7 +8,11 @@ import br.erp.myerp.backend.cruds.product.mapper.ProductMapper;
 import br.erp.myerp.backend.cruds.product.repository.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ProductService {
@@ -18,6 +22,12 @@ public class ProductService {
 
     @Autowired
     private ProductMapper productMapper;
+
+    public List<ProductResponseDTO> findAll(){
+        return productRepository.findAllProducts().orElseThrow(
+                () -> new EntityNotFoundException("No product was founded")
+        );
+    }
 
     public ProductResponseDTO find(Long id){
         return productMapper.toResponseDTO(

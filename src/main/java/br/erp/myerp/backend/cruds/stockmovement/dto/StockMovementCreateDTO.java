@@ -11,7 +11,7 @@ import lombok.Data;
 public class StockMovementCreateDTO {
 
     @NotNull(message = "product can not be null")
-    private Stock stock;
+    private Long stockId;
 
     @NotNull(message = "Movement type can not be null")
     private MovementType type;

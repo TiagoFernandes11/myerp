@@ -13,7 +13,6 @@ public class StockUpdateDTO {
     private Product product;
 
     @NotNull(message = "Quantity can not be null")
-    @NotBlank(message = "Quantity can not be blank")
     @Positive(message = "Quantity must be greater or equal than 0")
     private int quantity;
 }

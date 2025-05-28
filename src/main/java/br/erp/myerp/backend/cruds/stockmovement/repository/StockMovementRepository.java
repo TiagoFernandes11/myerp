@@ -13,8 +13,8 @@ import java.util.Optional;
 @Repository
 public interface StockMovementRepository extends JpaRepository<StockMovement, Long> {
 
-    @Query("SELECT new br.erp.myerp.backend.cruds.stockmovement.dto.StockMovementResponseDTO(s.id, s.stock, s.type, s.quantity, s.description, s.timestamp) FROM StockMovement s")
+    @Query("SELECT new br.erp.myerp.backend.cruds.stockmovement.dto.StockMovementResponseDTO(s.id, s.stockId, s.type, s.quantity, s.description, s.timestamp) FROM StockMovement s")
     List<StockMovementResponseDTO> findAllDto();
 
-    Optional<StockMovement> findByStock(Stock stock);
+    Optional<StockMovement> findByStockId(Long stockId);
 }

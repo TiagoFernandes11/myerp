@@ -13,8 +13,6 @@ import java.text.NumberFormat;
 import java.util.Locale;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class ProductResponseDTO {
 
     private Long id;
@@ -24,16 +22,19 @@ public class ProductResponseDTO {
 
     private String name;
 
-    private String formatedPrice;
+    private String price;
+
+    public ProductResponseDTO() {
+    }
 
     public ProductResponseDTO(Long id, String sku, String name, BigDecimal price) {
         this.id = id;
         this.sku = sku;
         this.name = name;
-        this.formatedPrice = NumberFormat.getCurrencyInstance(new Locale("pt", "BR")).format(price);;
+        this.price = NumberFormat.getCurrencyInstance(new Locale("pt", "BR")).format(price);;
     }
 
     public void setFormatedPrice(BigDecimal price) {
-        this.formatedPrice = NumberFormat.getCurrencyInstance(new Locale("pt", "BR")).format(price);;
+        this.price = NumberFormat.getCurrencyInstance(new Locale("pt", "BR")).format(price);;
     }
 }

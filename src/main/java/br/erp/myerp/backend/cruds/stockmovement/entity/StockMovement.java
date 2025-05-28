@@ -15,9 +15,7 @@ public class StockMovement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(nullable = false)
-    private Stock stock;
+    private Long stockId;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -35,9 +33,9 @@ public class StockMovement {
         this.timestamp = LocalDateTime.now();
     }
 
-    public StockMovement(Long id, Stock stock, MovementType type, Integer quantity, String description) {
+    public StockMovement(Long id, Long stockId, MovementType type, Integer quantity, String description) {
         this.id = id;
-        this.stock = stock;
+        this.stockId = stockId;
         this.type = type;
         this.quantity = quantity;
         this.description = description;

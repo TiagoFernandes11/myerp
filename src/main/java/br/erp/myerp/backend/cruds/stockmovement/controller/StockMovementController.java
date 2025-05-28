@@ -18,6 +18,6 @@ public class StockMovementController {
 
     @PostMapping
     public void create(@RequestBody @Valid StockMovementCreateDTO stockMovement){
-
+        stockMovementService.create(stockMovement);
     }
 }

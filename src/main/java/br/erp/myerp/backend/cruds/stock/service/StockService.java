@@ -1,6 +1,6 @@
 package br.erp.myerp.backend.cruds.stock.service;
 
-import br.erp.myerp.backend.cruds.product.entity.Product;
+import br.erp.myerp.backend.cruds.stock.client.product.ProductClient;
 import br.erp.myerp.backend.cruds.stock.dto.StockCreateDTO;
 import br.erp.myerp.backend.cruds.stock.dto.StockResponseDTO;
 import br.erp.myerp.backend.cruds.stock.dto.StockUpdateDTO;
@@ -9,6 +9,7 @@ import br.erp.myerp.backend.cruds.stock.mapper.StockMapper;
 import br.erp.myerp.backend.cruds.stock.repository.StockRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +23,10 @@ public class StockService {
     @Autowired
     private StockMapper stockMapper;
 
+    @Autowired
+    @Qualifier("productClientForStock")
+    private ProductClient productClient;
+
     public List<StockResponseDTO> getAll() {
         return stockRepository.findAllDto();
     }
@@ -33,10 +38,9 @@ public class StockService {
                 ));
     }
 
-    public StockResponseDTO get(Product product) {
-        return stockMapper.toStockDTO(
-                stockRepository.findByProduct(product).orElseThrow(
-                        () -> new EntityNotFoundException("Stock not founded for product:  " + product.getName())));
+    public StockResponseDTO getByProductId(Long productId) {
+        return stockRepository.findByProductId(productId).orElseThrow(
+                        () -> new EntityNotFoundException("Stock not founded for product:  " + productId));
     }
 
     public void create(StockCreateDTO stockCreateDTO) {
@@ -45,7 +49,7 @@ public class StockService {
     }
 
     public void update(StockUpdateDTO stockUpdateDTO){
-        Stock stock = stockMapper.toStock(this.get(stockUpdateDTO.getProduct()));
+        Stock stock = stockMapper.toStock(this.getByProductId(stockUpdateDTO.getProduct().getId()));
         stock.setQuantity(stockUpdateDTO.getQuantity());
         stockRepository.save(stock);
     }

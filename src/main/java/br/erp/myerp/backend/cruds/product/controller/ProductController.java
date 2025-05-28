@@ -11,12 +11,20 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/product")
 public class ProductController {
 
     @Autowired
     private ProductService productService;
+
+    @GetMapping
+    public ResponseEntity<List<ProductResponseDTO>> findAll(){
+        List<ProductResponseDTO> products = productService.findAll();
+        return ResponseEntity.status(HttpStatus.OK).body(products);
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<ProductResponseDTO> findProduct(@PathVariable Long id){

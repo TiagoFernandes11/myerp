@@ -20,7 +20,7 @@ public class StockMovementResponseDTO {
     private Long id;
 
     @NotNull(message = "product can not be null")
-    private Stock stock;
+    private Long stockId;
 
     @NotNull(message = "Movement type can not be null")
     private MovementType type;

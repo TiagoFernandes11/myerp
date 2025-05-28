@@ -1,5 +1,6 @@
 package br.erp.myerp.backend.cruds.stock.controller;
 
+import br.erp.myerp.backend.cruds.stock.client.product.ProductClient;
 import br.erp.myerp.backend.response.Response;
 import br.erp.myerp.backend.cruds.stock.dto.StockCreateDTO;
 import br.erp.myerp.backend.cruds.stock.dto.StockResponseDTO;
@@ -20,6 +21,9 @@ public class StockController {
     @Autowired
     private StockService stockService;
 
+    @Autowired
+    private ProductClient productClient;
+
     @GetMapping
     public ResponseEntity<List<StockResponseDTO>> findAll(){
         return ResponseEntity.status(HttpStatus.OK).body(stockService.getAll());
@@ -28,6 +32,11 @@ public class StockController {
     @GetMapping("/{id}")
     public ResponseEntity<StockResponseDTO> getStock(@PathVariable Long id){
         return ResponseEntity.status(HttpStatus.OK).body(stockService.get(id));
+    }
+
+    @GetMapping("/by-product/{id}")
+    public ResponseEntity<StockResponseDTO> getStockByProduct(@PathVariable Long idProduct){
+        return ResponseEntity.status(HttpStatus.OK).body(stockService.get(idProduct));
     }
 
     @PostMapping

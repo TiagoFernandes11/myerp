@@ -1,18 +1,19 @@
 package br.erp.myerp.backend.cruds.stockmovement.service;
 
-import br.erp.myerp.backend.cruds.product.entity.Product;
-import br.erp.myerp.backend.cruds.stock.service.StockService;
-import br.erp.myerp.backend.cruds.stockmovement.client.ProductClient;
-import br.erp.myerp.backend.cruds.stockmovement.dto.StockMovementResponseDTO;
-import br.erp.myerp.backend.cruds.stockmovement.dto.StockMovementCreateDTO;
 import br.erp.myerp.backend.cruds.stock.entity.Stock;
+import br.erp.myerp.backend.cruds.stock.mapper.StockMapper;
+import br.erp.myerp.backend.cruds.stockmovement.client.product.ProductClient;
+import br.erp.myerp.backend.cruds.stockmovement.client.stock.StockClient;
+import br.erp.myerp.backend.cruds.stockmovement.dto.product.ProductDTO;
+import br.erp.myerp.backend.cruds.stockmovement.dto.StockMovementCreateDTO;
+import br.erp.myerp.backend.cruds.stockmovement.dto.StockMovementResponseDTO;
 import br.erp.myerp.backend.cruds.stockmovement.entity.StockMovement;
 import br.erp.myerp.backend.cruds.stockmovement.enums.MovementType;
-import br.erp.myerp.backend.cruds.stock.mapper.StockMapper;
 import br.erp.myerp.backend.cruds.stockmovement.mapper.StockMovementMapper;
 import br.erp.myerp.backend.cruds.stockmovement.repository.StockMovementRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -28,10 +29,11 @@ public class StockMovementService {
     private StockMovementMapper stockMovementMapper;
 
     @Autowired
-    private StockService stockService;
+    @Qualifier("productClientForStockMovement")
+    private ProductClient productClient;
 
     @Autowired
-    private ProductClient productClient;
+    private StockClient stockClient;
 
     @Autowired
     private StockMapper stockMapper;
@@ -47,17 +49,16 @@ public class StockMovementService {
                 );
     }
 
-    public StockMovementResponseDTO findStockMovement(Product product){
-        Stock stock = stockMapper.toStock(stockService.get(product));
-        StockMovement stockMovement = stockMovementRepository.findByStock(stock)
+    public StockMovementResponseDTO findStockMovementByProduct(Long productId){
+        ProductDTO product = productClient.getProduct(productId);
+        Stock stock = stockClient.getByProductId(productId);
+        StockMovement stockMovement = stockMovementRepository.findByStockId(stock.getId())
                 .orElseThrow(() -> new EntityNotFoundException("Stock movement not found for product: " + product.getName()));
         return stockMovementMapper.toStockMovementDTO(stockMovement);
     }
 
     public void create(StockMovementCreateDTO stockMovementCreateDTO){
-        Product product = productClient.getProduct(stockMovementCreateDTO.getStock().getProduct().getId());
-
-        Stock stock = stockMapper.toStock(stockService.get(product));
+        Stock stock = stockClient.getById(stockMovementCreateDTO.getStockId());
 
         if (stockMovementCreateDTO.getType() == MovementType.OUT) {
             if (stock.getQuantity() < stockMovementCreateDTO.getQuantity()) {
@@ -68,11 +69,12 @@ public class StockMovementService {
             stock.addQuantity(stockMovementCreateDTO.getQuantity());
         }
 
-        stockService.update(stockMapper.toStockUpdate(stock));
+        stockClient.update(stockMapper.toStockUpdate(stock));
 
         StockMovement stockMovement = new StockMovement();
-        stockMovement.setStock(stock);
+        stockMovement.setStockId(stock.getId());
         stockMovement.setType(stockMovementCreateDTO.getType());
+        stockMovement.setQuantity(stockMovementCreateDTO.getQuantity());
         stockMovement.setDescription(stockMovementCreateDTO.getDescription());
         stockMovement.setTimestamp(LocalDateTime.now());
 
