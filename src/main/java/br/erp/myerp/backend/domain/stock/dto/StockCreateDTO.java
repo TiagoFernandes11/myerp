@@ -1,0 +1,17 @@
+package br.erp.myerp.backend.domain.stock.dto;
+
+import br.erp.myerp.backend.domain.product.entity.Product;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import lombok.Data;
+
+@Data
+public class StockCreateDTO {
+
+    @NotNull(message = "Product id can not be null")
+    private Long productId;
+
+    @NotNull(message = "Quantity can not be null")
+    @Positive(message = "Quantity must be greater or equal than 0")
+    private int quantity;
+}
