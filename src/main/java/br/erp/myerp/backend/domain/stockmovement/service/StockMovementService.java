@@ -73,15 +73,14 @@ public class StockMovementService {
         stockClient.update(stockMapper.toStockUpdateDTO(stock));
 
         StockMovement stockMovement = stockMovementMapper.toStockMovement(stockMovementCreateDTO);
+        stockMovement.setStockId(stock.getId());
         stockMovement.setTimestamp(LocalDateTime.now());
 
         stockMovementRepository.save(stockMovement);
     }
 
     public void update(StockMovementUpdateDTO stockMovementUpdateDTO){
-        StockMovement stockMovement = stockMovementRepository
-                .findById(stockMovementUpdateDTO.getId())
-                .orElseThrow(() -> new EntityNotFoundException("StockMovement not founded for id: #" + stockMovementUpdateDTO.getId()));
+        StockMovement stockMovement = getStockMovementById(stockMovementUpdateDTO.getId());
         StockDTO stock = stockClient.getById(stockMovement.getStockId());
 
         int diff =  stockMovement.getQuantity() - stockMovementUpdateDTO.getQuantity();
@@ -89,10 +88,25 @@ public class StockMovementService {
         if(diff + stock.getQuantity() < 0){
             throw new IllegalArgumentException("The stock does not have sufficient quantity");
         } else {
-            stock.setQuantity(stock.getQuantity() + diff);
+            stock.addQuantity(diff);
             stockClient.update(stockMapper.toStockUpdateDTO(stock));
             stockMovement = stockMovementMapper.toStockMovement(stockMovementUpdateDTO);
             stockMovementRepository.save(stockMovement);
         }
+    }
+
+    public void delete(Long id){
+        StockMovement stockMovement = getStockMovementById(id);
+        StockDTO stock = stockClient.getById(stockMovement.getStockId());
+
+        stock.addQuantity(stock.getQuantity() * -1);
+        stockClient.update(stockMapper.toStockUpdateDTO(stock));
+        stockMovementRepository.save(stockMovement);
+    }
+
+    private StockMovement getStockMovementById(Long id){
+        return stockMovementRepository
+                .findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("StockMovement not founded for id: #" + id));
     }
 }

@@ -22,7 +22,7 @@ public class StockClientImpl implements StockClient{
 
     @Override
     public StockDTO getByProductId(Long productId) {
-        return restTemplate.getForObject(BASE_URL, StockDTO.class);
+        return restTemplate.getForObject(BASE_URL + "/{productId}", StockDTO.class, productId);
     }
 
     @Override
