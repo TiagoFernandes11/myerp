@@ -99,9 +99,13 @@ public class StockMovementService {
         StockMovement stockMovement = getStockMovementById(id);
         StockDTO stock = stockClient.getById(stockMovement.getStockId());
 
-        stock.addQuantity(stock.getQuantity() * -1);
+        if(stockMovement.getType() == MovementType.IN){
+            stock.addQuantity(stockMovement.getQuantity() * -1);
+        }else {
+            stock.addQuantity(stockMovement.getQuantity());
+        }
         stockClient.update(stockMapper.toStockUpdateDTO(stock));
-        stockMovementRepository.save(stockMovement);
+        stockMovementRepository.delete(stockMovement);
     }
 
     private StockMovement getStockMovementById(Long id){
