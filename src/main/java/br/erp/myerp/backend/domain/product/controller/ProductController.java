@@ -4,7 +4,7 @@ import br.erp.myerp.backend.domain.product.dto.ProductCreateDTO;
 import br.erp.myerp.backend.domain.product.dto.ProductResponseDTO;
 import br.erp.myerp.backend.domain.product.dto.ProductUpdateDTO;
 import br.erp.myerp.backend.domain.product.service.ProductService;
-import br.erp.myerp.backend.response.Response;
+import br.erp.myerp.backend.common.response.Response;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -1,7 +1,7 @@
 package br.erp.myerp.backend.domain.stock.controller;
 
 import br.erp.myerp.backend.domain.stock.client.product.ProductClient;
-import br.erp.myerp.backend.response.Response;
+import br.erp.myerp.backend.common.response.Response;
 import br.erp.myerp.backend.domain.stock.dto.StockCreateDTO;
 import br.erp.myerp.backend.domain.stock.dto.StockResponseDTO;
 import br.erp.myerp.backend.domain.stock.dto.StockUpdateDTO;

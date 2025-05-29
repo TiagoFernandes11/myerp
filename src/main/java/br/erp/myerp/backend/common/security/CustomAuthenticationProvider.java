@@ -1,4 +1,4 @@
-package br.erp.myerp.backend.security;
+package br.erp.myerp.backend.common.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;

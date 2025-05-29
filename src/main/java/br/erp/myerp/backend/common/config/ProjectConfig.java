@@ -1,4 +1,4 @@
-package br.erp.myerp.backend.config;
+package br.erp.myerp.backend.common.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

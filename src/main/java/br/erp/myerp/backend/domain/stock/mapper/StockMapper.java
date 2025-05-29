@@ -5,6 +5,7 @@ import br.erp.myerp.backend.domain.stock.dto.StockResponseDTO;
 import br.erp.myerp.backend.domain.stock.dto.StockUpdateDTO;
 import br.erp.myerp.backend.domain.stock.entity.Stock;
 import org.mapstruct.Mapper;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 @Mapper(componentModel = "spring")
 public interface StockMapper {

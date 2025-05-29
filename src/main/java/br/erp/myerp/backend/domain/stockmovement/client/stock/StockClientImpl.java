@@ -2,6 +2,7 @@ package br.erp.myerp.backend.domain.stockmovement.client.stock;
 
 import br.erp.myerp.backend.domain.stock.dto.StockUpdateDTO;
 import br.erp.myerp.backend.domain.stock.entity.Stock;
+import br.erp.myerp.backend.domain.stockmovement.dto.stock.StockDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -15,13 +16,13 @@ public class StockClientImpl implements StockClient{
     private RestTemplate restTemplate;
 
     @Override
-    public Stock getById(Long stockId) {
-        return restTemplate.getForObject(BASE_URL + "/{id}", Stock.class, stockId);
+    public StockDTO getById(Long stockId) {
+        return restTemplate.getForObject(BASE_URL + "/{id}", StockDTO.class, stockId);
     }
 
     @Override
-    public Stock getByProductId(Long productId) {
-        return restTemplate.getForObject(BASE_URL, Stock.class);
+    public StockDTO getByProductId(Long productId) {
+        return restTemplate.getForObject(BASE_URL, StockDTO.class);
     }
 
     @Override

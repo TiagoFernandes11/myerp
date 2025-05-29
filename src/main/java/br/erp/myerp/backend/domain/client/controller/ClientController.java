@@ -4,7 +4,7 @@ import br.erp.myerp.backend.domain.client.dto.ClientCreateDTO;
 import br.erp.myerp.backend.domain.client.dto.ClientResponseDTO;
 import br.erp.myerp.backend.domain.client.dto.ClientUpdateDTO;
 import br.erp.myerp.backend.domain.client.service.ClientService;
-import br.erp.myerp.backend.response.Response;
+import br.erp.myerp.backend.common.response.Response;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

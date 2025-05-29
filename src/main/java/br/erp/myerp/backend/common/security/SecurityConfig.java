@@ -1,4 +1,4 @@
-package br.erp.myerp.backend.security;
+package br.erp.myerp.backend.common.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

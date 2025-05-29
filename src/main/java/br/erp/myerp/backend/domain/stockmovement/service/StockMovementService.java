@@ -1,15 +1,16 @@
 package br.erp.myerp.backend.domain.stockmovement.service;
 
-import br.erp.myerp.backend.domain.stock.entity.Stock;
-import br.erp.myerp.backend.domain.stock.mapper.StockMapper;
 import br.erp.myerp.backend.domain.stockmovement.client.product.ProductClient;
 import br.erp.myerp.backend.domain.stockmovement.client.stock.StockClient;
-import br.erp.myerp.backend.domain.stockmovement.dto.product.ProductDTO;
 import br.erp.myerp.backend.domain.stockmovement.dto.StockMovementCreateDTO;
 import br.erp.myerp.backend.domain.stockmovement.dto.StockMovementResponseDTO;
+import br.erp.myerp.backend.domain.stockmovement.dto.StockMovementUpdateDTO;
+import br.erp.myerp.backend.domain.stockmovement.dto.product.ProductDTO;
+import br.erp.myerp.backend.domain.stockmovement.dto.stock.StockDTO;
 import br.erp.myerp.backend.domain.stockmovement.entity.StockMovement;
 import br.erp.myerp.backend.domain.stockmovement.enums.MovementType;
 import br.erp.myerp.backend.domain.stockmovement.mapper.StockMovementMapper;
+import br.erp.myerp.backend.domain.stockmovement.mapper.StockMovementStockMapper;
 import br.erp.myerp.backend.domain.stockmovement.repository.StockMovementRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,7 @@ public class StockMovementService {
     private StockClient stockClient;
 
     @Autowired
-    private StockMapper stockMapper;
+    private StockMovementStockMapper stockMapper;
 
     public List<StockMovementResponseDTO> findAll(){
         return stockMovementRepository.findAllDto();
@@ -51,14 +52,14 @@ public class StockMovementService {
 
     public StockMovementResponseDTO findStockMovementByProduct(Long productId){
         ProductDTO product = productClient.getProduct(productId);
-        Stock stock = stockClient.getByProductId(productId);
+        StockDTO stock = stockClient.getByProductId(productId);
         StockMovement stockMovement = stockMovementRepository.findByStockId(stock.getId())
                 .orElseThrow(() -> new EntityNotFoundException("Stock movement not found for product: " + product.getName()));
         return stockMovementMapper.toStockMovementDTO(stockMovement);
     }
 
     public void create(StockMovementCreateDTO stockMovementCreateDTO){
-        Stock stock = stockClient.getById(stockMovementCreateDTO.getStockId());
+        StockDTO stock = stockClient.getById(stockMovementCreateDTO.getStockId());
 
         if (stockMovementCreateDTO.getType() == MovementType.OUT) {
             if (stock.getQuantity() < stockMovementCreateDTO.getQuantity()) {
@@ -69,15 +70,29 @@ public class StockMovementService {
             stock.addQuantity(stockMovementCreateDTO.getQuantity());
         }
 
-        stockClient.update(stockMapper.toStockUpdate(stock));
+        stockClient.update(stockMapper.toStockUpdateDTO(stock));
 
-        StockMovement stockMovement = new StockMovement();
-        stockMovement.setStockId(stock.getId());
-        stockMovement.setType(stockMovementCreateDTO.getType());
-        stockMovement.setQuantity(stockMovementCreateDTO.getQuantity());
-        stockMovement.setDescription(stockMovementCreateDTO.getDescription());
+        StockMovement stockMovement = stockMovementMapper.toStockMovement(stockMovementCreateDTO);
         stockMovement.setTimestamp(LocalDateTime.now());
 
         stockMovementRepository.save(stockMovement);
+    }
+
+    public void update(StockMovementUpdateDTO stockMovementUpdateDTO){
+        StockMovement stockMovement = stockMovementRepository
+                .findById(stockMovementUpdateDTO.getId())
+                .orElseThrow(() -> new EntityNotFoundException("StockMovement not founded for id: #" + stockMovementUpdateDTO.getId()));
+        StockDTO stock = stockClient.getById(stockMovement.getStockId());
+
+        int diff =  stockMovement.getQuantity() - stockMovementUpdateDTO.getQuantity();
+
+        if(diff + stock.getQuantity() < 0){
+            throw new IllegalArgumentException("The stock does not have sufficient quantity");
+        } else {
+            stock.setQuantity(stock.getQuantity() + diff);
+            stockClient.update(stockMapper.toStockUpdateDTO(stock));
+            stockMovement = stockMovementMapper.toStockMovement(stockMovementUpdateDTO);
+            stockMovementRepository.save(stockMovement);
+        }
     }
 }

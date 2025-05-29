@@ -1,4 +1,4 @@
-package br.erp.myerp.backend.response;
+package br.erp.myerp.backend.common.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

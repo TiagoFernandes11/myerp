@@ -1,4 +1,4 @@
-package br.erp.myerp.backend.exceptions;
+package br.erp.myerp.backend.common.exceptions;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;

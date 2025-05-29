@@ -2,12 +2,13 @@ package br.erp.myerp.backend.domain.stockmovement.client.stock;
 
 import br.erp.myerp.backend.domain.stock.dto.StockUpdateDTO;
 import br.erp.myerp.backend.domain.stock.entity.Stock;
+import br.erp.myerp.backend.domain.stockmovement.dto.stock.StockDTO;
 
 public interface StockClient {
 
-    Stock getByProductId(Long ProductId);
+    StockDTO getByProductId(Long ProductId);
 
-    Stock getById(Long stockId);
+    StockDTO getById(Long stockId);
 
     void update(StockUpdateDTO stockUpdateDTO);
 }
