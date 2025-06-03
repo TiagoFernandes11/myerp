@@ -24,7 +24,7 @@ public class AdminService {
 
     public AdminDTO get(String username){
         return adminMapper.toAdminDTO(adminRepository.findByUsername(username)
-                .orElseThrow(() -> new EntityNotFoundException("Admin not found for username: " + username)));
+                .orElseThrow(() -> new EntityNotFoundException("Invalid username or password")));
     }
 
     public void create(AdminDTO adminDTO){

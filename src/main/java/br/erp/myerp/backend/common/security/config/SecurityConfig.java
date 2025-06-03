@@ -1,12 +1,11 @@
 package br.erp.myerp.backend.common.security.config;
 
 import br.erp.myerp.backend.common.filter.CsrfCookieFilter;
+import br.erp.myerp.backend.common.filter.JWTTokenValidationFilter;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -21,6 +20,7 @@ import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 
+import java.util.Arrays;
 import java.util.Collections;
 
 @EnableWebSecurity
@@ -34,10 +34,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain customSecurityFilterChain(HttpSecurity http) throws Exception {
-        CsrfTokenRequestAttributeHandler csrfTokenRequestAttributeHandler = new CsrfTokenRequestAttributeHandler();
-
-        http.securityContext(security -> security.requireExplicitSave(false));
-        http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS));
+        http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         http.cors(corsConfig -> corsConfig.configurationSource(new CorsConfigurationSource() {
             @Override
@@ -46,16 +43,22 @@ public class SecurityConfig {
                 corsConfiguration.addAllowedOrigin("http://localhost:3000");
                 corsConfiguration.setAllowedMethods(Collections.singletonList("*"));
                 corsConfiguration.setAllowedHeaders(Collections.singletonList("*"));
+                corsConfiguration.setExposedHeaders(Arrays.asList("Authorization"));
                 corsConfiguration.setAllowCredentials(true);
                 corsConfiguration.setMaxAge(3600L);
                 return corsConfiguration;
             }
         }));
+        CsrfTokenRequestAttributeHandler csrfTokenRequestAttributeHandler = new CsrfTokenRequestAttributeHandler();
         http.csrf(csrf -> csrf.csrfTokenRequestHandler(csrfTokenRequestAttributeHandler)
-                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()));
+                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                .ignoringRequestMatchers("/api/login"));
         http.addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class);
+        http.addFilterBefore(new JWTTokenValidationFilter(), BasicAuthenticationFilter.class);
         http.authorizeHttpRequests((request) -> {
-            request.requestMatchers("/api/**").permitAll();
+            request.requestMatchers("/api/login").permitAll();
+            request.requestMatchers("/api/admin/get/**").permitAll();
+            request.requestMatchers("/api/**").authenticated();
         });
         http.formLogin(AbstractHttpConfigurer::disable);
         return http.build();

@@ -17,7 +17,7 @@ public class AdminController {
     @Autowired
     private AdminService adminService;
 
-    @GetMapping("/{username}")
+    @GetMapping("/get/{username}")
     public ResponseEntity<AdminDTO> getAdmin(@PathVariable String username){
         return ResponseEntity.status(HttpStatus.OK).body(adminService.get(username));
     }

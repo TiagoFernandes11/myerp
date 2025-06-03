@@ -1,4 +1,4 @@
-package br.erp.myerp.backend.common.security.login.dto;
+package br.erp.myerp.backend.domain.stock.dto.auth;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

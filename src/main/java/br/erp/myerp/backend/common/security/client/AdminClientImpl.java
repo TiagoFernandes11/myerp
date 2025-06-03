@@ -13,6 +13,6 @@ public class AdminClientImpl implements AdminClient{
     private RestTemplate restTemplate;
 
     public AdminDTO getAdmin(String username){
-        return restTemplate.getForObject("http://localhost:8080/api/admin/{username}", AdminDTO.class, username);
+        return restTemplate.getForObject("http://localhost:8080/api/admin/get/{username}", AdminDTO.class, username);
     }
 }

@@ -1,7 +1,12 @@
 package br.erp.myerp.backend.domain.stockmovement.client.product;
 
+import br.erp.myerp.backend.domain.stock.security.InternalTokenProviderForStockMovement;
 import br.erp.myerp.backend.domain.stockmovement.dto.product.ProductDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -11,7 +16,25 @@ public class ProductClientImpl implements ProductClient{
     @Autowired
     private RestTemplate restTemplate;
 
+    @Autowired
+    private InternalTokenProviderForStockMovement tokenProvider;
+
     public ProductDTO getProduct(Long id){
-        return restTemplate.getForObject("http://localhost:8080/api/product/{id}", ProductDTO.class, id);
+        String token = tokenProvider.getToken();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", token);
+
+        HttpEntity<Void> entity = new HttpEntity<>(headers);
+
+        ResponseEntity<ProductDTO> response = restTemplate.exchange(
+                "http://localhost:8080/api/product/{id}",
+                HttpMethod.GET,
+                entity,
+                ProductDTO.class,
+                id
+        );
+
+        return response.getBody();
     }
 }
