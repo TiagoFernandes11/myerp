@@ -1,4 +1,4 @@
-package br.erp.myerp.backend.common.filter;
+package br.erp.myerp.backend.common.security.filter;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

@@ -4,7 +4,7 @@ import br.erp.myerp.backend.domain.client.dto.ClientCreateDTO;
 import br.erp.myerp.backend.domain.client.dto.ClientResponseDTO;
 import br.erp.myerp.backend.domain.client.dto.ClientUpdateDTO;
 import br.erp.myerp.backend.domain.client.service.ClientService;
-import br.erp.myerp.backend.common.response.Response;
+import br.erp.myerp.backend.common.security.response.Response;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,12 +17,14 @@ import java.util.List;
 @RequestMapping("/api/client")
 public class ClientController {
 
+    private final int PAGE_SIZE = 20;
+
     @Autowired
     private ClientService clientService;
 
     @GetMapping
-    public ResponseEntity<List<ClientResponseDTO>> getAll(){
-        return ResponseEntity.status(HttpStatus.OK).body(clientService.findAll());
+    public ResponseEntity<List<ClientResponseDTO>> getAll(@RequestParam(required = false, defaultValue = "0") int pageNum){
+        return ResponseEntity.status(HttpStatus.OK).body(clientService.findAll(pageNum, PAGE_SIZE).getContent());
     }
 
     @GetMapping("/{id}")
@@ -38,20 +40,20 @@ public class ClientController {
     }
 
     @PostMapping()
-    public ResponseEntity<Response> createClient(@RequestBody @Valid ClientCreateDTO clientCreateDTO){
+    public ResponseEntity<String> createClient(@RequestBody @Valid ClientCreateDTO clientCreateDTO){
         clientService.create(clientCreateDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new Response(HttpStatus.CREATED, "Client successfully created"));
+        return ResponseEntity.status(HttpStatus.CREATED).body("Client successfully created");
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Response> updateClient(@PathVariable Long id, @RequestBody @Valid ClientUpdateDTO clientUpdateDTO){
+    public ResponseEntity<String> updateClient(@PathVariable Long id, @RequestBody @Valid ClientUpdateDTO clientUpdateDTO){
         clientService.update(id, clientUpdateDTO);
-        return ResponseEntity.status(HttpStatus.OK).body(new Response(HttpStatus.OK, "Client was successfully updated"));
+        return ResponseEntity.status(HttpStatus.OK).body("Client was successfully updated");
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Response> deleteClient(@PathVariable Long id){
+    public ResponseEntity<String> deleteClient(@PathVariable Long id){
         clientService.delete(id);
-        return ResponseEntity.status(HttpStatus.OK).body(new Response(HttpStatus.OK, "Client id: " + id + " was successfully deleted"));
+        return ResponseEntity.status(HttpStatus.OK).body("Client id: " + id + " was successfully deleted");
     }
 }

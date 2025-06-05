@@ -8,6 +8,9 @@ import br.erp.myerp.backend.domain.client.mapper.ClientMapper;
 import br.erp.myerp.backend.domain.client.repository.ClientRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,8 +24,8 @@ public class ClientService {
     @Autowired
     private ClientMapper clientMapper;
 
-    public List<ClientResponseDTO> findAll(){
-        return clientRepository.findAllResponseDTO();
+    public Page<ClientResponseDTO> findAll(int pageNum, int pageSize){
+        return clientRepository.findAllResponseDTO(PageRequest.of(pageNum, pageSize));
     }
 
     public ClientResponseDTO find(Long id){

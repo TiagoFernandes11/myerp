@@ -18,8 +18,6 @@ public class LoginServices {
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
         return authentication;
     }
 }

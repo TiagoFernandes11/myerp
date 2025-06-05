@@ -1,7 +1,7 @@
 package br.erp.myerp.backend.domain.stock.controller;
 
 import br.erp.myerp.backend.domain.stock.client.product.ProductClient;
-import br.erp.myerp.backend.common.response.Response;
+import br.erp.myerp.backend.common.security.response.Response;
 import br.erp.myerp.backend.domain.stock.dto.StockCreateDTO;
 import br.erp.myerp.backend.domain.stock.dto.StockResponseDTO;
 import br.erp.myerp.backend.domain.stock.dto.StockUpdateDTO;
@@ -40,26 +40,22 @@ public class StockController {
     }
 
     @PostMapping
-    public ResponseEntity<Response> createStock(@RequestBody @Valid StockCreateDTO stockCreateDTO){
+    public ResponseEntity<String> createStock(@RequestBody @Valid StockCreateDTO stockCreateDTO){
         stockService.create(stockCreateDTO);
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(
-                        new Response(HttpStatus.CREATED, "Stock for product: #" + stockCreateDTO.getProductId() + " was successfully created")
-                );
+                .body("Stock for product: #" + stockCreateDTO.getProductId() + " was successfully created");
     }
 
     @PutMapping
-    public ResponseEntity<Response> updateStock(@RequestBody @Valid StockUpdateDTO stockUpdateDTO){
+    public ResponseEntity<String> updateStock(@RequestBody @Valid StockUpdateDTO stockUpdateDTO){
         stockService.update(stockUpdateDTO);
         return ResponseEntity.status(HttpStatus.OK)
-                .body(
-                        new Response(HttpStatus.OK, "Stock for product: #" + stockUpdateDTO.getProductId() + " was successfully created")
-                );
+                .body("Stock for product: #" + stockUpdateDTO.getProductId() + " was successfully created");
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Response> deleteStock(@PathVariable Long id){
+    public ResponseEntity<String> deleteStock(@PathVariable Long id){
         stockService.delete(id);
-        return ResponseEntity.status(HttpStatus.OK).body(new Response(HttpStatus.OK, "Stock with id: " + id + " was successfully deleted"));
+        return ResponseEntity.status(HttpStatus.OK).body("Stock with id: " + id + " was successfully deleted");
     }
 }

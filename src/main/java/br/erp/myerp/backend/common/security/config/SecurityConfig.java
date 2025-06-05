@@ -1,7 +1,6 @@
 package br.erp.myerp.backend.common.security.config;
 
-import br.erp.myerp.backend.common.filter.CsrfCookieFilter;
-import br.erp.myerp.backend.common.filter.JWTTokenValidationFilter;
+import br.erp.myerp.backend.common.security.filter.JWTTokenValidationFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,8 +14,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
-import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 
@@ -49,17 +46,13 @@ public class SecurityConfig {
                 return corsConfiguration;
             }
         }));
-        CsrfTokenRequestAttributeHandler csrfTokenRequestAttributeHandler = new CsrfTokenRequestAttributeHandler();
-        http.csrf(csrf -> csrf.csrfTokenRequestHandler(csrfTokenRequestAttributeHandler)
-                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                .ignoringRequestMatchers("/api/login"));
-        http.addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class);
         http.addFilterBefore(new JWTTokenValidationFilter(), BasicAuthenticationFilter.class);
         http.authorizeHttpRequests((request) -> {
             request.requestMatchers("/api/login").permitAll();
             request.requestMatchers("/api/admin/get/**").permitAll();
             request.requestMatchers("/api/**").authenticated();
         });
+        http.csrf(AbstractHttpConfigurer::disable);
         http.formLogin(AbstractHttpConfigurer::disable);
         return http.build();
     }

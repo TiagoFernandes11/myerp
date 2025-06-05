@@ -1,10 +1,9 @@
 package br.erp.myerp.backend.domain.stockmovement.controller;
 
-import br.erp.myerp.backend.common.response.Response;
+import br.erp.myerp.backend.common.security.response.Response;
 import br.erp.myerp.backend.domain.stockmovement.dto.StockMovementCreateDTO;
 import br.erp.myerp.backend.domain.stockmovement.dto.StockMovementResponseDTO;
 import br.erp.myerp.backend.domain.stockmovement.dto.StockMovementUpdateDTO;
-import br.erp.myerp.backend.domain.stockmovement.entity.StockMovement;
 import br.erp.myerp.backend.domain.stockmovement.service.StockMovementService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,9 +50,9 @@ public class StockMovementController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Response> delete(@PathVariable Long id){
+    public ResponseEntity<String> delete(@PathVariable Long id){
         stockMovementService.delete(id);
         return ResponseEntity.status(HttpStatus.OK)
-                .body(new Response(HttpStatus.OK, "Stock movement with id: #" + id + " was successfully deleted"));
+                .body("Stock movement with id: #" + id + " was successfully deleted");
     }
 }
