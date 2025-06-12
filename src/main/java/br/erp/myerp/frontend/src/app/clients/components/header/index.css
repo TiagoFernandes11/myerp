@@ -1,0 +1,17 @@
+#header{
+    background-color: blueviolet;
+    width: 100%;
+}
+
+#buttons{
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+}
+
+button{
+    padding: 4px;
+    margin: 0px 10px;
+    background-color: rgb(64, 102, 136);
+}

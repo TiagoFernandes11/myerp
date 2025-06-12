@@ -1,0 +1,10 @@
+#client{
+    background-color: rgb(6, 48, 34);
+}
+
+td{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}

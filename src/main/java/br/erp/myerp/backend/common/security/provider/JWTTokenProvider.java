@@ -27,7 +27,7 @@ public class JWTTokenProvider {
                         .map(GrantedAuthority::getAuthority)
                         .collect(Collectors.joining(",")))
                 .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis() + 30000000)) // ~8h
+                .expiration(new Date(System.currentTimeMillis() + 30000000))
                 .signWith(secretKey)
                 .compact();
     }
