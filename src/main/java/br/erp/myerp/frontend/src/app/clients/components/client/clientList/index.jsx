@@ -1,29 +1,11 @@
 import "./index.css";
 import Client from "../client";
 import { useState } from "react";
+import { getClients } from "@/app/clients/service/clientService";
 
-const clientList = [
-  {
-    id: 10,
-    firstName: "Teste",
-    lastName: "Teste",
-    email: "teste@email.com",
-    ddd: "11",
-    cellPhone: "999999999",
-    birthDay: new Date(),
-    cpf: "123456789098",
-  },
-  {
-    id: 11,
-    firstName: "Teste",
-    lastName: "Teste",
-    email: "teste@email.com",
-    ddd: "11",
-    cellPhone: "999999999",
-    birthDay: new Date(),
-    cpf: "123456789098",
-  },
-];
+const clientList = await getClients();
+
+console.log(clientList);
 
 export default function ClientList() {
   const [selectedClient, setSelectedClient] = useState(clientList[0]);
