@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api")
-public class AuthController {
+@RequestMapping("/api/token")
+public class TokenValidationController {
 
     @GetMapping("/validate")
     public ResponseEntity<?> validateToken() {
