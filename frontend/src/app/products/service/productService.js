@@ -1,46 +1,41 @@
 import axios from "axios";
 
-export async function getClients() {
+export async function getProducts() {
   try {
-    const response = await axios.get("http://localhost:8080/api/client", {
+    const response = await axios.get("http://localhost:8080/api/product", {
       headers: {
         Authorization: localStorage.getItem("token"),
       },
     });
-
     return response.data;
   } catch (error) {
-    console.error("Error trying to retrieve clients:", error);
+    console.log("Something went wrong: ", error);
     return [];
   }
 }
 
-export async function getClientById(id) {
-  const response = await axios.get("http://localhost:8080/api/client/" + id, {
-    headers: {
-      Authorization: localStorage.getItem("token"),
-    },
-    validateStatus: function () {
-      return true;
-    },
-  });
-  if (response.status == 404) {
-    console.error("Error trying to find client with id: " + id);
-    return null;
+export async function getProductById(id) {
+  try {
+    const response = await axios.get(
+      "http://localhost:8080/api/product/" + id,
+      {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log("Something went wrong: ", error);
+    return [];
   }
-
-  if (response.status === 403) {
-    console.error("Not authorized");
-    return null;
-  }
-  return response.data;
 }
 
-export async function createClient(client) {
+export async function createProduct(product) {
   try {
     const response = await axios.post(
-      "http://localhost:8080/api/client",
-      client,
+      "http://localhost:8080/api/product",
+      product,
       {
         headers: {
           Authorization: localStorage.getItem("token"),
@@ -50,7 +45,6 @@ export async function createClient(client) {
     return response.status;
   } catch (error) {
     if (error.response) {
-      console.log("Error from server:", error.response.data);
       return error.response.data;
     } else if (error.request) {
       return "No response from server:", error.request;
@@ -60,15 +54,14 @@ export async function createClient(client) {
   }
 }
 
-export async function updateClient(client) {
+export async function updateProduct(product) {
   try {
     const response = await axios.put(
-      "http://localhost:8080/api/client/" + client.id,
-      client,
+      "http://localhost:8080/api/product/" + product.id,
+      product,
       {
         headers: {
           Authorization: localStorage.getItem("token"),
-          "Content-Type": "application/json",
         },
       }
     );
@@ -85,10 +78,10 @@ export async function updateClient(client) {
   }
 }
 
-export async function deleteClient(client) {
+export async function deleteProduct(product) {
   try {
     const response = await axios.delete(
-      "http://localhost:8080/api/client/" + client.id,
+      "http://localhost:8080/api/products/" + product.id,
       {
         headers: {
           Authorization: localStorage.getItem("token"),
@@ -101,9 +94,9 @@ export async function deleteClient(client) {
       console.log("Error from server: ", error.response.data);
       return error.response.data;
     } else if (error.request) {
-      return "No response from server:", error.request;
+      return "No response from server: " + error.request;
     } else {
-      return "Unespected error:", error.message;
+      return "Unespected error: " + error.message;
     }
   }
 }

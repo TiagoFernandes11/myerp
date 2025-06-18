@@ -4,30 +4,30 @@ import "./page.css";
 
 import AuthGuard from "../../security/AuthGuard";
 
-import ClientForm from "../components/client/clientForm";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { getClientById } from "@/app/clients/service/clientService";
-import FormHeader from "../components/client/formHeader";
+import FormHeader from "../components/formHeader";
+import ProductForm from "../components/productForm";
+import { getProductById } from "../service/productService";
 
 export default function ClientByID() {
   const { id } = useParams();
-  const [client, setClient] = useState(null);
+  const [product, setProduct] = useState(null);
 
   useEffect(() => {
     if (!id) {
       console.error("Not a valid id");
       return;
     }
-    getClientById(id).then((client) => setClient(client));
+    getProductById(id).then((product) => setProduct(product));
   }, [id]);
 
   return (
     <AuthGuard>
-      <FormHeader client={client} isNew={false} />
-      <ClientForm
-        client={client ? client : null}
-        setClient={setClient}
+      <FormHeader product={product} isNew={false} />
+      <ProductForm
+        product={product ? product : null}
+        setProduct={setProduct}
         isNew={false}
       />
     </AuthGuard>

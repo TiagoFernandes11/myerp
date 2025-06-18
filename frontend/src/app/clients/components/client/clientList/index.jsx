@@ -1,12 +1,10 @@
 import "./index.css";
 import Client from "../client";
-import { useState } from "react";
 import { getClients } from "@/app/clients/service/clientService";
 
 const clientList = await getClients();
 
-export default function ClientList() {
-  const [selectedClient, setSelectedClient] = useState(clientList[0]);
+export default function ClientList({ selectedClient, setSelectedClient }) {
 
   return (
     <div>
