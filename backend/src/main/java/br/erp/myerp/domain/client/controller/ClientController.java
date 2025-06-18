@@ -23,7 +23,7 @@ public class ClientController {
     private ClientService clientService;
 
     @GetMapping
-    public ResponseEntity<List<ClientResponseDTO>> getAll(@RequestParam(required = false, defaultValue = "0") int pageNum){
+    public ResponseEntity<List<ClientResponseDTO>> getAll(@RequestParam(name = "pageNum", required = false, defaultValue = "0") int pageNum){
         return ResponseEntity.status(HttpStatus.OK).body(clientService.findAll(pageNum, PAGE_SIZE).getContent());
     }
 

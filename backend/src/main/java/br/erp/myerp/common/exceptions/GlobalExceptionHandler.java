@@ -25,6 +25,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleDataIntegrityViolation(DataIntegrityViolationException ex) {
         String message = "Data integrity error.";
 
+        //todo
         if (ex.getMessage().contains("123123123213213")) {
             message = "Email is already in use.";
         } else if (ex.getMessage().contains("UKplnstg0h55xcbwkkf8iehxo71")) {

@@ -8,6 +8,7 @@ import br.erp.myerp.domain.product.mapper.ProductMapper;
 import br.erp.myerp.domain.product.repository.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,8 +22,8 @@ public class ProductService {
     @Autowired
     private ProductMapper productMapper;
 
-    public List<ProductResponseDTO> findAll(){
-        return productRepository.findAllProducts().orElseThrow(
+    public List<ProductResponseDTO> findAll(int pageNum, int pageSize){
+        return productRepository.findAllProducts(PageRequest.of(pageNum, pageSize)).orElseThrow(
                 () -> new EntityNotFoundException("No product was founded")
         );
     }

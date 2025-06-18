@@ -17,12 +17,14 @@ import java.util.List;
 @RequestMapping("/api/product")
 public class ProductController {
 
+    private final int PAGE_SIZE = 20;
+
     @Autowired
     private ProductService productService;
 
     @GetMapping
-    public ResponseEntity<List<ProductResponseDTO>> findAll(){
-        List<ProductResponseDTO> products = productService.findAll();
+    public ResponseEntity<List<ProductResponseDTO>> findAll(@RequestParam(name = "pageNum", required = false, defaultValue = "1") int pageNum){
+        List<ProductResponseDTO> products = productService.findAll(pageNum, PAGE_SIZE);
         return ResponseEntity.status(HttpStatus.OK).body(products);
     }
 
