@@ -1,9 +1,9 @@
 package br.erp.myerp.domain.stock.service;
 
 import br.erp.myerp.domain.stock.client.product.ProductClient;
-import br.erp.myerp.domain.stock.dto.StockCreateDTO;
-import br.erp.myerp.domain.stock.dto.StockResponseDTO;
-import br.erp.myerp.domain.stock.dto.StockUpdateDTO;
+import br.erp.myerp.domain.stock.dto.stock.StockCreateDTO;
+import br.erp.myerp.domain.stock.dto.stock.StockResponseDTO;
+import br.erp.myerp.domain.stock.dto.stock.StockUpdateDTO;
 import br.erp.myerp.domain.stock.entity.Stock;
 import br.erp.myerp.domain.stock.mapper.StockMapper;
 import br.erp.myerp.domain.stock.repository.StockRepository;
@@ -31,7 +31,7 @@ public class StockService {
         return stockRepository.findAllDto();
     }
 
-    public StockResponseDTO get(Long id) {
+    public StockResponseDTO getById(Long id) {
         return stockMapper.toStockDTO(
                 stockRepository.findById(id).orElseThrow(
                         () -> new EntityNotFoundException("Stock not founded with id: " + id)

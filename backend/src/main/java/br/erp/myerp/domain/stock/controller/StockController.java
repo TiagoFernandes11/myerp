@@ -1,10 +1,9 @@
 package br.erp.myerp.domain.stock.controller;
 
 import br.erp.myerp.domain.stock.client.product.ProductClient;
-import br.erp.myerp.common.security.response.Response;
-import br.erp.myerp.domain.stock.dto.StockCreateDTO;
-import br.erp.myerp.domain.stock.dto.StockResponseDTO;
-import br.erp.myerp.domain.stock.dto.StockUpdateDTO;
+import br.erp.myerp.domain.stock.dto.stock.StockCreateDTO;
+import br.erp.myerp.domain.stock.dto.stock.StockResponseDTO;
+import br.erp.myerp.domain.stock.dto.stock.StockUpdateDTO;
 import br.erp.myerp.domain.stock.service.StockService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,12 +30,12 @@ public class StockController {
 
     @GetMapping("/{id}")
     public ResponseEntity<StockResponseDTO> getStock(@PathVariable Long id){
-        return ResponseEntity.status(HttpStatus.OK).body(stockService.get(id));
+        return ResponseEntity.status(HttpStatus.OK).body(stockService.getById(id));
     }
 
     @GetMapping("/by-product/{productId}")
     public ResponseEntity<StockResponseDTO> getStockByProduct(@PathVariable Long productId){
-        return ResponseEntity.status(HttpStatus.OK).body(stockService.get(productId));
+        return ResponseEntity.status(HttpStatus.OK).body(stockService.getById(productId));
     }
 
     @PostMapping

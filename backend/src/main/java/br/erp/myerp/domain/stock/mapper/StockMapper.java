@@ -1,14 +1,15 @@
 package br.erp.myerp.domain.stock.mapper;
 
-import br.erp.myerp.domain.stock.dto.StockCreateDTO;
-import br.erp.myerp.domain.stock.dto.StockResponseDTO;
-import br.erp.myerp.domain.stock.dto.StockUpdateDTO;
+import br.erp.myerp.domain.stock.dto.stock.StockCreateDTO;
+import br.erp.myerp.domain.stock.dto.stock.StockResponseDTO;
+import br.erp.myerp.domain.stock.dto.stock.StockUpdateDTO;
 import br.erp.myerp.domain.stock.entity.Stock;
 import org.mapstruct.Mapper;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 @Mapper(componentModel = "spring")
 public interface StockMapper {
+
+    StockUpdateDTO toStockUpdateDTO(Stock stock);
 
     StockResponseDTO toStockDTO(Stock stock);
 
