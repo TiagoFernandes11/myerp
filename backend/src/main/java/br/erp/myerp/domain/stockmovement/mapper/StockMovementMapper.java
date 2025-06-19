@@ -1,8 +1,8 @@
 package br.erp.myerp.domain.stockmovement.mapper;
 
-import br.erp.myerp.domain.stockmovement.dto.StockMovementCreateDTO;
-import br.erp.myerp.domain.stockmovement.dto.StockMovementResponseDTO;
-import br.erp.myerp.domain.stockmovement.dto.StockMovementUpdateDTO;
+import br.erp.myerp.domain.stockmovement.dto.stockmovement.StockMovementCreateDTO;
+import br.erp.myerp.domain.stockmovement.dto.stockmovement.StockMovementResponseDTO;
+import br.erp.myerp.domain.stockmovement.dto.stockmovement.StockMovementUpdateDTO;
 import br.erp.myerp.domain.stockmovement.entity.StockMovement;
 import org.mapstruct.Mapper;
 

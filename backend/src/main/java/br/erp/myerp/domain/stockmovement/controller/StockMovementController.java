@@ -1,9 +1,10 @@
 package br.erp.myerp.domain.stockmovement.controller;
 
-import br.erp.myerp.common.security.response.Response;
-import br.erp.myerp.domain.stockmovement.dto.StockMovementCreateDTO;
-import br.erp.myerp.domain.stockmovement.dto.StockMovementResponseDTO;
-import br.erp.myerp.domain.stockmovement.dto.StockMovementUpdateDTO;
+import br.erp.myerp.domain.stockmovement.dto.stockmovement.StockMovementCreateDTO;
+import br.erp.myerp.domain.stockmovement.dto.stockmovement.StockMovementResponseDTO;
+import br.erp.myerp.domain.stockmovement.dto.stockmovement.StockMovementUpdateDTO;
+import br.erp.myerp.domain.stockmovement.entity.StockMovement;
+import br.erp.myerp.domain.stockmovement.entity.StockMovementItem;
 import br.erp.myerp.domain.stockmovement.service.StockMovementService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,28 +32,22 @@ public class StockMovementController {
         return ResponseEntity.status(HttpStatus.OK).body(stockMovement);
     }
 
-    @GetMapping("/by-product/{productId}")
-    public ResponseEntity<StockMovementResponseDTO> findByProductId(@PathVariable Long productId){
-        StockMovementResponseDTO stockMovement = stockMovementService.findStockMovementByProduct(productId);
-        return ResponseEntity.status(HttpStatus.OK).body(stockMovement);
-    }
-
     @PostMapping
     public ResponseEntity<StockMovementCreateDTO> create(@RequestBody @Valid StockMovementCreateDTO stockMovement){
         stockMovementService.create(stockMovement);
         return ResponseEntity.status(HttpStatus.CREATED).body(stockMovement);
     }
 
-    @PutMapping
-    public ResponseEntity<StockMovementUpdateDTO> update(@RequestBody @Valid StockMovementUpdateDTO stockMovementUpdateDTO){
-        stockMovementService.update(stockMovementUpdateDTO);
-        return ResponseEntity.status(HttpStatus.OK).body(stockMovementUpdateDTO);
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable Long id){
-        stockMovementService.delete(id);
-        return ResponseEntity.status(HttpStatus.OK)
-                .body("Stock movement with id: #" + id + " was successfully deleted");
-    }
+//    @PutMapping
+//    public ResponseEntity<StockMovementUpdateDTO> update(@RequestBody @Valid StockMovementUpdateDTO stockMovementUpdateDTO){
+//        stockMovementService.update(stockMovementUpdateDTO);
+//        return ResponseEntity.status(HttpStatus.OK).body(stockMovementUpdateDTO);
+//    }
+//
+//    @DeleteMapping("/{id}")
+//    public ResponseEntity<String> delete(@PathVariable Long id){
+//        stockMovementService.delete(id);
+//        return ResponseEntity.status(HttpStatus.OK)
+//                .body("Stock movement with id: #" + id + " was successfully deleted");
+//    }
 }

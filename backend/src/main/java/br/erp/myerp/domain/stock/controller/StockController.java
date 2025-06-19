@@ -34,9 +34,9 @@ public class StockController {
         return ResponseEntity.status(HttpStatus.OK).body(stockService.get(id));
     }
 
-    @GetMapping("/by-product/{id}")
-    public ResponseEntity<StockResponseDTO> getStockByProduct(@PathVariable Long idProduct){
-        return ResponseEntity.status(HttpStatus.OK).body(stockService.get(idProduct));
+    @GetMapping("/by-product/{productId}")
+    public ResponseEntity<StockResponseDTO> getStockByProduct(@PathVariable Long productId){
+        return ResponseEntity.status(HttpStatus.OK).body(stockService.get(productId));
     }
 
     @PostMapping

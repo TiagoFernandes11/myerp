@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Data
@@ -14,14 +15,13 @@ public class StockMovement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long stockId;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn
+    private List<StockMovementItem> items;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private MovementType type;
-
-    @Column(nullable = false)
-    private Integer quantity;
 
     @Column(nullable = false)
     private String description;
@@ -32,11 +32,10 @@ public class StockMovement {
         this.timestamp = LocalDateTime.now();
     }
 
-    public StockMovement(Long id, Long stockId, MovementType type, Integer quantity, String description) {
+    public StockMovement(Long id, List<StockMovementItem> productsId, MovementType type, String description) {
         this.id = id;
-        this.stockId = stockId;
+        this.items = productsId;
         this.type = type;
-        this.quantity = quantity;
         this.description = description;
         this.timestamp = LocalDateTime.now();
     }
