@@ -26,7 +26,7 @@ public class StockMovementController {
 
     @GetMapping("/{id}")
     public ResponseEntity<StockMovementResponseDTO> findById(@PathVariable Long id){
-        StockMovementResponseDTO stockMovement = stockMovementService.findStockMovement(id);
+        StockMovementResponseDTO stockMovement = stockMovementService.findById(id);
         return ResponseEntity.status(HttpStatus.OK).body(stockMovement);
     }
 
@@ -41,11 +41,11 @@ public class StockMovementController {
         stockMovementService.update(stockMovementUpdateDTO);
         return ResponseEntity.status(HttpStatus.OK).body(stockMovementUpdateDTO);
     }
-//
-//    @DeleteMapping("/{id}")
-//    public ResponseEntity<String> delete(@PathVariable Long id){
-//        stockMovementService.delete(id);
-//        return ResponseEntity.status(HttpStatus.OK)
-//                .body("Stock movement with id: #" + id + " was successfully deleted");
-//    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> delete(@PathVariable Long id){
+        stockMovementService.delete(id);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body("Stock movement with id: #" + id + " was successfully deleted");
+    }
 }

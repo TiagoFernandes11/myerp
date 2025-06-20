@@ -1,6 +1,6 @@
 package br.erp.myerp.domain.order.controller;
 
-import br.erp.myerp.domain.order.dto.OrderResponseDTO;
+import br.erp.myerp.domain.order.dto.order.OrderResponseDTO;
 import br.erp.myerp.domain.order.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

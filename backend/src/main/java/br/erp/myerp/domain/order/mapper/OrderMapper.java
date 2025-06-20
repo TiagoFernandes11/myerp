@@ -1,6 +1,6 @@
 package br.erp.myerp.domain.order.mapper;
 
-import br.erp.myerp.domain.order.dto.OrderResponseDTO;
+import br.erp.myerp.domain.order.dto.order.OrderResponseDTO;
 import br.erp.myerp.domain.order.entity.Order;
 import org.mapstruct.Mapper;
 

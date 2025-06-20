@@ -9,7 +9,11 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface StockMapper {
 
+    StockResponseDTO toStockResponseDTO(Stock stock);
+
     StockUpdateDTO toStockUpdateDTO(Stock stock);
+
+    StockUpdateDTO toStockUpdateDTO(StockResponseDTO stockResponseDTO);
 
     StockResponseDTO toStockDTO(Stock stock);
 

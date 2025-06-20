@@ -39,4 +39,11 @@ public class StockMovement {
         this.description = description;
         this.timestamp = LocalDateTime.now();
     }
+
+    public StockMovementItem findStockMovementItemByProductId(Long id){
+        for(StockMovementItem item : items){
+            if(item.getProductId() == id) return item;
+        }
+        return null;
+    }
 }

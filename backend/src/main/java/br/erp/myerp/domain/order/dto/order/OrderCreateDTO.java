@@ -1,4 +1,4 @@
-package br.erp.myerp.domain.order.dto;
+package br.erp.myerp.domain.order.dto.order;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -14,13 +14,15 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderResponseDTO {
+public class OrderCreateDTO {
 
-    private long id;
-
+    @NotBlank(message = "client id must not be blank")
+    @NotNull(message = "client id must not be null")
     private long clientId;
 
+    @NotEmpty(message = "Products id can not be empty")
     private List<Long> productsId;
 
+    @Positive(message = "Total must be positive")
     private BigDecimal total;
 }

@@ -9,6 +9,8 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface StockMovementMapper {
 
+    StockMovementUpdateDTO toStockMovementUpdateDTO(StockMovement stockMovement);
+
     StockMovementResponseDTO toStockMovementDTO(StockMovement stockMovement);
 
     StockMovement toStockMovement(StockMovementCreateDTO stockMovementCreateDTO);

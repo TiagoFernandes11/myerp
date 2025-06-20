@@ -13,4 +13,8 @@ public class StockUpdateDTO {
     @NotNull(message = "Quantity can not be null")
     @PositiveOrZero(message = "Quantity must be greater or equal than 0")
     private int quantity;
+
+    public void addQuantity(int quantity){
+        this.quantity += quantity;
+    }
 }

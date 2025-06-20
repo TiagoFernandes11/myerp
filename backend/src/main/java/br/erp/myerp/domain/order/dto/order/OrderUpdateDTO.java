@@ -1,4 +1,4 @@
-package br.erp.myerp.domain.order.dto;
+package br.erp.myerp.domain.order.dto.order;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -14,7 +14,10 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderCreateDTO {
+public class OrderUpdateDTO {
+
+    @NotNull(message = "Id must not be null")
+    private long id;
 
     @NotBlank(message = "client id must not be blank")
     @NotNull(message = "client id must not be null")
