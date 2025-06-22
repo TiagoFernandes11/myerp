@@ -1,12 +1,15 @@
 import axios from "axios";
 
-export async function getClients() {
+export async function getClients(filter, value) {
   try {
-    const response = await axios.get("http://localhost:8080/api/client", {
-      headers: {
-        Authorization: localStorage.getItem("token"),
-      },
-    });
+    const response = await axios.get(
+      "http://localhost:8080/api/client?filter=" + filter + "&value=" + value,
+      {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      }
+    );
 
     return response.data;
   } catch (error) {

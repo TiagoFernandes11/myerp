@@ -3,6 +3,7 @@ package br.erp.myerp.domain.client.controller;
 import br.erp.myerp.domain.client.dto.ClientCreateDTO;
 import br.erp.myerp.domain.client.dto.ClientResponseDTO;
 import br.erp.myerp.domain.client.dto.ClientUpdateDTO;
+import br.erp.myerp.domain.client.entity.Client;
 import br.erp.myerp.domain.client.service.ClientService;
 import br.erp.myerp.common.security.response.Response;
 import jakarta.validation.Valid;
@@ -23,8 +24,10 @@ public class ClientController {
     private ClientService clientService;
 
     @GetMapping
-    public ResponseEntity<List<ClientResponseDTO>> getAll(@RequestParam(name = "pageNum", required = false, defaultValue = "0") int pageNum){
-        return ResponseEntity.status(HttpStatus.OK).body(clientService.findAll(pageNum, PAGE_SIZE).getContent());
+    public ResponseEntity<List<Client>> getAll(@RequestParam(name = "filter", required = false, defaultValue = "") String filter,
+                                               @RequestParam(name = "value", required = false, defaultValue = "") String value,
+                                               @RequestParam(name = "pageNum", required = false, defaultValue = "0") int pageNum){
+        return ResponseEntity.status(HttpStatus.OK).body(clientService.findAll(pageNum, PAGE_SIZE, filter, value).getContent());
     }
 
     @GetMapping("/{id}")

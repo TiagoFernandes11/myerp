@@ -6,14 +6,12 @@ import br.erp.myerp.domain.client.dto.ClientUpdateDTO;
 import br.erp.myerp.domain.client.entity.Client;
 import br.erp.myerp.domain.client.mapper.ClientMapper;
 import br.erp.myerp.domain.client.repository.ClientRepository;
+import br.erp.myerp.domain.client.specification.ClienteSpecification;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class ClientService {
@@ -24,8 +22,8 @@ public class ClientService {
     @Autowired
     private ClientMapper clientMapper;
 
-    public Page<ClientResponseDTO> findAll(int pageNum, int pageSize){
-        return clientRepository.findAllResponseDTO(PageRequest.of(pageNum, pageSize));
+    public Page<Client> findAll(int pageNum, int pageSize, String filter, String value){
+        return clientRepository.findAll(ClienteSpecification.genericFilter(filter, value), PageRequest.of(pageNum, pageSize));
     }
 
     public ClientResponseDTO find(Long id){

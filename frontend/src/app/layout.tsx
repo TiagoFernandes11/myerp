@@ -39,7 +39,7 @@ export default function RootLayout({
         {" "}
         <Header
           addresses={[
-            { label: "clients", url: "/clients" },
+            { label: "clients", url: "/clients?page=0&filter=&value=" },
             { label: "products", url: "/products" },
           ]}
         ></Header>

@@ -1,10 +1,24 @@
 import "./index.css";
 import Client from "../client";
 import { getClients } from "@/app/clients/service/clientService";
+import { useEffect, useState } from "react";
 
-const clientList = await getClients();
+export default function ClientList({
+  selectedClient,
+  setSelectedClient,
+  searchFilter,
+  searchValue,
+}) {
+  const [clientList, setClientList] = useState([]);
 
-export default function ClientList({ selectedClient, setSelectedClient }) {
+  useEffect(() => {
+    async function fetchClients(filter, value) {
+      const clients = await getClients(filter, value);
+      setClientList(clients);
+    }
+
+    fetchClients(searchFilter, searchValue);
+  }, [searchFilter, searchValue]);
 
   return (
     <div>

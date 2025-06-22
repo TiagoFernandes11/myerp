@@ -87,7 +87,7 @@ public class StockMovementService {
                 throw new IllegalArgumentException("The stock does not have sufficient quantity");
             } else {
                 item.addQuantity(diff);
-                stock.setQuantity(stock.getQuantity() + diff);
+                stock.addQuantity(diff);
                 stockService.update(stockMapper.toStockUpdateDTO(stockMapper.toStock(stock)));
             }
             item.setStockMovement(stockMovement);
