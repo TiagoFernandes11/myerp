@@ -1,8 +1,8 @@
 import axios from "axios";
 
-export async function getProducts() {
+export async function getProducts(page, filter, value) {
   try {
-    const response = await axios.get("http://localhost:8080/api/product", {
+    const response = await axios.get(`http://localhost:8080/api/product?page=${page}&filter=${filter}&value=${value}`, {
       headers: {
         Authorization: localStorage.getItem("token"),
       },

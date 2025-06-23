@@ -6,8 +6,10 @@ import br.erp.myerp.domain.product.dto.ProductUpdateDTO;
 import br.erp.myerp.domain.product.entity.Product;
 import br.erp.myerp.domain.product.mapper.ProductMapper;
 import br.erp.myerp.domain.product.repository.ProductRepository;
+import br.erp.myerp.domain.product.specification.ProductSpecification;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -22,10 +24,9 @@ public class ProductService {
     @Autowired
     private ProductMapper productMapper;
 
-    public List<ProductResponseDTO> findAll(int pageNum, int pageSize){
-        return productRepository.findAllProducts(PageRequest.of(pageNum, pageSize)).orElseThrow(
-                () -> new EntityNotFoundException("No product was founded")
-        );
+    public Page<ProductResponseDTO> findAll(String filter, String value, int pageNum, int pageSize){
+        Page<Product> products = productRepository.findAll(ProductSpecification.getProductSpecification(filter, value),PageRequest.of(pageNum, pageSize));
+        return products.map((product -> productMapper.toResponseDTO(product)));
     }
 
     public ProductResponseDTO find(Long id){

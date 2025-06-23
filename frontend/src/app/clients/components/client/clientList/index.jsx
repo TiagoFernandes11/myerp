@@ -6,19 +6,20 @@ import { useEffect, useState } from "react";
 export default function ClientList({
   selectedClient,
   setSelectedClient,
+  page,
   searchFilter,
   searchValue,
 }) {
   const [clientList, setClientList] = useState([]);
 
   useEffect(() => {
-    async function fetchClients(filter, value) {
-      const clients = await getClients(filter, value);
+    async function fetchClients(page, filter, value) {
+      const clients = await getClients(page, filter, value);
       setClientList(clients);
     }
 
-    fetchClients(searchFilter, searchValue);
-  }, [searchFilter, searchValue]);
+    fetchClients(page, searchFilter, searchValue);
+  }, [page, searchFilter, searchValue]);
 
   return (
     <div>

@@ -13,6 +13,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ClientService {
 
@@ -22,8 +24,9 @@ public class ClientService {
     @Autowired
     private ClientMapper clientMapper;
 
-    public Page<Client> findAll(int pageNum, int pageSize, String filter, String value){
-        return clientRepository.findAll(ClienteSpecification.genericFilter(filter, value), PageRequest.of(pageNum, pageSize));
+    public Page<ClientResponseDTO> findAll(int pageNum, int pageSize, String filter, String value){
+        Page<Client> clients = clientRepository.findAll(ClienteSpecification.genericFilter(filter, value), PageRequest.of(pageNum, pageSize));
+        return clients.map((client) -> clientMapper.toClientResponseDTO(client));
     }
 
     public ClientResponseDTO find(Long id){

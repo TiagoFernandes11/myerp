@@ -7,6 +7,7 @@ import br.erp.myerp.domain.product.service.ProductService;
 import br.erp.myerp.common.security.response.Response;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,8 +24,10 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping
-    public ResponseEntity<List<ProductResponseDTO>> findAll(@RequestParam(name = "pageNum", required = false, defaultValue = "1") int pageNum){
-        List<ProductResponseDTO> products = productService.findAll(pageNum, PAGE_SIZE);
+    public ResponseEntity<List<ProductResponseDTO>> findAll(@RequestParam(name = "filter", required = false, defaultValue = "") String filter,
+                                                            @RequestParam(name = "value", required = false, defaultValue = "") String value,
+                                                            @RequestParam(name = "pageNum", required = false, defaultValue = "0") int pageNum){
+        List<ProductResponseDTO> products = productService.findAll(filter, value, pageNum, PAGE_SIZE).getContent();
         return ResponseEntity.status(HttpStatus.OK).body(products);
     }
 

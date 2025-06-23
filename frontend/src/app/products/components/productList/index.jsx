@@ -2,12 +2,29 @@
 
 import "./index.css";
 
-import { getProducts } from "../../service/productService";
 import Product from "../product";
+import { useEffect, useState } from "react";
+import { getProducts } from "../../service/productService";
 
-const productList = await getProducts();
+export default function ProductList({
+  selectedProduct,
+  setSelectedProduct,
+  currentPage,
+  selectedFilterValue,
+  searchKeyword,
+}) {
+  const [productList, setProductList] = useState([]);
 
-export default function ProductList({ selectedProduct, setSelectedProduct }) {
+  useEffect(() => {
+    async function fetchProducts(page, filter, value) {
+      const products = await getProducts(page, filter, value);
+      console.log(products);
+      setProductList(products);
+    }
+
+    fetchProducts(currentPage, selectedFilterValue, searchKeyword);
+  }, [currentPage, selectedFilterValue, searchKeyword]);
+
   return (
     <div>
       <table>

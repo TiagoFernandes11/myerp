@@ -1,9 +1,9 @@
 import axios from "axios";
 
-export async function getClients(filter, value) {
+export async function getClients(page, filter, value) {
   try {
     const response = await axios.get(
-      "http://localhost:8080/api/client?filter=" + filter + "&value=" + value,
+      `http://localhost:8080/api/client?page=${page}&filter=${filter}&value=${value}`,
       {
         headers: {
           Authorization: localStorage.getItem("token"),
@@ -19,7 +19,7 @@ export async function getClients(filter, value) {
 }
 
 export async function getClientById(id) {
-  const response = await axios.get("http://localhost:8080/api/client/" + id, {
+  const response = await axios.get(`http://localhost:8080/api/client/${id}`, {
     headers: {
       Authorization: localStorage.getItem("token"),
     },

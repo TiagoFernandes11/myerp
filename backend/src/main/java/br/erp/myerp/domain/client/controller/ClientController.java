@@ -8,6 +8,7 @@ import br.erp.myerp.domain.client.service.ClientService;
 import br.erp.myerp.common.security.response.Response;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +25,7 @@ public class ClientController {
     private ClientService clientService;
 
     @GetMapping
-    public ResponseEntity<List<Client>> getAll(@RequestParam(name = "filter", required = false, defaultValue = "") String filter,
+    public ResponseEntity<List<ClientResponseDTO>> getAll(@RequestParam(name = "filter", required = false, defaultValue = "") String filter,
                                                @RequestParam(name = "value", required = false, defaultValue = "") String value,
                                                @RequestParam(name = "pageNum", required = false, defaultValue = "0") int pageNum){
         return ResponseEntity.status(HttpStatus.OK).body(clientService.findAll(pageNum, PAGE_SIZE, filter, value).getContent());
