@@ -14,7 +14,7 @@ public class ProductSpecification {
                 return criteriaBuilder.conjunction();
             }
 
-            List<String> allowedFields = List.of("name", "sku", "price");
+            List<String> allowedFields = List.of("sku", "price");
 
             if(!allowedFields.contains(filter)){
                 throw new IllegalArgumentException("invalid filter");
