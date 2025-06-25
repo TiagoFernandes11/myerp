@@ -34,7 +34,6 @@ export default function GeneralHeader({ selectedClient }) {
           }}
         >
           <option value="">Select and option</option>
-          <option value="name">Name</option>
           <option value="email">Email</option>
           <option value="cpf">CPF</option>
           <option value="cellphone">Cellphone</option>

@@ -18,7 +18,6 @@ export default function ProductList({
   useEffect(() => {
     async function fetchProducts(page, filter, value) {
       const products = await getProducts(page, filter, value);
-      console.log(products);
       setProductList(products);
     }
 
