@@ -1,9 +1,6 @@
 package br.erp.myerp.domain.shoppingcart.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -16,6 +13,7 @@ public class ShoppingCart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ShoppingCartItem> itens;
 
     private BigDecimal total;

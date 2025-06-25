@@ -1,10 +1,7 @@
 package br.erp.myerp.domain.shoppingcart.entity;
 
 import br.erp.myerp.domain.shoppingcart.dto.product.Product;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -17,9 +14,13 @@ public class ShoppingCartItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Product product;
+    private int productId;
 
     private int quantity;
 
     private BigDecimal total;
+
+    @ManyToOne
+    @JoinColumn(name = "cart_id")
+    private ShoppingCart cart;
 }
