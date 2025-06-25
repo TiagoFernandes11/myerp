@@ -1,6 +1,6 @@
 package br.erp.myerp.common.security.client;
 
-import br.erp.myerp.common.security.dto.AdminDTO;
+import br.erp.myerp.common.security.dto.admin.AdminDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;

@@ -1,7 +1,7 @@
 package br.erp.myerp.common.security.config;
 
-import br.erp.myerp.common.security.client.AdminClient;
-import br.erp.myerp.common.security.dto.AdminDTO;
+import br.erp.myerp.common.security.client.CustomerAccountClient;
+import br.erp.myerp.common.security.dto.customeraccount.CustomerAccountDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -14,20 +14,21 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class CustomUserDetailsService implements UserDetailsService {
+public class CustomCustomerDetailsService implements UserDetailsService {
 
     @Autowired
-    private AdminClient adminClient;
+    private CustomerAccountClient customerAccountClient;
+
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        AdminDTO admin = adminClient.getAdmin(username);
-        if(admin == null){
+        CustomerAccountDTO customer = customerAccountClient.findByUsername(username);
+        if(customer == null){
             throw new UsernameNotFoundException("User with username: " + username + " was not found");
         }
-        String user = admin.getUsername();
-        String password = admin.getPassword();
-        List<GrantedAuthority> grantedAuthority = List.of(new SimpleGrantedAuthority(admin.getRole().toString()));
+        String user = customer.getUsername();
+        String password = customer.getPassword();
+        List<GrantedAuthority> grantedAuthority = List.of(new SimpleGrantedAuthority(customer.getRole().toString()));
         return new User(user, password, grantedAuthority);
     }
 }

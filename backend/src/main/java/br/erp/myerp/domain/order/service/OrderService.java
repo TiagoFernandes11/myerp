@@ -17,6 +17,9 @@ public class OrderService {
     private OrderRepository orderRepository;
 
     @Autowired
+    private OrderItemService orderItemService;
+
+    @Autowired
     private OrderMapper orderMapper;
 
     public List<OrderResponseDTO> findAll(int pageSize, int pageNum){

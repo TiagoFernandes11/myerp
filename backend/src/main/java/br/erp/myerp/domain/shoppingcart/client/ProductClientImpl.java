@@ -1,4 +1,4 @@
-package br.erp.myerp.domain.order.client;
+package br.erp.myerp.domain.shoppingcart.client;
 
 import br.erp.myerp.domain.order.dto.product.Product;
 import br.erp.myerp.domain.order.security.InternalTokenProviderForOrder;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 @Component
-public class ProductClientImpl implements ProductClient{
+public class ProductClientImpl implements ProductClient {
 
     @Autowired
     private RestTemplate restTemplate;

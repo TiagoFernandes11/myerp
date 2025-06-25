@@ -1,5 +1,6 @@
 package br.erp.myerp.domain.order.dto.order;
 
+import br.erp.myerp.domain.order.entity.OrderItem;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -21,7 +22,7 @@ public class OrderCreateDTO {
     private long clientId;
 
     @NotEmpty(message = "Products id can not be empty")
-    private List<Long> productsId;
+    private List<OrderItem> productsId;
 
     @Positive(message = "Total must be positive")
     private BigDecimal total;

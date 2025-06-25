@@ -1,6 +1,6 @@
 package br.erp.myerp.common.security.client;
 
-import br.erp.myerp.common.security.dto.AdminDTO;
+import br.erp.myerp.common.security.dto.admin.AdminDTO;
 
 public interface AdminClient {
 

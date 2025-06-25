@@ -13,8 +13,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class ClientService {
 
@@ -33,8 +31,12 @@ public class ClientService {
         return clientMapper.toDto(clientRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Client with id: " + id + " was not founded")));
     }
 
-    public ClientResponseDTO find(String cpf){
-        return clientMapper.toDto(clientRepository.findByCpf(cpf).orElseThrow(() -> new EntityNotFoundException("Client with cpf: " + cpf + " was not founded")));
+    public ClientResponseDTO findByCpf(String cpf){
+        return clientMapper.toClientResponseDTO(clientRepository.findByCpf(cpf).orElseThrow(() -> new EntityNotFoundException("Client with cpf: " + cpf + " was not founded")));
+    }
+
+    public ClientResponseDTO findByEmail(String email){
+        return clientMapper.toClientResponseDTO(clientRepository.findByEmail(email).orElseThrow(() -> new EntityNotFoundException("Client with email: " + email + " was not founded")));
     }
 
     public void create(ClientCreateDTO clientCreateDTO){

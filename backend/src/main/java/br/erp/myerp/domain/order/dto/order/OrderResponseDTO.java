@@ -1,5 +1,6 @@
 package br.erp.myerp.domain.order.dto.order;
 
+import br.erp.myerp.domain.order.dto.orderItem.OrderItemResponseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,7 +17,7 @@ public class OrderResponseDTO {
 
     private long clientId;
 
-    private List<Long> productsId;
+    private List<OrderItemResponseDTO> itens;
 
     private BigDecimal total;
 }

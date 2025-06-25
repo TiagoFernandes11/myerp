@@ -2,9 +2,11 @@ package br.erp.myerp.common.security.config;
 
 import br.erp.myerp.common.security.filter.JWTTokenValidationFilter;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -29,6 +31,15 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+    @Autowired
+    private AuthenticationProvider CustomAdminAuthenticationProvider;
+
+    @Autowired
+    private CustomAdminAuthenticationProvider adminAuthenticationProvider;
+
+    @Autowired
+    private CustomCustomerAuthenticationProvider customerAuthenticationProvider;
+
     @Bean
     public SecurityFilterChain customSecurityFilterChain(HttpSecurity http) throws Exception {
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
@@ -46,6 +57,8 @@ public class SecurityConfig {
                 return corsConfiguration;
             }
         }));
+        http.authenticationProvider(adminAuthenticationProvider);
+        http.authenticationProvider(customerAuthenticationProvider);
         http.addFilterBefore(new JWTTokenValidationFilter(), BasicAuthenticationFilter.class);
         http.authorizeHttpRequests((request) -> {
             request.requestMatchers("/api/login").permitAll();

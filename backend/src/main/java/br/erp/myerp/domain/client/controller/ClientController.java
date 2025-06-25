@@ -3,12 +3,9 @@ package br.erp.myerp.domain.client.controller;
 import br.erp.myerp.domain.client.dto.ClientCreateDTO;
 import br.erp.myerp.domain.client.dto.ClientResponseDTO;
 import br.erp.myerp.domain.client.dto.ClientUpdateDTO;
-import br.erp.myerp.domain.client.entity.Client;
 import br.erp.myerp.domain.client.service.ClientService;
-import br.erp.myerp.common.security.response.Response;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,8 +35,14 @@ public class ClientController {
     }
 
     @GetMapping("/by-cpf/{cpf}")
-    public ResponseEntity<ClientResponseDTO> getClient(@PathVariable String cpf){
-        ClientResponseDTO client = clientService.find(cpf);
+    public ResponseEntity<ClientResponseDTO> getClientByCpf(@PathVariable String cpf){
+        ClientResponseDTO client = clientService.findByCpf(cpf);
+        return ResponseEntity.status(HttpStatus.OK).body(client);
+    }
+
+    @GetMapping("/by-email/{email}")
+    public ResponseEntity<ClientResponseDTO> getClientByEmail(@PathVariable String email){
+        ClientResponseDTO client = clientService.findByEmail(email);
         return ResponseEntity.status(HttpStatus.OK).body(client);
     }
 

@@ -1,11 +1,13 @@
-package br.erp.myerp.common.security.dto;
+package br.erp.myerp.common.security.dto.customeraccount;
 
 import br.erp.myerp.domain.admin.constants.Role;
 import lombok.Data;
 
 @Data
-public class AdminDTO {
+public class CustomerAccountDTO {
+
     private Long id;
+    private Long clientId;
     private String username;
     private String password;
     private Role role;
