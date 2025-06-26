@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/order")
+@RequestMapping("/store/api/order")
 public class OrderController {
 
     private final int PAGE_SIZE = 20;

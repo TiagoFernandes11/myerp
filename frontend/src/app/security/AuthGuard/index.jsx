@@ -17,7 +17,7 @@ export default function AuthGuard({ children }) {
       return;
     }
     axios
-      .get("http://localhost:8080/api/token/validate", {
+      .get("http://localhost:8080/api/token/validate/admin", {
         headers: {
           Authorization: token,
         },

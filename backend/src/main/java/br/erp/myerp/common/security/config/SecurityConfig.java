@@ -49,9 +49,10 @@ public class SecurityConfig {
         http.addFilterBefore(new JWTTokenValidationFilter(), BasicAuthenticationFilter.class);
         http.authorizeHttpRequests((request) -> {
             request.requestMatchers("/api/login").permitAll();
+            request.requestMatchers("/api/token/validate/**").permitAll();
             request.requestMatchers("/api/admin/get/**").permitAll();
             request.requestMatchers("/api/customer-account/get/**").permitAll();
-            request.requestMatchers("/api/**").authenticated();
+            request.requestMatchers("/api/**").hasRole("ADMIN");
         });
         http.csrf(AbstractHttpConfigurer::disable);
         http.formLogin(AbstractHttpConfigurer::disable);

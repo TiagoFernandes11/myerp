@@ -1,16 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-interface LinkItem {
-  label: string;
-  url: string;
-}
-
-interface Links {
-  addresses: LinkItem[];
-}
-
-export default function Header(links: Links) {
+export default function Header(links) {
   return (
     <nav className="bg-gray-800 p-4">
       <ul className="flex space-x-4">

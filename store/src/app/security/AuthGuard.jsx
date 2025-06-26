@@ -10,7 +10,7 @@ export default function AuthGuard({ children }) {
     localStorage.setItem("redirectAfterLogin", window.location.pathname);
 
     async function getToken() {
-      return await axios.get("http://localhost:8080/api/token/validate", {
+      return await axios.get("http://localhost:8080/api/token/validate/customer", {
         headers: {
           Authorization: localStorage.getItem("token"),
         },

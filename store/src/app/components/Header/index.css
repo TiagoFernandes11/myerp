@@ -1,0 +1,23 @@
+nav{
+    padding: 50px;
+    border-bottom: solid black 1px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+input {
+    background-color: white;
+    padding: 2px;
+    margin-right: 5px;
+    border-radius: 5px;
+}
+
+.buttons{
+    display: flex;
+    flex-direction: row;
+}
+
+.buttons > .button{
+    margin: 0px 10px;
+}
