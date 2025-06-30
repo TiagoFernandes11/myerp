@@ -1,12 +1,10 @@
 import "./index.css";
 
-export default function Client({ client, onSelect, isSelected }) {
+export default function Client({ client, isSelected, ...props }) {
   return (
     <tr
       id="client"
-      onClick={() => {
-        onSelect(client);
-      }}
+      {...props}
       style={{
         backgroundColor: isSelected ? "red" : "green",
         cursor: "pointer",

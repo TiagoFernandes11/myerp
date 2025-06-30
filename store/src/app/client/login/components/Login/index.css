@@ -1,0 +1,67 @@
+.loginContainer {
+  max-width: 350px;
+  margin: 60px auto;
+  padding: 32px 24px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.loginForm {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.loginForm label {
+  font-weight: 500;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.loginForm input {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  font-size: 1rem;
+  margin-top: 4px;
+  transition: border 0.2s;
+}
+
+.loginForm input:focus {
+  border-color: #2563eb;
+  outline: none;
+}
+
+button[type="submit"] {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  padding: 10px 0;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: 0.2s;
+}
+
+button[type="submit"]:hover {
+  background: #1d4ed8;
+}
+
+.error {
+  color: #dc2626;
+  background: #fee2e2;
+  border: 1px solid #fecaca;
+  padding: 8px;
+  border-radius: 4px;
+  margin-top: -8px;
+  font-size: 0.95rem;
+  text-align: center;
+}

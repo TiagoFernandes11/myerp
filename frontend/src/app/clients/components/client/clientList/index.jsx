@@ -39,7 +39,7 @@ export default function ClientList({
               <Client
                 key={client.id}
                 client={client}
-                onSelect={setSelectedClient}
+                onClick={() => setSelectedClient(client)}
                 isSelected={selectedClient?.id === client.id}
               />
             );

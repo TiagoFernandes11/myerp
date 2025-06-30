@@ -5,7 +5,7 @@ import "./index.css";
 export default function Header() {
   return (
     <nav>
-      <ul className>
+      <ul>
         <Link href={"/"}>
           <Image src={"./next.svg"} alt="logo" width={100} height={10} />
         </Link>

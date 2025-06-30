@@ -1,0 +1,28 @@
+.showcase-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
+  padding: 24px 200px;
+  width: 100%;
+  box-sizing: border-box;
+  justify-items: center;
+}
+
+@media (max-width: 600px) {
+  .container {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 12px;
+  }
+}
+
+.item-container img {
+  width: 100%;
+  height: auto;
+  max-height: 160px;
+  object-fit: contain;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  background: #f3f4f6;
+  display: block;
+}

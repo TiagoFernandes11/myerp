@@ -1,0 +1,67 @@
+.formContainer {
+  max-width: 400px;
+  margin: 60px auto;
+  padding: 32px 24px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+label {
+  font-weight: 500;
+  margin-bottom: 4px;
+  color: #22223b;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="date"] {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  font-size: 1rem;
+  margin-top: 2px;
+  transition: border 0.2s;
+}
+
+input:focus {
+  border-color: #2563eb;
+  outline: none;
+}
+
+button {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  padding: 10px 0;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background 0.2s;
+}
+
+button:hover {
+  background: #1d4ed8;
+}
+
+.message {
+  color: #26dcd3;
+  background: #fee2e2;
+  padding: 8px;
+  border-radius: 4px;
+  text-align: center;
+  margin-top: 10px;
+}
