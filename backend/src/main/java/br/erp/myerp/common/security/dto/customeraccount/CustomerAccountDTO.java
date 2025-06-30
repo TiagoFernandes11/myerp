@@ -8,7 +8,7 @@ public class CustomerAccountDTO {
 
     private Long id;
     private Long clientId;
-    private String username;
+    private String email;
     private String password;
     private Role role;
 }

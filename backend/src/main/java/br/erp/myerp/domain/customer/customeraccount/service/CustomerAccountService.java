@@ -39,8 +39,8 @@ public class CustomerAccountService {
         return customerAccountRepository.findAll(CustomerAccountSpecification.genericFilter(filter, value), PageRequest.of(pageNum, pageSize)).toList();
     }
 
-    public CustomerAccountDTO findByUsername(String username) {
-        CustomerAccount customerAccount = customerAccountRepository.findByUsername(username).orElseThrow(() -> new EntityNotFoundException("Customer not found with username: " + username));
+    public CustomerAccountDTO findByUsername(String email) {
+        CustomerAccount customerAccount = customerAccountRepository.findByEmail(email).orElseThrow(() -> new EntityNotFoundException("Customer not found with email: " + email));
         return customerAccountMapper.toCustomerAccountDTO(customerAccount);
     }
 

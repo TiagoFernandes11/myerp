@@ -25,12 +25,12 @@ public class CustomAdminDetailsService implements UserDetailsService {
     private CustomerAccountClient customerAccountClient;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        AdminDTO admin = adminClient.getAdmin(username);
-        CustomerAccountDTO customer = customerAccountClient.findByUsername(username);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        AdminDTO admin = adminClient.getAdmin(email);
+        CustomerAccountDTO customer = customerAccountClient.findByEmail(email);
 
         if(admin == null && customer == null){
-            throw new UsernameNotFoundException("User with username: " + username + " was not found");
+            throw new UsernameNotFoundException("User with username: " + email + " was not found");
         }
 
         String user;
@@ -42,7 +42,7 @@ public class CustomAdminDetailsService implements UserDetailsService {
             password = admin.getPassword();
             grantedAuthority = List.of(new SimpleGrantedAuthority(admin.getRole().toString()));
         } else {
-            user = customer.getUsername();
+            user = customer.getEmail();
             password = customer.getPassword();
             grantedAuthority = List.of(new SimpleGrantedAuthority(customer.getRole().toString()));
         }

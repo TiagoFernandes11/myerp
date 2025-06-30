@@ -15,7 +15,7 @@ public class CustomerAccount {
     private Long clientId;
 
     @Column(unique = true, nullable = false)
-    private String username;
+    private String email;
 
     private String password;
 

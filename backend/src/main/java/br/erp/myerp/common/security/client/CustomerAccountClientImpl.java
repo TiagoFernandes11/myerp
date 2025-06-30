@@ -13,9 +13,9 @@ public class CustomerAccountClientImpl implements CustomerAccountClient{
     private RestTemplate restTemplate;
 
     @Override
-    public CustomerAccountDTO findByUsername(String username) {
+    public CustomerAccountDTO findByEmail(String email) {
         try{
-            return restTemplate.getForObject("http://localhost:8080/api/customer-account/get/{username}", CustomerAccountDTO.class, username);
+            return restTemplate.getForObject("http://localhost:8080/api/customer-account/get/{email}", CustomerAccountDTO.class, email);
         }catch (HttpClientErrorException e){
             return null;
         }
