@@ -18,5 +18,7 @@ public class Product {
 
     private String name;
 
+    private byte[][] image;
+
     private BigDecimal price;
 }
