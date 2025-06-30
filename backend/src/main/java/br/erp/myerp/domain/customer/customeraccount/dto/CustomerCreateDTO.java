@@ -1,6 +1,5 @@
 package br.erp.myerp.domain.customer.customeraccount.dto;
 
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
@@ -10,7 +9,7 @@ import lombok.Data;
 import java.time.LocalDate;
 
 @Data
-public class CustomerAccountCreateDTO {
+public class CustomerCreateDTO {
 
     @NotNull(message = "Email can not be null")
     @NotEmpty(message = "Email can not be empty")
@@ -40,6 +39,8 @@ public class CustomerAccountCreateDTO {
     @Past(message = "Birthday must be in the past")
     private LocalDate birthday;
 
-    @Column(unique = true, nullable = false)
+    //    @CPF(message = "CPF must be valid")
+    @NotNull(message = "CPF can not be null")
+    @NotEmpty(message = "CPF can not be empty")
     private String cpf;
 }

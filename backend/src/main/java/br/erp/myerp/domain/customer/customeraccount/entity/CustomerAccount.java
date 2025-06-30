@@ -1,6 +1,6 @@
 package br.erp.myerp.domain.customer.customeraccount.entity;
 
-import br.erp.myerp.domain.admin.constants.Role;
+import br.erp.myerp.domain.customer.customeraccount.constants.Role;
 import jakarta.persistence.*;
 import lombok.Data;
 

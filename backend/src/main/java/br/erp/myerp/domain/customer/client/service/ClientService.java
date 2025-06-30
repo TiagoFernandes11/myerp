@@ -39,9 +39,9 @@ public class ClientService {
         return clientMapper.toClientResponseDTO(clientRepository.findByEmail(email).orElseThrow(() -> new EntityNotFoundException("Client with email: " + email + " was not founded")));
     }
 
-    public void create(ClientCreateDTO clientCreateDTO){
+    public Client create(ClientCreateDTO clientCreateDTO){
         Client client = clientMapper.toClient(clientCreateDTO);
-        clientRepository.save(client);
+        return clientRepository.save(client);
     }
 
     public void update(Long id, ClientUpdateDTO clientUpdateDTO){
