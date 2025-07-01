@@ -13,7 +13,7 @@ public class ClienteSpecification {
                 return criteriaBuilder.conjunction();
             }
 
-            List<String> allowedFields = List.of("name", "email", "cpf", "cellphone");
+            List<String> allowedFields = List.of("email", "cpf", "cellphone");
 
             if (!allowedFields.contains(filter)) {
                 throw new IllegalArgumentException("invalid filter");

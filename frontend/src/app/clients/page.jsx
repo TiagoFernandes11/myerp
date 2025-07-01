@@ -1,11 +1,12 @@
 "use client";
 
 import "./page.css";
-import GeneralHeader from "./components/client/generalHeader";
-import ClientList from "./components/client/clientList";
+import EntityList from "@/app/components/lists/List";
 import AuthGuard from "../security/AuthGuard";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
+import ListHeader from "@/app/components/lists/ListHeader";
+import { getClients } from "@/app/clients/service/clientService";
 
 export default function ClientsPage() {
   const [selectedClient, setSelectedClient] = useState();
@@ -30,13 +31,18 @@ export default function ClientsPage() {
 
   return (
     <AuthGuard>
-      <GeneralHeader selectedClient={selectedClient} />
-      <ClientList
-        selectedClient={selectedClient}
-        setSelectedClient={setSelectedClient}
+      <ListHeader
+        entity={"clients"}
+        filterOptions={["email", "cpf", "cellphone"]}
+        selectedEntity={selectedClient}
+      />
+      <EntityList
+        fetchEntity={getClients}
+        selectedEntity={selectedClient}
+        setSelectedEntity={setSelectedClient}
         page={currentPage}
-        searchFilter={selectedFilter}
-        searchValue={selectedFilterValue}
+        filter={selectedFilter}
+        filterValue={selectedFilterValue}
       />
     </AuthGuard>
   );

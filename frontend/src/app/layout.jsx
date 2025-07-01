@@ -2,8 +2,8 @@
 
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/header";
-import SideBar from "@/components/sidebar";
+import Header from "@/app/components/header";
+import SideBar from "@/app/components/sidebar";
 import { usePathname } from "next/navigation";
 
 const geistSans = Geist({

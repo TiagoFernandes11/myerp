@@ -3,16 +3,26 @@
 import { useState } from "react";
 import "./page.css";
 import AuthGuard from "../../security/AuthGuard";
-import ClientForm from "../components/client/clientForm";
-import FormHeader from "../components/client/formHeader";
+import EntityForm from "../../components/lists/EntityForm";
+import FormHeader from "../../components/lists/FormHeader";
+import { createClient } from "../service/clientService";
 
 export default function New() {
-  const [client, setClient] = useState({});
+  const [client, setClient] = useState({
+    id: "",
+    firstName: "",
+    lastName: "",
+    email: "",
+    ddd: "",
+    cellphone: "",
+    birthday: "",
+    cpf: "",
+  });
 
   return (
     <AuthGuard>
-      <FormHeader client={client} isNew={true} />
-      <ClientForm client={client} setClient={setClient} isNew={true} />
+      <FormHeader entity={client} saveFunction={createClient} isNew={true} />
+      <EntityForm entity={client} setEntity={setClient} isNew={true} />
     </AuthGuard>
   );
 }

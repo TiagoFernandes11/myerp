@@ -22,6 +22,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/clients/service/clientService.js", "src/app/clients/components/client/clientList/index.jsx", "src/app/clients/components/client/client/index.jsx", "src/app/clients/components/client/generalHeader/index.jsx", "src/app/clients/page.jsx", "src/app/products/page.jsx", "src/app/layout.jsx", "src/app/page.jsx", "src/components/header.jsx", "src/components/sidebar.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/clients/service/clientService.js", "src/app/clients/components/client/clientList/index.jsx", "src/app/clients/components/client/client/index.jsx", "src/app/clients/components/client/generalHeader/index.jsx", "src/app/clients/page.jsx", "src/app/products/page.jsx", "src/app/layout.jsx", "src/app/page.jsx", "src/app/components/header.jsx", "src/app/components/sidebar.jsx"],
   "exclude": ["node_modules"]
 }

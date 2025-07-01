@@ -24,7 +24,7 @@ export default function ListHeader({ entity, filterOptions, selectedEntity }) {
 
   return (
     <div id="header" className="flex flex-col w-full p-2">
-      <h1 className="text-2xl">{entity}s</h1>
+      <h1 className="text-2xl">{entity}:</h1>
       <div id="buttons">
         <button onClick={editEntity}>Edit</button>
         <button onClick={createEntity}>Create new</button>
@@ -37,7 +37,11 @@ export default function ListHeader({ entity, filterOptions, selectedEntity }) {
         >
           <option value="">Select a filter</option>
           {filterOptions.map((opt) => {
-            return <option value={opt}>{opt}</option>;
+            return (
+              <option key={opt} value={opt}>
+                {opt}
+              </option>
+            );
           })}
         </select>
         <input
