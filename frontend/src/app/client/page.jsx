@@ -6,7 +6,7 @@ import AuthGuard from "../security/AuthGuard";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import ListHeader from "@/app/components/lists/ListHeader";
-import { getClients } from "@/app/clients/service/clientService";
+import { getClients } from "./service/clientService";
 
 export default function ClientsPage() {
   const [selectedClient, setSelectedClient] = useState();
@@ -32,7 +32,7 @@ export default function ClientsPage() {
   return (
     <AuthGuard>
       <ListHeader
-        entity={"clients"}
+        entityName={"client"}
         filterOptions={["email", "cpf", "cellphone"]}
         selectedEntity={selectedClient}
       />

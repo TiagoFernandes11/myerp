@@ -27,7 +27,9 @@ export default function EntityList({
   useEffect(() => {
     async function fetchEntities(page, filter, value) {
       const entities = await fetchEntity(page, filter, value);
-      setEntityList(entities);
+      if (entities[0]) {
+        setEntityList(entities);
+      }
     }
 
     fetchEntities(page, filter, filterValue);

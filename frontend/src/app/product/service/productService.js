@@ -2,11 +2,14 @@ import axios from "axios";
 
 export async function getProducts(page, filter, value) {
   try {
-    const response = await axios.get(`http://localhost:8080/api/product?page=${page}&filter=${filter}&value=${value}`, {
-      headers: {
-        Authorization: localStorage.getItem("token"),
-      },
-    });
+    const response = await axios.get(
+      `http://localhost:8080/api/product?page=${page}&filter=${filter}&value=${value}`,
+      {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      }
+    );
     return response.data;
   } catch (error) {
     console.log("Something went wrong: ", error);
@@ -24,6 +27,7 @@ export async function getProductById(id) {
         },
       }
     );
+    console.log(response.data);
     return response.data;
   } catch (error) {
     console.log("Something went wrong: ", error);

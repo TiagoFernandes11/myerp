@@ -38,7 +38,7 @@ export default function ClientByID() {
         <>
           <FormHeader
             entity={client}
-            entityName={"clients"}
+            entityName={"client"}
             saveFunction={updateClient}
             deleteFunction={deleteClient}
           />

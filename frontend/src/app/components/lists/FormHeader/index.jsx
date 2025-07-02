@@ -13,7 +13,7 @@ export default function FormHeader({
     const response = await saveFunction(entity);
     if (response === 200 || response === 201) {
       alert("Successfully saved");
-      router.push("/clients");
+      router.push(`/${entityName}`);
     } else {
       alert("Something went wrong, " + JSON.stringify(response));
     }

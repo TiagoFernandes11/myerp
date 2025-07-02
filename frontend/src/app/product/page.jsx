@@ -1,10 +1,11 @@
 "use client";
 
 import AuthGuard from "../security/AuthGuard";
-import ProductList from "./components/productList";
-import ListHeader from "./components/listHeader";
+import List from "@/app/components/lists/List";
+import ListHeader from "@/app/components/lists/ListHeader";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
+import { getProducts } from "./service/productService";
 
 export default function ProductsPage() {
   const [selectedProduct, setSelectedProduct] = useState();
@@ -26,18 +27,17 @@ export default function ProductsPage() {
   return (
     <AuthGuard>
       <ListHeader
-        product={selectedProduct}
-        selectedFilter={selectedFilter}
-        searchKeyword={searchKeyword}
-        setSelectedFilter={selectedFilter}
-        setSearchKeyword={setSearchKeyword}
+        entityName={"product"}
+        filterOptions={["id", "name", "sku", "price"]}
+        selectedEntity={selectedProduct}
       />
-      <ProductList
-        selectedProduct={selectedProduct}
-        setSelectedProduct={setSelectedProduct}
-        currentPage={currentPage}
-        selectedFilter={selectedFilter}
-        searchKeyword={searchKeyword}
+      <List
+        fetchEntity={getProducts}
+        filter={selectedFilter}
+        filterValue={searchKeyword}
+        page={currentPage}
+        selectedEntity={selectedProduct}
+        setSelectedEntity={setSelectedProduct}
       />
     </AuthGuard>
   );

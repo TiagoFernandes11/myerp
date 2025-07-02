@@ -4,27 +4,31 @@ import { useState } from "react";
 import "./index.css";
 import { useRouter } from "next/navigation";
 
-export default function ListHeader({ entity, filterOptions, selectedEntity }) {
+export default function ListHeader({
+  entityName,
+  filterOptions,
+  selectedEntity,
+}) {
   const [selectedFilter, setSelectedFilter] = useState("");
   const [searchKeyword, setSearchKeyword] = useState("");
 
   const router = useRouter();
 
   function createEntity() {
-    router.push(`/${entity}/new`);
+    router.push(`/${entityName}/new`);
   }
 
   function editEntity() {
     if (selectedEntity) {
-      router.push(`/${entity}/${selectedEntity.id}`);
+      router.push(`/${entityName}/${selectedEntity.id}`);
     } else {
-      alert(`Please select a ${entity} to edit`);
+      alert(`Please select a ${entityName} to edit`);
     }
   }
 
   return (
     <div id="header" className="flex flex-col w-full p-2">
-      <h1 className="text-2xl">{entity}:</h1>
+      <h1 className="text-2xl">{entityName}s:</h1>
       <div id="buttons">
         <button onClick={editEntity}>Edit</button>
         <button onClick={createEntity}>Create new</button>

@@ -35,8 +35,8 @@ export default function RootLayout({ children }) {
         {" "}
         <Header
           addresses={[
-            { label: "clients", url: "/clients?page=0&filter=&value=" },
-            { label: "products", url: "/products" },
+            { label: "clients", url: "/client?page=0&filter=&value=" },
+            { label: "products", url: "/product?page=0&filter=&value=" },
           ]}
         ></Header>
         <div style={{ display: "flex", height: "100%", width: "100%" }}>
