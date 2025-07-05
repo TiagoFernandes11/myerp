@@ -24,10 +24,10 @@ public class TokenValidationController {
 
     @GetMapping("/validate/customer")
     public ResponseEntity<?> validateToken(Authentication authentication) {
-        boolean hasRoleAdmin = authentication.getAuthorities().stream()
+        boolean hasRole = authentication.getAuthorities().stream()
                 .anyMatch(authority -> authority.getAuthority().equals("ROLE_CLIENT") || authority.getAuthority().equals("ROLE_ADMIN"));
 
-        if (hasRoleAdmin) {
+        if (hasRole) {
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("You have no permission");

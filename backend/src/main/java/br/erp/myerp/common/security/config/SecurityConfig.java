@@ -52,6 +52,7 @@ public class SecurityConfig {
             request.requestMatchers("/api/login").permitAll();
             request.requestMatchers("/api/token/validate/**").permitAll();
             request.requestMatchers("/api/admin/get/**").permitAll();
+            request.requestMatchers("/api/product").permitAll();
             request.requestMatchers("/api/product/{id}").permitAll();
             request.requestMatchers("/api/customer-account/get/**").permitAll();
             request.requestMatchers("/api/customer-account/register").permitAll();
