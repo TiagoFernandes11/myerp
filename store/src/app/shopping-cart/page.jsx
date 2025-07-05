@@ -4,11 +4,9 @@ import { useEffect, useState } from "react";
 import "./page.css";
 
 export default function ShoppingCartPage() {
-  const [products, setProducts] = useState([[]]);
-
-  useEffect(() => {
-    setProducts([]);
-  }, []);
+  const [shoppingCart, setShoppingCart] = useState(
+    JSON.parse(localStorage.getItem("shoppingCart"))
+  );
 
   return (
     <div className="body">
@@ -17,15 +15,21 @@ export default function ShoppingCartPage() {
         <div className="resume">
           <p>Itens</p>
           <div className="itens">
-            {products.map((product) => {
-              return <div>oi</div>;
+            {shoppingCart.item.map((product) => {
+              return <div>product placeholder</div>;
             })}
           </div>
         </div>
         <div className="options">
-          <p>Total: </p>
+          <p>Subtotal: </p>
           <p>Shipping: </p>
           <div>
+            <hr />
+            <div>
+              <p>Total</p>
+              <p>R$ Placeholder</p>
+            </div>
+            <hr />
             <button>Checkout</button>
             <button>Add more itens</button>
           </div>

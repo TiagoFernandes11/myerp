@@ -3,6 +3,7 @@ import "./index.css";
 import ShowcaseItem from "../ShowcaseItem";
 import { useEffect, useState } from "react";
 import { getProducts } from "@/app/service/homeService";
+import { addItemToShoppingCart } from "@/app/shopping-cart/service/ShoppingCartService";
 
 export default function Showcase() {
   const [products, setProducts] = useState([]);
@@ -25,6 +26,7 @@ export default function Showcase() {
             image={product.image}
             name={product.name}
             price={product.price}
+            buttonAction={() => addItemToShoppingCart(product)}
           />
         );
       })}
