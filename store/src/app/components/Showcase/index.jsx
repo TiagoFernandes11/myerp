@@ -2,17 +2,18 @@ import "./index.css";
 
 import ShowcaseItem from "../ShowcaseItem";
 import { useEffect, useState } from "react";
-import { getProducts } from "../../service/homeService";
+import { getProducts } from "@/app/service/homeService";
 
 export default function Showcase() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
     async function getShowcaseItems() {
-      return getProducts();
+      const products = await getProducts();
+      setProducts(products);
     }
 
-    setProducts(getShowcaseItems());
+    getShowcaseItems();
   }, []);
 
   return (
@@ -20,6 +21,7 @@ export default function Showcase() {
       {products.map((product) => {
         return (
           <ShowcaseItem
+            key={product.id}
             image={product.image}
             name={product.name}
             price={product.price}

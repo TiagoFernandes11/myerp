@@ -9,17 +9,17 @@ export default function RootLayout({ children }) {
   if (usePathname() === "/login") {
     return (
       <html lang="en">
-        <body className="w-full h-full">
+        <body>
           <div>{children}</div>
         </body>
       </html>
     );
   }
   return (
-    <html lang="en">
-      <body>
+    <html lang="en" className="h-full w-full">
+      <body className="h-full w-full flex flex-col">
         <Header />
-        {children}
+        <main className="flex-grow">{children}</main>
       </body>
     </html>
   );

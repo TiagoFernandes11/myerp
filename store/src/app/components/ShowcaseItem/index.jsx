@@ -8,7 +8,7 @@ export default function ShowcaseItem({ image, name, price }) {
       <img src={image} alt={name} />
       <div className="name-price-container">
         <span className="name">{name}</span>
-        <span className="price">R$ {price.toFixed(2)}</span>
+        <span className="price">R$ {Number(price).toFixed(2)}</span>
       </div>
       <div className="button-container">
         <button>Comprar</button>
