@@ -19,6 +19,8 @@ public class ProductResponseDTO {
 
     private String price;
 
+    private byte[][] image;
+
     public ProductResponseDTO() {
     }
 
