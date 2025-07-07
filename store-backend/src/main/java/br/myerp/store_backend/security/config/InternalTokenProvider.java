@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 @Component
-public class InternalTokenProviderForOrder implements ApplicationListener<ApplicationReadyEvent> {
+public class InternalTokenProvider implements ApplicationListener<ApplicationReadyEvent> {
 
     @Autowired
     private RestTemplate restTemplate;

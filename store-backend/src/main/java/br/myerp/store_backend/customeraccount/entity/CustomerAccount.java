@@ -12,7 +12,7 @@ public class CustomerAccount {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long clientId;
+    private Long idErp;
 
     @Column(unique = true, nullable = false)
     private String email;

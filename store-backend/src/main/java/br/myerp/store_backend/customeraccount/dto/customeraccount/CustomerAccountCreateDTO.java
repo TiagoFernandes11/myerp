@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CustomerAccountCreateDTO {
 
-    private Long IdERP;
+    private Long idErp;
 
     @Column(unique = true, nullable = false)
     private String email;

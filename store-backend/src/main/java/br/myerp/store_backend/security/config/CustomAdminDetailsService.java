@@ -1,9 +1,7 @@
 package br.myerp.store_backend.security.config;
 
-import br.myerp.store_backend.customeraccount.dto.customeraccount.CustomerAccountDTO;
+import br.myerp.store_backend.customeraccount.dto.customeraccount.CustomerAccountResponseDTO;
 import br.myerp.store_backend.customeraccount.service.CustomerAccountService;
-import br.myerp.store_backend.security.client.CustomerAccountClient;
-import br.myerp.store_backend.security.dto.CustomerAccountDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -24,7 +22,7 @@ public class CustomAdminDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        CustomerAccountDTO customer = customerAccountService.findByUsername(email);
+        CustomerAccountResponseDTO customer = customerAccountService.findByUsername(email);
 
         String user = customer.getEmail();
         String password = customer.getPassword();

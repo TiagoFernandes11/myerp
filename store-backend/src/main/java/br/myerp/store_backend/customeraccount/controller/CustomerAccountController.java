@@ -1,7 +1,7 @@
 package br.myerp.store_backend.customeraccount.controller;
 
 
-import br.myerp.store_backend.customeraccount.dto.customeraccount.CustomerAccountDTO;
+import br.myerp.store_backend.customeraccount.dto.customeraccount.CustomerAccountResponseDTO;
 import br.myerp.store_backend.customeraccount.dto.customeraccount.CustomerCreateDTO;
 import br.myerp.store_backend.customeraccount.entity.CustomerAccount;
 import br.myerp.store_backend.customeraccount.service.CustomerAccountService;
@@ -30,15 +30,20 @@ public class CustomerAccountController {
         return ResponseEntity.status(HttpStatus.OK).body(customerAccountService.findAll(filter, value, pageNum, PAGE_SIZE));
     }
 
-    @GetMapping("/get/{username}")
-    public ResponseEntity<CustomerAccountDTO> findById(@PathVariable String username){
-        return ResponseEntity.status(HttpStatus.OK).body(customerAccountService.findByUsername(username));
+    @GetMapping("/get/{email}")
+    public ResponseEntity<CustomerAccountResponseDTO> findById(@PathVariable String email){
+        return ResponseEntity.status(HttpStatus.OK).body(customerAccountService.findByUsername(email));
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Void> createAccount(@Valid @RequestBody CustomerCreateDTO customer){
-        customerAccountService.register(customer);
+    public ResponseEntity<String> createAccount(@Valid @RequestBody CustomerCreateDTO customer){
+        int code = customerAccountService.register(customer);
+        if(code == 403){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email already registered");
+        }
         return ResponseEntity.status(HttpStatus.CREATED).build();
-
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<>
 }

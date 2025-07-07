@@ -46,10 +46,10 @@ public class ClientController {
         return ResponseEntity.status(HttpStatus.OK).body(client);
     }
 
-    @PostMapping()
-    public ResponseEntity<String> createClient(@RequestBody @Valid ClientCreateDTO clientCreateDTO){
-        clientService.create(clientCreateDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Client successfully created");
+    @PostMapping
+    public ResponseEntity<ClientResponseDTO> createClient(@RequestBody @Valid ClientCreateDTO clientCreateDTO){
+        ClientResponseDTO clientResponseDTO = clientService.create(clientCreateDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(clientResponseDTO);
     }
 
     @PutMapping("/{id}")
@@ -60,7 +60,7 @@ public class ClientController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteClient(@PathVariable Long id){
-        clientService.delete(id);
+        clientService.setInactive(id);
         return ResponseEntity.status(HttpStatus.OK).body("Client id: " + id + " was successfully deleted");
     }
 }

@@ -49,6 +49,7 @@ public class SecurityConfig {
         }));
         http.addFilterBefore(new JWTTokenValidationFilter(), BasicAuthenticationFilter.class);
         http.authorizeHttpRequests((request) -> {
+            request.requestMatchers("/api/customer-account/**").permitAll();
         });
         http.csrf(AbstractHttpConfigurer::disable);
         http.formLogin(AbstractHttpConfigurer::disable);
