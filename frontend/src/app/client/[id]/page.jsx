@@ -6,7 +6,7 @@ import AuthGuard from "../../security/AuthGuard";
 
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { getClientById } from "@/app/clients/service/clientService";
+import { getClientById } from "../service/clientService";
 import FormHeader from "@/app/components/lists/FormHeader";
 import EntityForm from "../../components/lists/EntityForm";
 import { deleteClient, updateClient } from "../service/clientService";

@@ -17,13 +17,16 @@ export default function Login() {
     setError("");
 
     try {
-      const response = await axios.post("http://localhost:8080/api/login", {
+      const response = await axios.post("http://localhost:8090/api/login", {
         username: email,
         password: password,
       });
 
+      console.log(response);
+
       if (response.status === 200) {
         localStorage.setItem("token", response.data.token);
+        localStorage.setItem("clientId", response.data.clientId);
         router.push(localStorage.getItem("redirectAfterLogin") || "/");
       }
     } catch (err) {

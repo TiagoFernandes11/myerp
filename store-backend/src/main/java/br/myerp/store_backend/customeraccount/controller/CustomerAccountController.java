@@ -3,6 +3,7 @@ package br.myerp.store_backend.customeraccount.controller;
 
 import br.myerp.store_backend.customeraccount.dto.customeraccount.CustomerAccountResponseDTO;
 import br.myerp.store_backend.customeraccount.dto.customeraccount.CustomerCreateDTO;
+import br.myerp.store_backend.customeraccount.dto.customeraccount.CustomerUpdateDTO;
 import br.myerp.store_backend.customeraccount.entity.CustomerAccount;
 import br.myerp.store_backend.customeraccount.service.CustomerAccountService;
 import jakarta.validation.Valid;
@@ -44,6 +45,9 @@ public class CustomerAccountController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<>
+//    @PutMapping("{id}")
+//    public ResponseEntity<String> updateAccount(@Valid @RequestBody CustomerUpdateDTO customerUpdateDTO){
+//        customerAccountService.update(customerUpdateDTO);
+//        return ResponseEntity.status(HttpStatus.OK).body("Successfully updated");
+//    }
 }

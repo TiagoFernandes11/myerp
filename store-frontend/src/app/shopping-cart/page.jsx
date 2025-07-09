@@ -1,12 +1,13 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import CartItem from "./components/CartItem";
 import "./page.css";
 
 export default function ShoppingCartPage() {
-  let shoppingCart = JSON.parse(localStorage.getItem("shoppingCart"));
+  const router = useRouter();
 
-  console.log(shoppingCart);
+  let shoppingCart = JSON.parse(localStorage.getItem("shoppingCart"));
 
   return (
     <div className="body">
@@ -19,9 +20,11 @@ export default function ShoppingCartPage() {
               shoppingCart.item.map((product) => {
                 return (
                   <CartItem
+                    key={product.id}
                     name={product.name}
                     price={product.price * product.quantity}
                     quantity={product.quantity}
+                    image={null}
                   />
                 );
               })
@@ -40,7 +43,19 @@ export default function ShoppingCartPage() {
               <p>R$ Placeholder</p>
             </div>
             <hr />
-            <button>Checkout</button>
+            {shoppingCart &&
+            shoppingCart.item &&
+            shoppingCart.item.length > 0 ? (
+              <button
+                onClick={() => {
+                  router.push("/payment-confirmation");
+                }}
+              >
+                Checkout
+              </button>
+            ) : (
+              <div></div>
+            )}
             <button>Add more itens</button>
           </div>
         </div>

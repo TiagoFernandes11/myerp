@@ -1,5 +1,8 @@
 package br.myerp.store_backend.login.controller;
 
+import br.myerp.store_backend.customeraccount.dto.customeraccount.CustomerAccountResponseDTO;
+import br.myerp.store_backend.customeraccount.entity.CustomerAccount;
+import br.myerp.store_backend.customeraccount.service.CustomerAccountService;
 import br.myerp.store_backend.login.dto.AuthRequestDTO;
 import br.myerp.store_backend.login.dto.AuthResponseDTO;
 import br.myerp.store_backend.login.service.LoginServices;
@@ -25,14 +28,19 @@ public class LoginController {
     @Autowired
     private JWTTokenProvider tokenProvider;
 
+    @Autowired
+    private CustomerAccountService customerAccountService;
+
     @PostMapping
     public ResponseEntity<AuthResponseDTO> authenticate(@RequestBody @Valid AuthRequestDTO authRequest, HttpServletResponse response){
         Authentication a = loginServices.authenticate(authRequest);
 
+        CustomerAccountResponseDTO customerAccount = customerAccountService.findByUsername(a.getName());
+
         String jwt = tokenProvider.generateToken(a);
         response.setHeader("Authorization", jwt);
 
-        return ResponseEntity.status(HttpStatus.OK).body(new AuthResponseDTO(jwt));
+        return ResponseEntity.status(HttpStatus.OK).body(new AuthResponseDTO(customerAccount.getId(), jwt));
     }
 
 }
