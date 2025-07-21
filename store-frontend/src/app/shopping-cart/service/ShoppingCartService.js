@@ -37,7 +37,7 @@ export function addItemToShoppingCart(item) {
 export function removeItemOfShoppingCart(item) {
   const shoppingCart = JSON.parse(localStorage.getItem("shoppingCart"));
   const existingItem = shoppingCart.item.find((i) => i.id === item.id);
-  
+
   if (existingItem) {
     if (existingItem.quantity > 1) {
       existingItem.quantity--;
@@ -45,6 +45,14 @@ export function removeItemOfShoppingCart(item) {
       shoppingCart.item = shoppingCart.item.filter((i) => i.id !== item.id);
     }
   }
+
+  let subtotal = 0;
+
+  shoppingCart.item.forEach((item) => {
+    subtotal += Number(item.quantity) * Number(item.price);
+  });
+
+  shoppingCart.total = subtotal;
 
   localStorage.setItem("shoppingCart", JSON.stringify(shoppingCart));
 }

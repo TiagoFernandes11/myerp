@@ -1,4 +1,4 @@
-package br.erp.myerp.common.security.login.controller;
+package br.myerp.manager.security.login.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

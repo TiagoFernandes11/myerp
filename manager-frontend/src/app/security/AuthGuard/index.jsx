@@ -13,11 +13,11 @@ export default function AuthGuard({ children }) {
 
     localStorage.setItem("redirectAfterLogin", window.location.pathname);
     if (!token) {
-      router.push("/client/login");
+      router.push("/login");
       return;
     }
     axios
-      .get("http://localhost:8090/api/token/validate/customer", {
+      .get("http://localhost:8080/api/token/validate/admin", {
         headers: {
           Authorization: token,
         },
@@ -26,12 +26,12 @@ export default function AuthGuard({ children }) {
         if (response.status === 200) {
           setAuthorized(true);
         } else {
-          router.push("/client/login");
+          router.push("/login");
         }
       })
       .catch((error) => {
         console.error("Invalid token", error);
-        router.push("/client/login");
+        router.push("/login");
       });
   }, []);
 

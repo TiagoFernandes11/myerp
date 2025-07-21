@@ -1,0 +1,12 @@
+.add-product {
+  width: 10px;
+  height: 10px;
+  font-size: 50px;
+}
+
+.remove-product {
+  width: 10px;
+  height: 10px;
+  font-size: 50px;
+  margin-left: 50px;
+}

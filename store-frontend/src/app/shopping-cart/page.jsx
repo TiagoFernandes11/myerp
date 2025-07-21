@@ -3,11 +3,13 @@
 import { useRouter } from "next/navigation";
 import CartItem from "./components/CartItem";
 import "./page.css";
+import { useState } from "react";
 
 export default function ShoppingCartPage() {
   const router = useRouter();
-
-  let shoppingCart = JSON.parse(localStorage.getItem("shoppingCart"));
+  const [shoppingCart, setShoppingCart] = useState(
+    JSON.parse(localStorage.getItem("shoppingCart"))
+  );
 
   return (
     <div className="body">
@@ -20,11 +22,11 @@ export default function ShoppingCartPage() {
               shoppingCart.item.map((product) => {
                 return (
                   <CartItem
+                    setShoppingCart={setShoppingCart}
+                    shoppingCart={shoppingCart}
                     key={product.id}
-                    name={product.name}
-                    price={product.price * product.quantity}
-                    quantity={product.quantity}
-                    image={null}
+                    product={product}
+                    total={shoppingCart.total}
                   />
                 );
               })
