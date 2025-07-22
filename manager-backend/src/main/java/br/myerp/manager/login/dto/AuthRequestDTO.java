@@ -1,4 +1,4 @@
-package br.myerp.manager.security.login.dto;
+package br.myerp.manager.login.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
