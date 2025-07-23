@@ -3,8 +3,6 @@ package br.myerp.manager.login.controller;
 import br.myerp.manager.login.client.ManagerAdminClient;
 import br.myerp.manager.login.dto.AuthRequestDTO;
 import br.myerp.manager.login.dto.AuthResponseDTO;
-import br.myerp.manager.security.provider.JWTTokenProvider;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,9 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/login")
 public class LoginController {
-
-    @Autowired
-    private JWTTokenProvider tokenProvider;
 
     @Autowired
     private ManagerAdminClient managerAdminClient;
