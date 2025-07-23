@@ -14,9 +14,7 @@ public class StockMovementItem {
     private long productId;
     private int quantity;
 
-    @JsonIgnore
-    @ManyToOne
-    private StockMovement stockMovement;
+    private long stockMovementId;
 
     public void addQuantity(int quantity){
         this.quantity += quantity;

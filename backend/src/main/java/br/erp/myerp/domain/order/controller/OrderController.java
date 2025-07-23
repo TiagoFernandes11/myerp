@@ -1,5 +1,6 @@
 package br.erp.myerp.domain.order.controller;
 
+import br.erp.myerp.domain.order.dto.order.OrderCreateDTO;
 import br.erp.myerp.domain.order.dto.order.OrderResponseDTO;
 import br.erp.myerp.domain.order.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.transform.OutputKeys;
 import java.util.List;
 
 @RestController
@@ -26,5 +28,11 @@ public class OrderController {
     @GetMapping("/{id}")
     public ResponseEntity<OrderResponseDTO> getById(@PathVariable(required = true) long id){
         return ResponseEntity.status(HttpStatus.OK).body(orderService.findById(id));
+    }
+
+    @PostMapping
+    public ResponseEntity<String> create(@RequestBody OrderCreateDTO orderCreateDTO){
+        orderService.createOrder(orderCreateDTO);
+        return ResponseEntity.status(HttpStatus.OK).body("Order successfully created");
     }
 }

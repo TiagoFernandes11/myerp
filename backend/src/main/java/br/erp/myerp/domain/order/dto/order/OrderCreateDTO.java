@@ -22,7 +22,7 @@ public class OrderCreateDTO {
     private long clientId;
 
     @NotEmpty(message = "Products id can not be empty")
-    private List<OrderItem> productsId;
+    private List<OrderItem> orderItems;
 
     @Positive(message = "Total must be positive")
     private BigDecimal total;

@@ -1,5 +1,6 @@
 package br.erp.myerp.domain.stock.service;
 
+import br.erp.myerp.domain.stock.dto.stockmovementitem.StockMovementItemCreateDTO;
 import br.erp.myerp.domain.stock.client.product.ProductClient;
 import br.erp.myerp.domain.stock.dto.stock.StockResponseDTO;
 import br.erp.myerp.domain.stock.dto.stockmovement.StockMovementCreateDTO;
@@ -52,7 +53,7 @@ public class StockMovementService {
         StockMovement stockMovement = stockMovementMapper.toStockMovement(stockMovementCreateDTO);
         stockMovement.setTimestamp(LocalDateTime.now());
 
-        for (StockMovementItem item : stockMovementCreateDTO.getItems()) {
+        for (StockMovementItemCreateDTO item : stockMovementCreateDTO.getItems()) {
             Stock stock = stockMapper.toStock(stockService.getByProductId(item.getProductId()));
 
             if (stockMovementCreateDTO.getType() == MovementType.OUT) {
@@ -65,7 +66,6 @@ public class StockMovementService {
             }
 
             stockService.update(stockMapper.toStockUpdateDTO(stock));
-            item.setStockMovement(stockMovement);
         }
         stockMovementRepository.save(stockMovement);
     }
@@ -90,7 +90,7 @@ public class StockMovementService {
                 stock.addQuantity(diff);
                 stockService.update(stockMapper.toStockUpdateDTO(stockMapper.toStock(stock)));
             }
-            item.setStockMovement(stockMovement);
+            item.setStockMovementId(stockMovement.getId());
         }
         stockMovement = stockMovementMapper.toStockMovement(stockMovementUpdateDTO);
         stockMovementRepository.save(stockMovement);

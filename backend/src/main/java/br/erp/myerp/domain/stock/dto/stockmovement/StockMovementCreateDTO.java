@@ -1,5 +1,6 @@
 package br.erp.myerp.domain.stock.dto.stockmovement;
 
+import br.erp.myerp.domain.stock.dto.stockmovementitem.StockMovementItemCreateDTO;
 import br.erp.myerp.domain.stock.entity.StockMovementItem;
 import br.erp.myerp.domain.stock.enums.MovementType;
 import jakarta.validation.constraints.NotBlank;
@@ -13,7 +14,7 @@ import java.util.List;
 public class StockMovementCreateDTO {
 
     @NotEmpty(message = "Stock movement items can not be empty")
-    private List<StockMovementItem> items;
+    private List<StockMovementItemCreateDTO> items;
 
     @NotNull(message = "Movement type can not be null")
     private MovementType type;

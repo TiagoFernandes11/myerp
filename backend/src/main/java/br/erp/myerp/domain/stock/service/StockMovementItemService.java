@@ -46,7 +46,10 @@ public class StockMovementItemService {
     }
 
     public void create(@Valid StockMovementItemCreateDTO stockMovementItemCreateDTO) {
-        StockMovement stockMovement = stockMovementItemCreateDTO.getStockMovement();
+        StockMovement stockMovement = stockMovementMapper
+                .toStockMovement(
+                        stockMovementService.findById(stockMovementItemCreateDTO.getStockMovementId())
+                );
 
         StockMovementItem item = mapper.toStockMovementItem(stockMovementItemCreateDTO);
         stockMovementItemRepository.save(item);
@@ -56,13 +59,16 @@ public class StockMovementItemService {
     }
 
     public void update(@Valid StockMovementItemUpdateDTO stockMovementItemUpdateDTO){
-        StockMovement stockMovement = stockMovementItemUpdateDTO.getStockMovement();
+        StockMovement stockMovement = stockMovementMapper
+                .toStockMovement(
+                        stockMovementService.findById(stockMovementItemUpdateDTO.getStockMovementId())
+                );
 
         StockMovementItem item = mapper.toStockMovementItem(stockMovementItemUpdateDTO);
         stockMovementItemRepository.save(item);
 
         StockMovementItem persisted = stockMovement.findStockMovementItemByProductId(item.getProductId());
-        persisted.setStockMovement(stockMovementItemUpdateDTO.getStockMovement());
+        persisted.setStockMovementId(stockMovementItemUpdateDTO.getStockMovementId());
         persisted.setQuantity(stockMovementItemUpdateDTO.getQuantity());
         persisted.setProductId(stockMovementItemUpdateDTO.getProductId());
 
@@ -71,7 +77,7 @@ public class StockMovementItemService {
 
     public void delete(Long id){
         StockMovementItem stockMovementItem = stockMovementItemRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("StockMovementItem not found with id: " + id));
-        StockMovement stockMovement = stockMovementItem.getStockMovement();
+        StockMovement stockMovement = stockMovementMapper.toStockMovement(stockMovementService.findById(id));
         StockMovementItem persisted = stockMovement.findStockMovementItemByProductId(id);
 
         stockMovement.getItems().remove(persisted);

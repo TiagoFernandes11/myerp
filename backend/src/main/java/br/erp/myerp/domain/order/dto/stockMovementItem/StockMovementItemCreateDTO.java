@@ -17,5 +17,6 @@ public class StockMovementItemCreateDTO {
     private int quantity;
 
     @NotNull(message = "StockMovement cannot be null")
-    private StockMovement stockMovement;
+    private long stockMovementId;
+
 }
