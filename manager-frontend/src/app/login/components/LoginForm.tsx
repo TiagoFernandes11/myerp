@@ -20,10 +20,12 @@ export default function LoginForm() {
 
     if (username && password) {
       try {
-        const response = await axios.post("http://localhost:8080/api/login", {
+        const response = await axios.post("http://localhost:9000/api/login", {
           username,
           password,
         });
+
+        console.log(response.data)
 
         //todo success
         localStorage.setItem("token", response.data.token);

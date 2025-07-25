@@ -37,7 +37,7 @@ public class SecurityConfig {
             @Override
             public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
                 CorsConfiguration corsConfiguration = new CorsConfiguration();
-//                corsConfiguration.addAllowedOrigin("http://localhost:3000");
+                corsConfiguration.addAllowedOrigin("http://localhost:3000");
                 corsConfiguration.addAllowedOrigin("http://localhost:4000");
                 corsConfiguration.setAllowedMethods(Collections.singletonList("*"));
                 corsConfiguration.setAllowedHeaders(Collections.singletonList("*"));
@@ -51,8 +51,6 @@ public class SecurityConfig {
         http.authorizeHttpRequests((request) -> {
             request.requestMatchers("/api/login").permitAll();
             request.requestMatchers("/api/token/validate/**").permitAll();
-            request.requestMatchers("/api/customer-account/register").permitAll();
-            request.requestMatchers("/api/customer-account/**").permitAll();
         });
         http.csrf(AbstractHttpConfigurer::disable);
         http.formLogin(AbstractHttpConfigurer::disable);

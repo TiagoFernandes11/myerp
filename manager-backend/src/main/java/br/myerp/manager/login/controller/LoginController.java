@@ -22,7 +22,7 @@ public class LoginController {
     @PostMapping
     public ResponseEntity<AuthResponseDTO> authenticate(@RequestBody @Valid AuthRequestDTO authRequest){
         AuthResponseDTO authResponseDTO = managerAdminClient.getAdmin(authRequest);
-        return ResponseEntity.status(HttpStatus.OK).body(new AuthResponseDTO(authResponseDTO.getAdminId(), authResponseDTO.getToken()));
+        return ResponseEntity.status(HttpStatus.OK).body(new AuthResponseDTO(authResponseDTO.getToken()));
     }
 
 }
