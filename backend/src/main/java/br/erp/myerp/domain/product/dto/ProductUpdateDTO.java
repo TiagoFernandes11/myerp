@@ -1,5 +1,6 @@
 package br.erp.myerp.domain.product.dto;
 
+import jakarta.persistence.Lob;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
@@ -23,4 +24,7 @@ public class ProductUpdateDTO {
 
     @Positive(message = "Price must be positive")
     private BigDecimal price;
+
+    @Lob
+    private byte[] image;
 }

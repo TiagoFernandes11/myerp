@@ -18,7 +18,8 @@ public class Product {
 
     private String name;
 
-    private byte[][] image;
+    @Lob
+    private byte[] image;
 
     private BigDecimal price;
 }

@@ -1,12 +1,28 @@
 import "./index.css";
 
-export default function EntityForm({ entity, setEntity, isNew }) {
+export default function EntityForm({
+  entity,
+  setEntity,
+  isNew,
+  hasImage = false,
+}) {
   const idIndication = (
     <div className="form-ro">
       <label htmlFor="entity-id">Id: </label>
       <p id="entity-id">{entity?.id}</p>
     </div>
   );
+
+  // const handleSubmit = async (event) => {
+  //   event.preventDefault();
+  //   const formData = new FormData();
+  //   formData.append("image", selectedFile); // "image" é o nome do parâmetro
+
+  //   await fetch("http://localhost:8080/api/upload", {
+  //     method: "POST",
+  //     body: formData,
+  //   });
+  // };
 
   function handleChange(fieldName, value) {
     setEntity((prev) => ({

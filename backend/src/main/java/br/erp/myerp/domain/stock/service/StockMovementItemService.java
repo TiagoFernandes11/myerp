@@ -8,9 +8,11 @@ import br.erp.myerp.domain.stock.entity.StockMovementItem;
 import br.erp.myerp.domain.stock.mapper.StockMovementItemMapper;
 import br.erp.myerp.domain.stock.mapper.StockMovementMapper;
 import br.erp.myerp.domain.stock.repository.StockMovementItemRepository;
+import br.erp.myerp.domain.stock.specification.StockMovementItemSpecification;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -35,8 +37,8 @@ public class StockMovementItemService {
     @Autowired
     private StockMovementItemMapper mapper;
 
-    public List<StockMovementItemResponseDTO> findAll() {
-        return stockMovementItemRepository.findAll().stream()
+    public List<StockMovementItemResponseDTO> findAll(int pageNumber, int pageSize, String filter, String value) {
+        return stockMovementItemRepository.findAll(StockMovementItemSpecification.filter(filter, value), PageRequest.of(pageNumber, pageSize)).stream()
                 .map(item -> mapper.toStockMovementItemResponseDTO(item)).toList();
     }
 
@@ -45,17 +47,9 @@ public class StockMovementItemService {
                 .orElseThrow(() -> new EntityNotFoundException("StockMovementItem not found with id: " + id)));
     }
 
-    public void create(@Valid StockMovementItemCreateDTO stockMovementItemCreateDTO) {
-        StockMovement stockMovement = stockMovementMapper
-                .toStockMovement(
-                        stockMovementService.findById(stockMovementItemCreateDTO.getStockMovementId())
-                );
-
+    public StockMovementItemResponseDTO create(@Valid StockMovementItemCreateDTO stockMovementItemCreateDTO) {
         StockMovementItem item = mapper.toStockMovementItem(stockMovementItemCreateDTO);
-        stockMovementItemRepository.save(item);
-
-        stockMovement.getItems().add(item);
-        stockMovementService.update(stockMovementMapper.toStockMovementUpdateDTO(stockMovement));
+        return mapper.toStockMovementItemResponseDTO(stockMovementItemRepository.save(item));
     }
 
     public void update(@Valid StockMovementItemUpdateDTO stockMovementItemUpdateDTO){

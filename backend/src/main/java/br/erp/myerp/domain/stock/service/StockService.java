@@ -5,6 +5,7 @@ import br.erp.myerp.domain.stock.dto.stock.StockCreateDTO;
 import br.erp.myerp.domain.stock.dto.stock.StockResponseDTO;
 import br.erp.myerp.domain.stock.dto.stock.StockUpdateDTO;
 import br.erp.myerp.domain.stock.entity.Stock;
+import br.erp.myerp.domain.stock.entity.StockMovement;
 import br.erp.myerp.domain.stock.mapper.StockMapper;
 import br.erp.myerp.domain.stock.repository.StockRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -48,10 +49,10 @@ public class StockService {
         stockRepository.save(stock);
     }
 
-    public void update(StockUpdateDTO stockUpdateDTO){
+    public Stock update(StockUpdateDTO stockUpdateDTO){
         Stock stock = stockMapper.toStock(this.getByProductId(stockUpdateDTO.getProductId()));
         stock.setQuantity(stockUpdateDTO.getQuantity());
-        stockRepository.save(stock);
+        return stockRepository.save(stock);
     }
 
     public void delete(Long id){

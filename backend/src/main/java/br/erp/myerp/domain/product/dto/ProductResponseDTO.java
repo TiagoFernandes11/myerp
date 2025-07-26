@@ -1,6 +1,7 @@
 package br.erp.myerp.domain.product.dto;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Lob;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -19,7 +20,8 @@ public class ProductResponseDTO {
 
     private String price;
 
-    private byte[][] image;
+    @Lob
+    private byte[] image;
 
     public ProductResponseDTO() {
     }

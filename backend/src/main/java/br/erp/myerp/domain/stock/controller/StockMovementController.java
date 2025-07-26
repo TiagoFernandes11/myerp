@@ -3,6 +3,7 @@ package br.erp.myerp.domain.stock.controller;
 import br.erp.myerp.domain.stock.dto.stockmovement.StockMovementCreateDTO;
 import br.erp.myerp.domain.stock.dto.stockmovement.StockMovementResponseDTO;
 import br.erp.myerp.domain.stock.dto.stockmovement.StockMovementUpdateDTO;
+import br.erp.myerp.domain.stock.entity.StockMovement;
 import br.erp.myerp.domain.stock.service.StockMovementService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,9 +32,9 @@ public class StockMovementController {
     }
 
     @PostMapping
-    public ResponseEntity<StockMovementCreateDTO> create(@RequestBody @Valid StockMovementCreateDTO stockMovement){
-        stockMovementService.create(stockMovement);
-        return ResponseEntity.status(HttpStatus.CREATED).body(stockMovement);
+    public ResponseEntity<StockMovement> create(@RequestBody @Valid StockMovementCreateDTO stockMovement){
+        StockMovement sm = stockMovementService.create(stockMovement);
+        return ResponseEntity.status(HttpStatus.CREATED).body(sm);
     }
 
     @PutMapping

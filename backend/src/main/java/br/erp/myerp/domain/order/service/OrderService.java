@@ -1,9 +1,14 @@
 package br.erp.myerp.domain.order.service;
 
+import br.erp.myerp.domain.order.client.StockMovementClient;
+import br.erp.myerp.domain.order.client.StockMovementItemClient;
 import br.erp.myerp.domain.order.dto.order.OrderCreateDTO;
 import br.erp.myerp.domain.order.dto.order.OrderResponseDTO;
 import br.erp.myerp.domain.order.dto.stockMovement.StockMovementCreateDTO;
+import br.erp.myerp.domain.order.dto.stockMovement.StockMovementResponseDTO;
 import br.erp.myerp.domain.order.dto.stockMovementItem.StockMovementItemCreateDTO;
+import br.erp.myerp.domain.order.dto.stockMovementItem.StockMovementItemResponseDTO;
+import br.erp.myerp.domain.order.entity.Order;
 import br.erp.myerp.domain.order.entity.OrderItem;
 import br.erp.myerp.domain.order.mapper.OrderMapper;
 import br.erp.myerp.domain.order.repository.OrderRepository;
@@ -17,6 +22,12 @@ import java.util.List;
 
 @Service
 public class OrderService {
+
+    @Autowired
+    private StockMovementClient stockMovementClient;
+
+    @Autowired
+    private StockMovementItemClient stockMovementItemClient;
 
     @Autowired
     private OrderRepository orderRepository;
@@ -36,18 +47,26 @@ public class OrderService {
     }
 
     public void createOrder(OrderCreateDTO orderCreateDTO){
-        List<StockMovementItemCreateDTO> stockItens = new ArrayList<>();
+        List<StockMovementItemResponseDTO> stockItens = new ArrayList<>();
         StockMovementCreateDTO stockMovementCreateDTO = new StockMovementCreateDTO();
+
+        StockMovementResponseDTO stockMovement = stockMovementClient.create(stockMovementCreateDTO);
 
         for(OrderItem item : orderCreateDTO.getOrderItems()){
             StockMovementItemCreateDTO stockItem = new StockMovementItemCreateDTO();
             stockItem.setProductId(item.getProductId());
             stockItem.setQuantity(item.getQuantity());
-            stockItens.add(stockItem);
+            stockItem.setStockMovementId(stockMovement.getId());
+            StockMovementItemResponseDTO st = stockMovementItemClient.save(stockItem);
+            stockItens.add(st);
         }
 
-        stockMovementCreateDTO.setItems(stockItens);
+        Long stockMovementId = stockMovement.getId();
+        stockMovement.setItems(stockItens);
 
-        //todo
+        stockMovementClient.update(stockMovementId, stockMovement);
+
+        Order order = orderMapper.toOrder(orderCreateDTO);
+        orderRepository.save(order);
     }
 }

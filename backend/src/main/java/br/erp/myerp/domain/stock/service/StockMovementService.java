@@ -49,7 +49,7 @@ public class StockMovementService {
         return stockMovementMapper.toStockMovementDTO(stockMovementRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Stock movement not found for id: " + id)));
     }
 
-    public void create(@Valid StockMovementCreateDTO stockMovementCreateDTO) {
+    public StockMovement create(@Valid StockMovementCreateDTO stockMovementCreateDTO) {
         StockMovement stockMovement = stockMovementMapper.toStockMovement(stockMovementCreateDTO);
         stockMovement.setTimestamp(LocalDateTime.now());
 
@@ -67,10 +67,10 @@ public class StockMovementService {
 
             stockService.update(stockMapper.toStockUpdateDTO(stock));
         }
-        stockMovementRepository.save(stockMovement);
+        return stockMovementRepository.save(stockMovement);
     }
 
-    public void update(@Valid StockMovementUpdateDTO stockMovementUpdateDTO) {
+    public StockMovement update(@Valid StockMovementUpdateDTO stockMovementUpdateDTO) {
         StockMovement stockMovement = getStockMovementById(stockMovementUpdateDTO.getId());
         int i = 0;
 
@@ -93,7 +93,7 @@ public class StockMovementService {
             item.setStockMovementId(stockMovement.getId());
         }
         stockMovement = stockMovementMapper.toStockMovement(stockMovementUpdateDTO);
-        stockMovementRepository.save(stockMovement);
+        return stockMovementRepository.save(stockMovement);
     }
 
     public void delete(Long id){

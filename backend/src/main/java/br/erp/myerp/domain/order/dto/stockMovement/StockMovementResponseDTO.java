@@ -1,7 +1,7 @@
 package br.erp.myerp.domain.order.dto.stockMovement;
 
-import br.erp.myerp.domain.stock.entity.StockMovementItem;
-import br.erp.myerp.domain.stock.enums.MovementType;
+import br.erp.myerp.domain.order.dto.stockMovementItem.StockMovementItemResponseDTO;
+import br.erp.myerp.domain.order.enums.MovementType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,7 +15,7 @@ import java.util.List;
 public class StockMovementResponseDTO {
 
     private Long id;
-    private List<StockMovementItem> items;
+    private List<StockMovementItemResponseDTO> items;
     private MovementType type;
     private String description;
     private LocalDateTime timestamp;
