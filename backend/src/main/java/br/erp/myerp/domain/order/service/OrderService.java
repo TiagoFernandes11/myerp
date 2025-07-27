@@ -1,5 +1,6 @@
 package br.erp.myerp.domain.order.service;
 
+import br.erp.myerp.domain.order.client.StockClient;
 import br.erp.myerp.domain.order.client.StockMovementClient;
 import br.erp.myerp.domain.order.client.StockMovementItemClient;
 import br.erp.myerp.domain.order.dto.order.OrderCreateDTO;
@@ -12,16 +13,21 @@ import br.erp.myerp.domain.order.entity.Order;
 import br.erp.myerp.domain.order.entity.OrderItem;
 import br.erp.myerp.domain.order.mapper.OrderMapper;
 import br.erp.myerp.domain.order.repository.OrderRepository;
+import br.erp.myerp.domain.stock.enums.MovementType;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class OrderService {
+
+    @Autowired
+    private StockClient stockClient;
 
     @Autowired
     private StockMovementClient stockMovementClient;
@@ -47,24 +53,27 @@ public class OrderService {
     }
 
     public void createOrder(OrderCreateDTO orderCreateDTO){
-        List<StockMovementItemResponseDTO> stockItens = new ArrayList<>();
-        StockMovementCreateDTO stockMovementCreateDTO = new StockMovementCreateDTO();
+        if(!stockClient.checkStock(orderCreateDTO.getOrderItems())){
+            throw new IllegalArgumentException("The stock does not have sufficient quantity for a this sale");
+        }
 
-        StockMovementResponseDTO stockMovement = stockMovementClient.create(stockMovementCreateDTO);
+        StockMovementCreateDTO stockMovement = new StockMovementCreateDTO();
+        stockMovement.setType(MovementType.OUT);
+        stockMovement.setDescription("Sale for client: " + orderCreateDTO.getClientId());
+
+        List<StockMovementItemResponseDTO> stockItens = new ArrayList<>();
 
         for(OrderItem item : orderCreateDTO.getOrderItems()){
             StockMovementItemCreateDTO stockItem = new StockMovementItemCreateDTO();
             stockItem.setProductId(item.getProductId());
             stockItem.setQuantity(item.getQuantity());
-            stockItem.setStockMovementId(stockMovement.getId());
             StockMovementItemResponseDTO st = stockMovementItemClient.save(stockItem);
             stockItens.add(st);
         }
 
-        Long stockMovementId = stockMovement.getId();
         stockMovement.setItems(stockItens);
 
-        stockMovementClient.update(stockMovementId, stockMovement);
+        stockMovementClient.create(stockMovement);
 
         Order order = orderMapper.toOrder(orderCreateDTO);
         orderRepository.save(order);

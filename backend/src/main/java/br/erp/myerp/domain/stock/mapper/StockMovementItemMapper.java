@@ -4,7 +4,9 @@ import br.erp.myerp.domain.stock.dto.stockmovementitem.StockMovementItemCreateDT
 import br.erp.myerp.domain.stock.dto.stockmovementitem.StockMovementItemResponseDTO;
 import br.erp.myerp.domain.stock.dto.stockmovementitem.StockMovementItemUpdateDTO;
 import br.erp.myerp.domain.stock.entity.StockMovementItem;
+import lombok.Data;
 import org.mapstruct.Mapper;
+
 
 @Mapper(componentModel = "spring")
 public interface StockMovementItemMapper {

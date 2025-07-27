@@ -12,7 +12,7 @@ import javax.xml.transform.OutputKeys;
 import java.util.List;
 
 @RestController
-@RequestMapping("/store/api/order")
+@RequestMapping("/api/order")
 public class OrderController {
 
     private final int PAGE_SIZE = 20;
@@ -20,12 +20,12 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    @GetMapping("/{pageNum}")
+    @GetMapping
     public ResponseEntity<List<OrderResponseDTO>> getAll(@RequestParam(required = false, defaultValue = "0") int pageNum){
         return ResponseEntity.status(HttpStatus.OK).body(orderService.findAll(PAGE_SIZE, pageNum));
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("by-id/{id}")
     public ResponseEntity<OrderResponseDTO> getById(@PathVariable(required = true) long id){
         return ResponseEntity.status(HttpStatus.OK).body(orderService.findById(id));
     }

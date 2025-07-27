@@ -1,11 +1,11 @@
 package br.erp.myerp.domain.stock.service;
 
 import br.erp.myerp.domain.stock.client.product.ProductClient;
+import br.erp.myerp.domain.stock.dto.order.OrderItemCreateDTO;
 import br.erp.myerp.domain.stock.dto.stock.StockCreateDTO;
 import br.erp.myerp.domain.stock.dto.stock.StockResponseDTO;
 import br.erp.myerp.domain.stock.dto.stock.StockUpdateDTO;
 import br.erp.myerp.domain.stock.entity.Stock;
-import br.erp.myerp.domain.stock.entity.StockMovement;
 import br.erp.myerp.domain.stock.mapper.StockMapper;
 import br.erp.myerp.domain.stock.repository.StockRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -40,6 +40,9 @@ public class StockService {
     }
 
     public StockResponseDTO getByProductId(Long productId) {
+        if(productId == null || productId < 1){
+            return new StockResponseDTO();
+        }
         return stockRepository.findByProductId(productId).orElseThrow(
                         () -> new EntityNotFoundException("Stock not founded for product:  " + productId));
     }
@@ -60,5 +63,19 @@ public class StockService {
                 () -> new EntityNotFoundException("Stock not founded with id: " + id)
         );
         stockRepository.delete(stock);
+    }
+
+    public boolean checkStock(List<OrderItemCreateDTO> orderItems){
+
+        for(OrderItemCreateDTO item : orderItems){
+            StockResponseDTO stock = getByProductId(item.getProductId());
+            int quantity = item.getQuantity();
+
+            if(stock.getQuantity() - quantity < 0){
+                throw new IllegalArgumentException("The stock does not have sufficient quantity for product: " + item.getProductId());
+            }
+        }
+
+        return true;
     }
 }

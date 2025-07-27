@@ -1,7 +1,9 @@
 package br.erp.myerp.domain.stock.dto.stockmovementitem;
 
 import br.erp.myerp.domain.stock.entity.StockMovement;
+import lombok.Data;
 
+@Data
 public class StockMovementItemResponseDTO {
 
     private long id;
@@ -9,6 +11,4 @@ public class StockMovementItemResponseDTO {
     private long productId;
 
     private int quantity;
-
-    private StockMovement stockMovement;
 }

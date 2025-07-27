@@ -1,6 +1,7 @@
 package br.erp.myerp.domain.stock.controller;
 
 import br.erp.myerp.domain.stock.client.product.ProductClient;
+import br.erp.myerp.domain.stock.dto.order.OrderItemCreateDTO;
 import br.erp.myerp.domain.stock.dto.stock.StockCreateDTO;
 import br.erp.myerp.domain.stock.dto.stock.StockResponseDTO;
 import br.erp.myerp.domain.stock.dto.stock.StockUpdateDTO;
@@ -56,5 +57,10 @@ public class StockController {
     public ResponseEntity<String> deleteStock(@PathVariable Long id){
         stockService.delete(id);
         return ResponseEntity.status(HttpStatus.OK).body("Stock with id: " + id + " was successfully deleted");
+    }
+
+    @PostMapping("/check-stock")
+    public ResponseEntity<Boolean> checkStock(@RequestBody List<OrderItemCreateDTO> orderItens){
+        return ResponseEntity.ok().body(stockService.checkStock(orderItens));
     }
 }

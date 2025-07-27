@@ -62,7 +62,6 @@ public class StockMovementItemService {
         stockMovementItemRepository.save(item);
 
         StockMovementItem persisted = stockMovement.findStockMovementItemByProductId(item.getProductId());
-        persisted.setStockMovementId(stockMovementItemUpdateDTO.getStockMovementId());
         persisted.setQuantity(stockMovementItemUpdateDTO.getQuantity());
         persisted.setProductId(stockMovementItemUpdateDTO.getProductId());
 

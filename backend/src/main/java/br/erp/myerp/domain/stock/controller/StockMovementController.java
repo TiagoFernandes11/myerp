@@ -32,7 +32,7 @@ public class StockMovementController {
     }
 
     @PostMapping
-    public ResponseEntity<StockMovement> create(@RequestBody @Valid StockMovementCreateDTO stockMovement){
+    public ResponseEntity<StockMovement> create(@RequestBody StockMovementCreateDTO stockMovement){
         StockMovement sm = stockMovementService.create(stockMovement);
         return ResponseEntity.status(HttpStatus.CREATED).body(sm);
     }

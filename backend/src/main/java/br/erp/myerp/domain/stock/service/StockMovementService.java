@@ -90,7 +90,6 @@ public class StockMovementService {
                 stock.addQuantity(diff);
                 stockService.update(stockMapper.toStockUpdateDTO(stockMapper.toStock(stock)));
             }
-            item.setStockMovementId(stockMovement.getId());
         }
         stockMovement = stockMovementMapper.toStockMovement(stockMovementUpdateDTO);
         return stockMovementRepository.save(stockMovement);

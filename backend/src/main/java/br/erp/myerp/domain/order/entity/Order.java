@@ -17,7 +17,7 @@ public class Order {
 
     private long clientId;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItem> itens;
 
     private BigDecimal total;

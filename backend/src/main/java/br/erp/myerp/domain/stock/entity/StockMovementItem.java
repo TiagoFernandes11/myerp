@@ -14,8 +14,6 @@ public class StockMovementItem {
     private long productId;
     private int quantity;
 
-    private long stockMovementId;
-
     public void addQuantity(int quantity){
         this.quantity += quantity;
     }

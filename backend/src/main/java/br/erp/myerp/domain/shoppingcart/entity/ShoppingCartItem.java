@@ -19,8 +19,4 @@ public class ShoppingCartItem {
     private int quantity;
 
     private BigDecimal total;
-
-    @ManyToOne
-    @JoinColumn(name = "cart_id")
-    private ShoppingCart cart;
 }

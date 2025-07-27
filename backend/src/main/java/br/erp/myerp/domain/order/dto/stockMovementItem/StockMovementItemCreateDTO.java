@@ -9,7 +9,6 @@ import lombok.Data;
 @Data
 public class StockMovementItemCreateDTO {
 
-    @NotBlank(message = "productId cannot be blank")
     @NotNull(message = "productId cannot be null")
     private long productId;
 
