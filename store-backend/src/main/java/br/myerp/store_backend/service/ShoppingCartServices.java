@@ -1,6 +1,8 @@
 package br.myerp.store_backend.service;
 
+import br.myerp.store_backend.client.ClientClient;
 import br.myerp.store_backend.client.ProductClient;
+import br.myerp.store_backend.dto.client.ClientResponseDTO;
 import br.myerp.store_backend.dto.product.Product;
 import br.myerp.store_backend.dto.shoppingCart.ShoppingCartCreateDTO;
 import br.myerp.store_backend.dto.shoppingCart.ShoppingCartResponseDTO;
@@ -13,6 +15,7 @@ import br.myerp.store_backend.repository.ShoppingCartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.security.auth.login.CredentialException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -22,6 +25,9 @@ public class ShoppingCartServices {
 
     @Autowired
     private ProductClient productClient;
+
+    @Autowired
+    private ClientClient clientClient;
 
     @Autowired
     private ShoppingCartRepository shoppingCartRepository;
@@ -50,7 +56,12 @@ public class ShoppingCartServices {
         return shoppingCartRepository.save(shoppingCart);
     }
 
-    public void addProduct(ShoppingCartItemDTO shoppingCartItemDTO){
+    public void addProduct(ShoppingCartItemDTO shoppingCartItemDTO, String email){
+        ClientResponseDTO existingClient = clientClient.get(shoppingCartItemDTO.getClientIdErp());
+        if(!email.equals(existingClient.getEmail())){
+            throw new RuntimeException("User not allowed");
+        }
+
         ShoppingCart existingShoppingCart = getExistingShoppingCart(shoppingCartItemDTO.getClientIdErp());
 
         for (ShoppingCartItem item : existingShoppingCart.getItens()) {
@@ -75,7 +86,12 @@ public class ShoppingCartServices {
         shoppingCartRepository.save(existingShoppingCart);
     }
 
-    public void removeProduct(ShoppingCartItemDTO item){
+    public void removeProduct(ShoppingCartItemDTO item, String email){
+        ClientResponseDTO existingClient = clientClient.get(item.getClientIdErp());
+        if(!email.equals(existingClient.getEmail())){
+            throw new RuntimeException("User not allowed");
+        }
+
         ShoppingCart existingShoppingCart = getExistingShoppingCart(item.getClientIdErp());
 
         for (ShoppingCartItem i : existingShoppingCart.getItens()) {

@@ -6,6 +6,7 @@ import br.myerp.store_backend.security.config.InternalTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -22,6 +23,20 @@ public class ClientClientImpl implements ClientClient{
 
     @Autowired
     private InternalTokenProvider internalTokenProvider;
+
+    @Override
+    public ClientResponseDTO get(Long idErp) {
+        String token = internalTokenProvider.getToken();
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.set("Authorization", token);
+
+        HttpEntity<Void> httpEntity = new HttpEntity<>(httpHeaders);
+
+        ResponseEntity<ClientResponseDTO> response = restTemplate.exchange(backendUrl + "/client/{idErp}", HttpMethod.GET, httpEntity, ClientResponseDTO.class, idErp);
+;
+        return response.getBody();
+    }
 
     @Override
     public ClientResponseDTO create(ClientCreateDTO client) {
