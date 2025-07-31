@@ -56,6 +56,4 @@ public class CustomerAccountService {
         customerAccountRepository.save(customerAccount);
         return 201;
     }
-
-//    public void update()
 }

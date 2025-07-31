@@ -45,7 +45,7 @@ public class ClientService {
         Optional<Client> existingClient = clientRepository.findByEmail(clientCreateDTO.getEmail());
         if (existingClient.isPresent()) {
             setActive(existingClient.get().getId());
-            return null;
+            return clientMapper.toClientResponseDTO(existingClient.get());
         }
         Client client = clientMapper.toClient(clientCreateDTO);
         client.setActive(true);

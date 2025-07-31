@@ -32,7 +32,7 @@ public class ShoppingCartServices {
     @Autowired
     private ShoppingCartMapper mapper;
 
-    public ShoppingCart getExistingShoppingCart(Long clientIdErp){
+    private ShoppingCart getExistingShoppingCart(Long clientIdErp){
         Optional<ShoppingCart> shoppingCart = shoppingCartRepository.findByClientIdErp(clientIdErp);
         return shoppingCart.orElseGet(() -> createCart(clientIdErp));
     }
@@ -73,5 +73,23 @@ public class ShoppingCartServices {
 
         existingShoppingCart.getItens().add(shoppingCartItem);
         shoppingCartRepository.save(existingShoppingCart);
+    }
+
+    public void removeProduct(ShoppingCartItemDTO item){
+        ShoppingCart existingShoppingCart = getExistingShoppingCart(item.getClientIdErp());
+
+        for (ShoppingCartItem i : existingShoppingCart.getItens()) {
+            if (i.getProductId().equals(item.getProductId()) && i.getQuantity() > 1) {
+                i.setQuantity(i.getQuantity() - 1);
+                shoppingCartItemRepository.save(i);
+                shoppingCartRepository.save(existingShoppingCart);
+                return;
+            } else {
+                existingShoppingCart.getItens().remove(i);
+                shoppingCartItemRepository.delete(i);
+                shoppingCartRepository.save(existingShoppingCart);
+                return;
+            }
+        }
     }
 }
