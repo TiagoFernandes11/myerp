@@ -1,6 +1,5 @@
 "use client";
 
-import App from "next/app";
 import {
   addItemToShoppingCart,
   removeItemOfShoppingCart,

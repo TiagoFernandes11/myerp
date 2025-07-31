@@ -39,7 +39,7 @@ public class LoginController {
         String jwt = tokenProvider.generateToken(a);
         response.setHeader("Authorization", jwt);
 
-        return ResponseEntity.status(HttpStatus.OK).body(new AuthResponseDTO(customerAccount.getId(), jwt));
+        return ResponseEntity.status(HttpStatus.OK).body(new AuthResponseDTO(customerAccount.getIdErp(), jwt));
     }
 
 }

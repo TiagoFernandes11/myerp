@@ -8,4 +8,6 @@ public class ShoppingCartItemDTO {
     private Long productId;
 
     private Long clientIdErp;
+
+    private int quantity;
 }

@@ -1,3 +1,21 @@
+import axios from "axios";
+
+export async function getShoppingCart() {
+  const response = await axios.get(
+    "http://localhost:8080/store/api/shopping-cart",
+    {
+      headers: {
+        Authorization: `${localStorage.getItem("token")}`,
+      },
+      data: {
+        userId: localStorage.getItem("clientIdErp"),
+      },
+    }
+  );
+
+  return response.data;
+}
+
 export function createShoppingCart(item, quantity) {
   item.quantity = quantity;
 

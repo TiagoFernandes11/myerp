@@ -4,7 +4,6 @@ import br.myerp.store_backend.client.ClientClient;
 import br.myerp.store_backend.client.ProductClient;
 import br.myerp.store_backend.dto.client.ClientResponseDTO;
 import br.myerp.store_backend.dto.product.Product;
-import br.myerp.store_backend.dto.shoppingCart.ShoppingCartCreateDTO;
 import br.myerp.store_backend.dto.shoppingCart.ShoppingCartResponseDTO;
 import br.myerp.store_backend.dto.shoppingCartItem.ShoppingCartItemDTO;
 import br.myerp.store_backend.entity.ShoppingCart;
@@ -15,7 +14,6 @@ import br.myerp.store_backend.repository.ShoppingCartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.security.auth.login.CredentialException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -66,7 +64,7 @@ public class ShoppingCartServices {
 
         for (ShoppingCartItem item : existingShoppingCart.getItens()) {
             if (item.getProductId().equals(shoppingCartItemDTO.getProductId())) {
-                item.setQuantity(item.getQuantity() + 1);
+                item.setQuantity(item.getQuantity() + shoppingCartItemDTO.getQuantity());
                 shoppingCartItemRepository.save(item);
                 shoppingCartRepository.save(existingShoppingCart);
                 return;
@@ -77,12 +75,13 @@ public class ShoppingCartServices {
 
         ShoppingCartItem shoppingCartItem = new ShoppingCartItem();
         shoppingCartItem.setProductId(shoppingCartItemDTO.getProductId());
-        shoppingCartItem.setQuantity(1);
+        shoppingCartItem.setQuantity(shoppingCartItem.getQuantity());
         shoppingCartItem.setTotal(product.getPrice().multiply(BigDecimal.valueOf(shoppingCartItem.getQuantity())));
 
         shoppingCartItemRepository.save(shoppingCartItem);
 
         existingShoppingCart.getItens().add(shoppingCartItem);
+        existingShoppingCart.setTotal(calculateTotal(existingShoppingCart));
         shoppingCartRepository.save(existingShoppingCart);
     }
 
@@ -92,20 +91,29 @@ public class ShoppingCartServices {
             throw new RuntimeException("User not allowed");
         }
 
+        Product product = productClient.get(item.getProductId());
         ShoppingCart existingShoppingCart = getExistingShoppingCart(item.getClientIdErp());
 
         for (ShoppingCartItem i : existingShoppingCart.getItens()) {
-            if (i.getProductId().equals(item.getProductId()) && i.getQuantity() > 1) {
-                i.setQuantity(i.getQuantity() - 1);
+            if (i.getProductId().equals(item.getProductId()) && item.getQuantity() <= i.getQuantity() && i.getQuantity() > 1) {
+                i.setQuantity(i.getQuantity() - item.getQuantity());
+                i.setTotal(product.getPrice().multiply(BigDecimal.valueOf(i.getQuantity())));
                 shoppingCartItemRepository.save(i);
-                shoppingCartRepository.save(existingShoppingCart);
-                return;
             } else {
                 existingShoppingCart.getItens().remove(i);
                 shoppingCartItemRepository.delete(i);
-                shoppingCartRepository.save(existingShoppingCart);
-                return;
             }
+            existingShoppingCart.setTotal(calculateTotal(existingShoppingCart));
+            shoppingCartRepository.save(existingShoppingCart);
+            return;
         }
+    }
+
+    private BigDecimal calculateTotal(ShoppingCart shoppingCart){
+        BigDecimal total = BigDecimal.valueOf(0d);
+        for(ShoppingCartItem shoppingCartItem : shoppingCart.getItens()){
+            total = total.add(shoppingCartItem.getTotal());
+        }
+        return total;
     }
 }
