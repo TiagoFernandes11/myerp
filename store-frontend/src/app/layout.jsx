@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 import "./globals.css";
 
 import { usePathname } from "next/navigation";
@@ -23,6 +24,7 @@ export default function RootLayout({ children }) {
       <body className="h-full w-full flex flex-col">
         <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
         <main className="flex-grow">{children}</main>
+        <Footer />
       </body>
     </html>
   );

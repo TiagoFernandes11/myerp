@@ -1,23 +1,94 @@
-nav{
-    padding: 50px;
-    border-bottom: solid black 1px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+nav {
+  padding: 16px 32px;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(90deg, #f8fafc 0%, #e0e7ff 100%);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+nav input {
+  background-color: #fff;
+  padding: 8px 12px;
+  margin-right: 8px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  font-size: 1rem;
+  transition: border 0.2s;
+}
+
+nav input:focus {
+  border-color: #6366f1;
+  outline: none;
+}
+
+nav button {
+  background: #6366f1;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+nav button:hover {
+  background: #4338ca;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.buttons > .button {
+  margin: 0 8px;
+  text-decoration: none;
+  color: #374151;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: background 0.2s, color 0.2s;
+  font-weight: 500;
+}
+
+.buttons > .button:hover {
+  background: #e0e7ff;
+  color: #6366f1;
+}
+
+.buttons > .button h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 500;
 }
 
 input {
-    background-color: white;
-    padding: 2px;
-    margin-right: 5px;
-    border-radius: 5px;
+  background-color: white;
+  padding: 2px;
+  margin-right: 5px;
+  border-radius: 5px;
 }
 
-.buttons{
-    display: flex;
-    flex-direction: row;
+.buttons {
+  display: flex;
+  flex-direction: row;
 }
 
-.buttons > .button{
-    margin: 0px 10px;
+.buttons > .button {
+  margin: 0px 10px;
 }

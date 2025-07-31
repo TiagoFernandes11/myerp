@@ -16,49 +16,61 @@ export default function ShoppingCartPage() {
       <h1>My Cart</h1>
       <div className="shopping-cart">
         <div className="resume">
-          <p>Itens</p>
-          <div className="itens">
-            {shoppingCart ? (
-              shoppingCart.item.map((product) => {
-                return (
-                  <CartItem
-                    setShoppingCart={setShoppingCart}
-                    shoppingCart={shoppingCart}
-                    key={product.id}
-                    product={product}
-                    total={shoppingCart.total}
-                  />
-                );
-              })
+          <p>Items</p>
+          <div className="items">
+            {shoppingCart &&
+            shoppingCart.item &&
+            shoppingCart.item.length > 0 ? (
+              shoppingCart.item.map((product) => (
+                <CartItem
+                  setShoppingCart={setShoppingCart}
+                  shoppingCart={shoppingCart}
+                  key={product.id}
+                  product={product}
+                  total={shoppingCart.total}
+                />
+              ))
             ) : (
               <div>No products in your shopping cart</div>
             )}
           </div>
         </div>
         <div className="options">
-          <p>Subtotal: </p>
-          <p>Shipping: </p>
-          <div>
-            <hr />
-            <div>
-              <p>Total</p>
-              <p>R$ Placeholder</p>
-            </div>
-            <hr />
+          <div className="summary-row">
+            <span>Subtotal:</span>
+            <span>R$ {shoppingCart?.subtotal?.toFixed(2) || "0.00"}</span>
+          </div>
+          <div className="summary-row">
+            <span>Shipping:</span>
+            <span>R$ {shoppingCart?.shipping?.toFixed(2) || "0.00"}</span>
+          </div>
+          <hr />
+          <div className="summary-row total">
+            <span>Total:</span>
+            <span>R$ {shoppingCart?.total?.toFixed(2) || "0.00"}</span>
+          </div>
+          <hr />
+          <div className="actions">
             {shoppingCart &&
             shoppingCart.item &&
             shoppingCart.item.length > 0 ? (
               <button
-                onClick={() => {
-                  router.push("/payment-confirmation");
-                }}
+                className="checkout-btn"
+                onClick={() => router.push("/payment-confirmation")}
               >
                 Checkout
               </button>
             ) : (
-              <div></div>
+              <button className="checkout-btn" disabled>
+                Checkout
+              </button>
             )}
-            <button>Add more itens</button>
+            <button
+              className="add-btn"
+              onClick={() => router.push("/products")}
+            >
+              Add more items
+            </button>
           </div>
         </div>
       </div>

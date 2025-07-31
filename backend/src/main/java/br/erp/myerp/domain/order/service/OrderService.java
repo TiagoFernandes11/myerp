@@ -5,6 +5,7 @@ import br.erp.myerp.domain.order.client.StockMovementClient;
 import br.erp.myerp.domain.order.client.StockMovementItemClient;
 import br.erp.myerp.domain.order.dto.order.OrderCreateDTO;
 import br.erp.myerp.domain.order.dto.order.OrderResponseDTO;
+import br.erp.myerp.domain.order.dto.order.OrderUpdateDTO;
 import br.erp.myerp.domain.order.dto.stockMovement.StockMovementCreateDTO;
 import br.erp.myerp.domain.order.dto.stockMovement.StockMovementResponseDTO;
 import br.erp.myerp.domain.order.dto.stockMovementItem.StockMovementItemCreateDTO;
@@ -37,9 +38,6 @@ public class OrderService {
 
     @Autowired
     private OrderRepository orderRepository;
-
-    @Autowired
-    private OrderItemService orderItemService;
 
     @Autowired
     private OrderMapper orderMapper;
@@ -77,5 +75,9 @@ public class OrderService {
 
         Order order = orderMapper.toOrder(orderCreateDTO);
         orderRepository.save(order);
+    }
+
+    public void updateOrder(OrderUpdateDTO orderUpdateDTO){
+
     }
 }

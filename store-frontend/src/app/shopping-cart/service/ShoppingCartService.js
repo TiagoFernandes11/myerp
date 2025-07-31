@@ -2,7 +2,7 @@ export function createShoppingCart(item, quantity) {
   item.quantity = quantity;
 
   const shoppingCart = {
-    item: [item],
+    item,
     total: item.price * [quantity],
     createdAt: Date.now(),
   };

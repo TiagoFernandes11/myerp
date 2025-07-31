@@ -1,11 +1,16 @@
 .showcase-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 24px;
-  padding: 24px 200px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 32px;
+  padding: 32px 40px;
   width: 100%;
   box-sizing: border-box;
-  justify-items: center;
+  justify-items: stretch;
+  background: linear-gradient(135deg, #f8fafc 0%, #e0e7ef 100%);
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  margin: 32px auto;
+  max-width: 1200px;
 }
 
 @media (max-width: 600px) {

@@ -1,8 +1,7 @@
 package br.myerp.store_backend.login.controller;
 
-import br.myerp.store_backend.customeraccount.dto.customeraccount.CustomerAccountResponseDTO;
-import br.myerp.store_backend.customeraccount.entity.CustomerAccount;
-import br.myerp.store_backend.customeraccount.service.CustomerAccountService;
+import br.myerp.store_backend.dto.customeraccount.CustomerAccountResponseDTO;
+import br.myerp.store_backend.service.CustomerAccountService;
 import br.myerp.store_backend.login.dto.AuthRequestDTO;
 import br.myerp.store_backend.login.dto.AuthResponseDTO;
 import br.myerp.store_backend.login.service.LoginServices;

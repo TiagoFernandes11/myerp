@@ -1,7 +1,7 @@
 package br.myerp.store_backend.security.config;
 
-import br.myerp.store_backend.customeraccount.dto.customeraccount.CustomerAccountResponseDTO;
-import br.myerp.store_backend.customeraccount.service.CustomerAccountService;
+import br.myerp.store_backend.dto.customeraccount.CustomerAccountResponseDTO;
+import br.myerp.store_backend.service.CustomerAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

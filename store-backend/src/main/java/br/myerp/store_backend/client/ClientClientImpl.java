@@ -1,7 +1,7 @@
 package br.myerp.store_backend.client;
 
-import br.myerp.store_backend.customeraccount.dto.client.ClientCreateDTO;
-import br.myerp.store_backend.customeraccount.dto.client.ClientResponseDTO;
+import br.myerp.store_backend.dto.client.ClientCreateDTO;
+import br.myerp.store_backend.dto.client.ClientResponseDTO;
 import br.myerp.store_backend.security.config.InternalTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
