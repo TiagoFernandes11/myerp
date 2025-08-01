@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/token")
 public class TokenValidationController {
 
-    @GetMapping("/validate/customer")
+    @GetMapping("/validate")
     public ResponseEntity<?> validateToken(Authentication authentication) {
         boolean hasRole = authentication.getAuthorities().stream()
                 .anyMatch(authority -> authority.getAuthority().equals("ROLE_CLIENT") || authority.getAuthority().equals("ROLE_ADMIN"));

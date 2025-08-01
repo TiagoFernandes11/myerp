@@ -13,6 +13,7 @@ import br.myerp.store_backend.repository.ShoppingCartItemRepository;
 import br.myerp.store_backend.repository.ShoppingCartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -42,6 +43,12 @@ public class ShoppingCartServices {
     }
 
     public ShoppingCartResponseDTO getCart(Long clientIdErp){
+        try{
+            ClientResponseDTO existingClient = clientClient.get(clientIdErp);
+        }
+        catch (HttpClientErrorException.NotFound e){
+            return null;
+        }
         return mapper.toResponseDTO(getExistingShoppingCart(clientIdErp));
     }
 
@@ -55,23 +62,33 @@ public class ShoppingCartServices {
     }
 
     public void addProduct(ShoppingCartItemDTO shoppingCartItemDTO, String email){
-        ClientResponseDTO existingClient = clientClient.get(shoppingCartItemDTO.getClientIdErp());
-        if(!email.equals(existingClient.getEmail())){
+        ClientResponseDTO existingClient = null;
+
+        try{
+            existingClient = clientClient.get(shoppingCartItemDTO.getClientIdErp());
+        }
+        catch (HttpClientErrorException.NotFound e){
+            return;
+        }
+
+        if(existingClient != null && !email.equals(existingClient.getEmail())){
             throw new RuntimeException("User not allowed");
         }
+
+        Product product = productClient.get(shoppingCartItemDTO.getProductId());
 
         ShoppingCart existingShoppingCart = getExistingShoppingCart(shoppingCartItemDTO.getClientIdErp());
 
         for (ShoppingCartItem item : existingShoppingCart.getItens()) {
             if (item.getProductId().equals(shoppingCartItemDTO.getProductId())) {
                 item.setQuantity(item.getQuantity() + shoppingCartItemDTO.getQuantity());
+                item.setTotal(item.getTotal().add(product.getPrice().multiply(BigDecimal.valueOf(shoppingCartItemDTO.getQuantity()))));
                 shoppingCartItemRepository.save(item);
+                existingShoppingCart.setTotal(existingShoppingCart.getTotal().add(product.getPrice().multiply(BigDecimal.valueOf(shoppingCartItemDTO.getQuantity()))));
                 shoppingCartRepository.save(existingShoppingCart);
                 return;
             }
         }
-
-        Product product = productClient.get(shoppingCartItemDTO.getProductId());
 
         ShoppingCartItem shoppingCartItem = new ShoppingCartItem();
         shoppingCartItem.setProductId(shoppingCartItemDTO.getProductId());
@@ -86,8 +103,16 @@ public class ShoppingCartServices {
     }
 
     public void removeProduct(ShoppingCartItemDTO item, String email){
-        ClientResponseDTO existingClient = clientClient.get(item.getClientIdErp());
-        if(!email.equals(existingClient.getEmail())){
+        ClientResponseDTO existingClient = null;
+
+        try{
+            existingClient = clientClient.get(item.getClientIdErp());
+        }
+        catch (HttpClientErrorException.NotFound e){
+            return;
+        }
+
+        if(existingClient != null && !email.equals(existingClient.getEmail())){
             throw new RuntimeException("User not allowed");
         }
 

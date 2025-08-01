@@ -10,25 +10,28 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/store/api/shopping-cart")
+@RequestMapping("/api/shopping-cart")
 public class ShoppingCartController {
 
     @Autowired
     private ShoppingCartServices shoppingCartServices;
 
     @GetMapping
-    public ResponseEntity<ShoppingCartResponseDTO> getCart(@RequestBody Long clientIdErp){
+    public ResponseEntity<ShoppingCartResponseDTO> getCart(@RequestParam Long clientIdErp){
         ShoppingCartResponseDTO response = shoppingCartServices.getCart(clientIdErp);
+        if(response == null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    @GetMapping("/add-product")
+    @PostMapping("/add-product")
     public ResponseEntity<String> addProduct(@RequestBody ShoppingCartItemDTO shoppingCartItem, Authentication authentication){
         shoppingCartServices.addProduct(shoppingCartItem, authentication.getName());
         return ResponseEntity.ok().body("Item added");
     }
 
-    @GetMapping("/remove-product")
+    @PostMapping("/remove-product")
     public ResponseEntity<String> removeProduct(@RequestBody ShoppingCartItemDTO shoppingCartItem, Authentication authentication){
         shoppingCartServices.removeProduct(shoppingCartItem, authentication.getName());
         return ResponseEntity.ok().body("Item removed");

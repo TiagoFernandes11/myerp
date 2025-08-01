@@ -53,6 +53,8 @@ public class SecurityConfig {
             request.requestMatchers("/api/token/validate/**").permitAll();
             request.requestMatchers("/api/customer-account/register").permitAll();
             request.requestMatchers("/api/customer-account/**").permitAll();
+            request.requestMatchers("/api/**").hasRole("CLIENT");
+            request.requestMatchers("/api/**").hasRole("ADMIN");
         });
         http.csrf(AbstractHttpConfigurer::disable);
         http.formLogin(AbstractHttpConfigurer::disable);
