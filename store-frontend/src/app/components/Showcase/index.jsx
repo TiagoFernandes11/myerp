@@ -11,6 +11,7 @@ export default function Showcase() {
   useEffect(() => {
     async function getShowcaseItems() {
       const products = await getProducts();
+      console.log("Products fetched:", products);
       setProducts(products);
     }
 
@@ -27,7 +28,15 @@ export default function Showcase() {
             image={product.image}
             name={product.name}
             price={product.price}
-            buttonAction={() => addItemToShoppingCart(product)}
+            buttonAction={() => {
+              const item = {
+                productId: product.id,
+                name: product.name,
+                price: product.price,
+                quantity: 1,
+              }
+              addItemToShoppingCart(item)
+            }}
           />
         );
       })}

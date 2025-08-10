@@ -81,6 +81,8 @@ public class ShoppingCartServices {
 
         for (ShoppingCartItem item : existingShoppingCart.getItens()) {
             if (item.getProductId().equals(shoppingCartItemDTO.getProductId())) {
+                item.setProductId(shoppingCartItemDTO.getProductId());
+                item.setName(shoppingCartItemDTO.getName());
                 item.setQuantity(item.getQuantity() + shoppingCartItemDTO.getQuantity());
                 item.setTotal(item.getTotal().add(product.getPrice().multiply(BigDecimal.valueOf(shoppingCartItemDTO.getQuantity()))));
                 shoppingCartItemRepository.save(item);
@@ -91,6 +93,7 @@ public class ShoppingCartServices {
         }
 
         ShoppingCartItem shoppingCartItem = new ShoppingCartItem();
+        shoppingCartItem.setName(shoppingCartItemDTO.getName());
         shoppingCartItem.setProductId(shoppingCartItemDTO.getProductId());
         shoppingCartItem.setQuantity(shoppingCartItem.getQuantity());
         shoppingCartItem.setTotal(product.getPrice().multiply(BigDecimal.valueOf(shoppingCartItem.getQuantity())));

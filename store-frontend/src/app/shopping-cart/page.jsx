@@ -2,14 +2,22 @@
 
 import { useRouter } from "next/navigation";
 import CartItem from "./components/CartItem";
+import { getShoppingCart } from "./service/ShoppingCartService";
 import "./page.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function ShoppingCartPage() {
   const router = useRouter();
-  const [shoppingCart, setShoppingCart] = useState(
-    JSON.parse(localStorage.getItem("shoppingCart"))
-  );
+  const [shoppingCart, setShoppingCart] = useState();
+
+  useEffect(() => {
+    async function fetchShoppingCart() {
+      const cart = await getShoppingCart();
+      setShoppingCart(cart);
+      console.log("Shopping cart fetched:", cart);
+    }
+    fetchShoppingCart();
+  }, []);
 
   return (
     <div className="body">
@@ -18,15 +26,13 @@ export default function ShoppingCartPage() {
         <div className="resume">
           <p>Items</p>
           <div className="items">
-            {shoppingCart &&
-            shoppingCart.item &&
-            shoppingCart.item.length > 0 ? (
-              shoppingCart.item.map((product) => (
+            {shoppingCart && shoppingCart.itens?.length > 0 ? (
+              shoppingCart.itens.map((item) => (
                 <CartItem
                   setShoppingCart={setShoppingCart}
                   shoppingCart={shoppingCart}
-                  key={product.id}
-                  product={product}
+                  key={item.id}
+                  item={item}
                   total={shoppingCart.total}
                 />
               ))

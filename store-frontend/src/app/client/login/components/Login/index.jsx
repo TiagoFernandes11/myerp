@@ -22,7 +22,7 @@ export default function Login() {
         password: password,
       });
 
-      console.log(response);
+      console.log("Login response:", response);
 
       if (response.status === 200) {
         localStorage.setItem("token", response.data.token);
