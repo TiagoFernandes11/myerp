@@ -12,8 +12,8 @@ export async function getShoppingCart() {
   return response.data;
 }
 
-export function addItemToShoppingCart(item, quantity = 1) {
-  axios.post(
+export async function addItemToShoppingCart(item, quantity = 1) {
+  return await axios.post(
     "http://localhost:8090/api/shopping-cart/add-product",
     {
       name: item.name,
@@ -29,8 +29,8 @@ export function addItemToShoppingCart(item, quantity = 1) {
   );
 }
 
-export function removeItemOfShoppingCart(item, quantity = 1) {
-  axios.post(
+export async function removeItemOfShoppingCart(item, quantity = 1) {
+  return await axios.post(
     "http://localhost:8090/api/shopping-cart/remove-product",
     {
       name: item.name,

@@ -95,7 +95,7 @@ public class ShoppingCartServices {
         ShoppingCartItem shoppingCartItem = new ShoppingCartItem();
         shoppingCartItem.setName(shoppingCartItemDTO.getName());
         shoppingCartItem.setProductId(shoppingCartItemDTO.getProductId());
-        shoppingCartItem.setQuantity(shoppingCartItem.getQuantity());
+        shoppingCartItem.setQuantity(shoppingCartItemDTO.getQuantity());
         shoppingCartItem.setTotal(product.getPrice().multiply(BigDecimal.valueOf(shoppingCartItem.getQuantity())));
 
         shoppingCartItemRepository.save(shoppingCartItem);

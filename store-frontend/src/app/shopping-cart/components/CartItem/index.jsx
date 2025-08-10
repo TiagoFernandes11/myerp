@@ -9,20 +9,21 @@ import "./index.css";
 
 import Image from "next/image";
 
-export default function CartItem({
-  item,
-  setShoppingCart,
-  shoppingCart,
-  total,
-}) {
+export default function CartItem({ item, setShoppingCart }) {
   async function addProduct() {
-    addItemToShoppingCart(item);
-    setShoppingCart(await getShoppingCart(localStorage.getItem("clientIdErp")));
+    await addItemToShoppingCart(item);
+    const updatedCart = await getShoppingCart(
+      localStorage.getItem("clientIdErp")
+    );
+    setShoppingCart(updatedCart);
   }
 
   async function removeProduct() {
-    removeItemOfShoppingCart(item);
-    setShoppingCart(await getShoppingCart(localStorage.getItem("clientIdErp")));
+    await removeItemOfShoppingCart(item);
+    const updatedCart = await getShoppingCart(
+      localStorage.getItem("clientIdErp")
+    );
+    setShoppingCart(updatedCart);
   }
 
   return (
@@ -31,7 +32,7 @@ export default function CartItem({
         alt={item.name}
         src={
           item.image && item.image.trim() !== ""
-            ? product.image
+            ? item.image
             : "/default-image.png"
         }
         width={80}

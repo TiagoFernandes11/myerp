@@ -30,10 +30,8 @@ export default function ShoppingCartPage() {
               shoppingCart.itens.map((item) => (
                 <CartItem
                   setShoppingCart={setShoppingCart}
-                  shoppingCart={shoppingCart}
                   key={item.id}
                   item={item}
-                  total={shoppingCart.total}
                 />
               ))
             ) : (
@@ -58,8 +56,8 @@ export default function ShoppingCartPage() {
           <hr />
           <div className="actions">
             {shoppingCart &&
-            shoppingCart.item &&
-            shoppingCart.item.length > 0 ? (
+            shoppingCart.itens &&
+            shoppingCart.itens.length > 0 ? (
               <button
                 className="checkout-btn"
                 onClick={() => router.push("/payment-confirmation")}
