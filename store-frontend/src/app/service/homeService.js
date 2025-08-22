@@ -1,9 +1,9 @@
 import axios from "axios";
 
-export async function getProducts() {
+export async function getProducts(filter, value, pageNum) {
   try {
     const response = await axios.get(
-      "http://localhost:8080/api/product?filter=&value=&pageNum=0"
+      `http://localhost:8080/api/product?filter=${filter}&value=${value}&pageNum=${pageNum}`
     );
     return response.data;
   } catch (error) {

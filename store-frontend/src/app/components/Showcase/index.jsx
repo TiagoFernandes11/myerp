@@ -7,39 +7,58 @@ import { addItemToShoppingCart } from "@/app/shopping-cart/service/ShoppingCartS
 
 export default function Showcase() {
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState("");
+
+  async function getShowcaseItems(filter = "", value = "", pageNum = 0) {
+    setLoading(true);
+    const products = await getProducts(filter, value, pageNum);
+    setProducts(products);
+    setLoading(false);
+  }
 
   useEffect(() => {
-    async function getShowcaseItems() {
-      const products = await getProducts();
-      console.log("Products fetched:", products);
-      setProducts(products);
-    }
-
     getShowcaseItems();
   }, []);
 
   return (
-    <div className="showcase-container">
-      {products.map((product) => {
-        return (
-          <ShowcaseItem
-            key={product.id}
-            id={product.id}
-            image={product.image}
-            name={product.name}
-            price={product.price}
-            buttonAction={() => {
-              const item = {
-                productId: product.id,
-                name: product.name,
-                price: product.price,
-                quantity: 1,
-              }
-              addItemToShoppingCart(item)
-            }}
-          />
-        );
-      })}
-    </div>
+    <>
+      <div className="showcase-search-bar">
+        <input
+          type="text"
+          placeholder="Search products..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)} // só atualiza o state
+        />
+        <button onClick={() => getShowcaseItems("", search, 0)}>Search</button>
+      </div>
+
+      <div className="showcase-container">
+        {loading && <p>Loading products...</p>}
+        {!loading && products.length === 0 && <p>No products available.</p>}
+        {!loading &&
+          products.length > 0 &&
+          products.map((product) => {
+            return (
+              <ShowcaseItem
+                key={product.id}
+                id={product.id}
+                image={product.image}
+                name={product.name}
+                price={product.price}
+                buttonAction={() => {
+                  const item = {
+                    productId: product.id,
+                    name: product.name,
+                    price: product.price,
+                    quantity: 1,
+                  };
+                  addItemToShoppingCart(item);
+                }}
+              />
+            );
+          })}
+      </div>
+    </>
   );
 }

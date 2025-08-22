@@ -18,10 +18,6 @@ export default function Header({ isLoggedIn, setIsLoggedIn }) {
           <Image src={"./next.svg"} alt="logo" width={100} height={10} />
         </Link>
       </ul>
-      <div>
-        <input type="text" placeholder="What are you looking for ?" />
-        <button>search</button>
-      </div>
       <div className="buttons">
         {isLoggedIn || (
           <>
