@@ -2,6 +2,7 @@ package br.erp.myerp.domain.order.client;
 
 import br.erp.myerp.domain.order.dto.stockMovement.StockMovementCreateDTO;
 import br.erp.myerp.domain.order.dto.stockMovement.StockMovementResponseDTO;
+import br.erp.myerp.domain.order.dto.stockMovement.StockMovementUpdateDTO;
 import br.erp.myerp.domain.order.entity.OrderItem;
 import br.erp.myerp.domain.order.security.InternalTokenProviderForOrder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,19 @@ public class StockMovementClientImpl implements StockMovementClient{
     private InternalTokenProviderForOrder tokenProvider;
 
     @Override
+    public StockMovementResponseDTO get(Long id) {
+        String token = tokenProvider.getToken();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", token);
+
+        HttpEntity<Void> entity = new HttpEntity<>(headers);
+
+        return restTemplate
+                .exchange("http://localhost:8080/api/stock-movement/" + id, HttpMethod.GET, entity, StockMovementResponseDTO.class).getBody();
+    }
+
+    @Override
     public StockMovementResponseDTO create(StockMovementCreateDTO stockMovementCreateDTO) {
         String token = tokenProvider.getToken();
 
@@ -35,13 +49,14 @@ public class StockMovementClientImpl implements StockMovementClient{
     }
 
     @Override
-    public void update(Long id, StockMovementResponseDTO stockMovement) {
+    public StockMovementUpdateDTO update(StockMovementUpdateDTO stockMovementUpdateDTO) {
         String token = tokenProvider.getToken();
 
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", token);
 
-        HttpEntity<StockMovementResponseDTO> entity = new HttpEntity<>(stockMovement, headers);
-        restTemplate.exchange("http://localhost:8080/api/stock-movement/{id}", HttpMethod.PUT, entity, Void.class);
+        HttpEntity<StockMovementUpdateDTO> entity = new HttpEntity<>(stockMovementUpdateDTO, headers);
+        return restTemplate
+                .exchange("http://localhost:8080/api/stock-movement/" + stockMovementUpdateDTO.getId(), HttpMethod.PUT, entity, StockMovementUpdateDTO.class).getBody();
     }
 }

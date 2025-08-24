@@ -39,8 +39,12 @@ public class StockMovementController {
 
     @PutMapping
     public ResponseEntity<StockMovementUpdateDTO> update(@RequestBody @Valid StockMovementUpdateDTO stockMovementUpdateDTO){
-        stockMovementService.update(stockMovementUpdateDTO);
-        return ResponseEntity.status(HttpStatus.OK).body(stockMovementUpdateDTO);
+        try{
+            stockMovementService.update(stockMovementUpdateDTO);
+            return ResponseEntity.status(HttpStatus.OK).body(stockMovementUpdateDTO);
+        } catch (IllegalArgumentException e){
+            return ResponseEntity.status(HttpStatus.OK).body(null);
+        }
     }
 
     @DeleteMapping("/{id}")

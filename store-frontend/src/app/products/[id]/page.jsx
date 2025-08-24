@@ -31,7 +31,7 @@ export default function ProductPage() {
     <div style={{ maxWidth: 800, margin: "0 auto", padding: 24 }}>
       <div style={{ display: "flex", gap: 32, alignItems: "flex-start" }}>
         <img
-          src={product.image}
+          src={`data:image/*;base64,${product.image}`}
           alt={product.name}
           style={{
             width: 320,

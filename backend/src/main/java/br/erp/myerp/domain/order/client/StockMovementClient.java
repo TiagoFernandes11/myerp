@@ -2,10 +2,13 @@ package br.erp.myerp.domain.order.client;
 
 import br.erp.myerp.domain.order.dto.stockMovement.StockMovementCreateDTO;
 import br.erp.myerp.domain.order.dto.stockMovement.StockMovementResponseDTO;
+import br.erp.myerp.domain.order.dto.stockMovement.StockMovementUpdateDTO;
 
 public interface StockMovementClient {
 
+    StockMovementResponseDTO get(Long id);
+
     StockMovementResponseDTO create(StockMovementCreateDTO stockMovementCreateDTO);
 
-    void update(Long id, StockMovementResponseDTO stockMovement);
+    StockMovementUpdateDTO update(StockMovementUpdateDTO stockMovement);
 }

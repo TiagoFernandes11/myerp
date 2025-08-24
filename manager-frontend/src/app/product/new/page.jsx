@@ -34,19 +34,11 @@ export default function NewProduct() {
         saveFunction={createProduct}
         deleteFunction={deleteProduct}
       />
-      <EntityForm entity={product} setEntity={setProduct} isNew={true} />
-      {selectedImage && (
-        <div>
-          <img
-            src={URL.createObjectURL(selectedImage)}
-            alt="not found"
-            width={"200px"}
-          />
-        </div>
-      )}
-      <input
-        type="file"
-        onChange={(event) => handleImageSubmit(event.target.files[0])}
+      <EntityForm
+        entity={product}
+        setEntity={setProduct}
+        isNew={true}
+        hasImage={true}
       />
     </AuthGuard>
   );

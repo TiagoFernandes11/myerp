@@ -1,5 +1,6 @@
 package br.erp.myerp.domain.order.entity;
 
+import br.erp.myerp.domain.order.enums.OrderStatus;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -16,6 +17,10 @@ public class Order {
     private long id;
 
     private long clientId;
+
+    private OrderStatus status;
+
+    private Long stockMovementId;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItem> itens;

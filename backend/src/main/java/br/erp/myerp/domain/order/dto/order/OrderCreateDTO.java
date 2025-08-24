@@ -1,6 +1,7 @@
 package br.erp.myerp.domain.order.dto.order;
 
 import br.erp.myerp.domain.order.entity.OrderItem;
+import br.erp.myerp.domain.order.enums.OrderStatus;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -20,6 +21,12 @@ public class OrderCreateDTO {
     @NotBlank(message = "client id must not be blank")
     @NotNull(message = "client id must not be null")
     private long clientId;
+
+    @NotBlank(message = "status must not be blank")
+    @NotNull(message = "status must not be null")
+    private OrderStatus status;
+
+    private Long stockMovementId;
 
     @NotEmpty(message = "Products id can not be empty")
     private List<OrderItem> orderItems;

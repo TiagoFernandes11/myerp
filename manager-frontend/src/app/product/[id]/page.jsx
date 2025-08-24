@@ -43,7 +43,12 @@ export default function ClientByID() {
         saveFunction={updateProduct}
         deleteFunction={deleteProduct}
       />
-      <EntityForm entity={product} setEntity={setProduct} isNew={false} />
+      <EntityForm
+        entity={product}
+        setEntity={setProduct}
+        isNew={false}
+        hasImage={true}
+      />
     </AuthGuard>
   );
 }

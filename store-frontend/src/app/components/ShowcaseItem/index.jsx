@@ -11,7 +11,7 @@ export default function ShowcaseItem({ id, image, name, price, buttonAction }) {
   return (
     <div className="item-container">
       <img
-        src={image}
+        src={`data:image/*;base64,${image}`}
         alt={name}
         onClick={() => router.push("http://localhost:4000/products/" + id)}
       />

@@ -59,6 +59,7 @@ export async function createProduct(product) {
 }
 
 export async function updateProduct(product) {
+  console.log(product);
   try {
     const response = await axios.put(
       "http://localhost:8080/api/product/" + product.id,
